@@ -23,6 +23,7 @@
 
     <style name="MaterialFullScreen" parent="MaterialThemeNoActionBar">
         <item name="android:windowFullscreen">true</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
 
     <style name="Game" parent="MaterialFullScreen">
@@ -30,8 +31,6 @@
     </style>
 
     <style name="Transition" parent="MaterialFullScreen">
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:navigationBarColor">@color/color4</item>
         <item name="android:windowActivityTransitions">true</item>
     </style>
 
