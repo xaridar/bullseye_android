@@ -1,4 +1,4 @@
-// Elliot wrote
+// Elliot coded and created layout
 package com.example.bullseye_android.activities;
 
 import android.app.ActivityOptions;
@@ -17,7 +17,7 @@ import java.util.TimerTask;
 public class TransitionActivity extends AppCompatActivity {
 
     boolean shouldFinish;
-    private Class toClass;
+    private Class<? extends AppCompatActivity> toActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +29,14 @@ public class TransitionActivity extends AppCompatActivity {
         String sendingActivity = intent.getStringExtra("sender");
         if (sendingActivity != null) {
             if (sendingActivity.equals("adminSignUp")) {
-//                toClass = UsersActivity.class;
+                // users activity
             } else if (sendingActivity.equals("userSignUp")) {
-//                toClass = UserDashboardActivity.class;
+                // user dashboard
             } else {
-                // splash screen
+                toActivity = HomeActivity.class;
             }
         } else {
-            // splash screen
+            toActivity = HomeActivity.class;
         }
         new Timer().schedule(new TimerTask() {
             @Override
@@ -44,7 +44,7 @@ public class TransitionActivity extends AppCompatActivity {
                 Looper.prepare();
                 runOnUiThread(() -> {
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(TransitionActivity.this);
-                    startActivity(new Intent(TransitionActivity.this, toClass), options.toBundle());
+                    startActivity(new Intent(TransitionActivity.this, toActivity), options.toBundle());
                     shouldFinish = true;
                 });
             }
