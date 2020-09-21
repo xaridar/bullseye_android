@@ -26,10 +26,10 @@
             android:layout_marginTop="50dp"
             android:layout_marginEnd="50dp"
             android:ems="10"
-            android:hint="Name"
+            android:hint="@string/name"
             android:inputType="textPersonName"
             android:theme="@style/SignInText"
-            android:autofillHints="name" />
+            android:autofillHints="@string/name" />
 
         <EditText
             android:id="@+id/email"
@@ -38,9 +38,9 @@
             android:layout_marginStart="50dp"
             android:layout_marginTop="60dp"
             android:layout_marginEnd="50dp"
-            android:autofillHints="email"
+            android:autofillHints="@string/email"
             android:ems="10"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:theme="@style/SignInText" />
 
@@ -57,11 +57,11 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:autofillHints="@string/password"
                 android:ems="10"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword"
-                android:theme="@style/SignInText"
-                android:autofillHints="password" />
+                android:theme="@style/SignInText" />
 
             <CheckBox
                 android:id="@+id/togglePass"
@@ -86,11 +86,11 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:autofillHints="@string/confirm_password"
                 android:ems="10"
-                android:hint="Confirm Password"
+                android:hint="@string/confirm_password"
                 android:inputType="textPassword"
-                android:theme="@style/SignInText"
-                android:autofillHints="confirm password"/>
+                android:theme="@style/SignInText" />
 
             <CheckBox
                 android:id="@+id/toggleConfPass"
@@ -109,7 +109,7 @@
         android:layout_width="194dp"
         android:layout_height="63dp"
         android:backgroundTint="@color/color4"
-        android:text="GO"
+        android:text="@string/go"
         android:transitionName="bigButton"
         app:cornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
