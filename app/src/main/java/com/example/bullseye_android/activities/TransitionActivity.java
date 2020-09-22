@@ -29,7 +29,7 @@ public class TransitionActivity extends AppCompatActivity {
         String sendingActivity = intent.getStringExtra("sender");
         if (sendingActivity != null) {
             if (sendingActivity.equals("adminSignUp")) {
-                // users activity
+                toActivity = Users.class;
             } else if (sendingActivity.equals("userSignUp")) {
                 // user dashboard
             }
