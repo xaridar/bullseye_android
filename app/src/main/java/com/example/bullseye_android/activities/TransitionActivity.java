@@ -32,17 +32,16 @@ public class TransitionActivity extends AppCompatActivity {
                 // users activity
             } else if (sendingActivity.equals("userSignUp")) {
                 // user dashboard
-            } else {
-                toActivity = HomeActivity.class;
             }
-        } else {
-            toActivity = HomeActivity.class;
         }
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 Looper.prepare();
                 runOnUiThread(() -> {
+                    if (toActivity == null) {
+                        toActivity = HomeActivity.class;
+                    }
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(TransitionActivity.this);
                     startActivity(new Intent(TransitionActivity.this, toActivity), options.toBundle());
                     shouldFinish = true;

@@ -1,6 +1,7 @@
 // Elliot coded and created layout
 package com.example.bullseye_android.activities;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -65,7 +66,9 @@ public class AdminSignUpActivity extends AppCompatActivity {
             }
             Intent intent = new Intent(AdminSignUpActivity.this, TransitionActivity.class);
             intent.putExtra("sender", "adminSignUp");
-            startActivity(intent);
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(AdminSignUpActivity.this, view, "bigButton");
+            startActivity(intent, options.toBundle());
+            finish();
         });
 
         togglePass.setOnClickListener(new ShowPassListener(pass, togglePass));
