@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Bullseye</string>
+    <string name="sign_up_name">Bullseye Admin Login</string>
     <string name="show">Show</string>
     <string name="hide">Hide</string>
     <string name="name">Name</string>
