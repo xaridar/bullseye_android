@@ -24,7 +24,8 @@
             android:theme="@style/Transition" />
         <activity
             android:name=".activities.AdminSignUpActivity"
-            android:theme="@style/MaterialThemeWithActionBar" />
+            android:theme="@style/MaterialThemeWithActionBar"
+            android:label="Admin Sign Up"/>
     </application>
 
 </manifest>
