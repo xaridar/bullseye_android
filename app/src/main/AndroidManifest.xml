@@ -9,19 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.HomeActivity" android:theme="@style/MaterialThemeNoActionBar">
+        <activity android:name=".activities.Users"></activity>
+        <activity
+            android:name=".activities.HomeActivity"
+            android:theme="@style/MaterialThemeNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.TransitionActivity"
             android:theme="@style/Transition" />
-
-        <activity android:name=".activities.AdminSignUpActivity" android:theme="@style/MaterialThemeWithActionBar"/>
+        <activity
+            android:name=".activities.AdminSignUpActivity"
+            android:theme="@style/MaterialThemeWithActionBar" />
     </application>
 
 </manifest>
