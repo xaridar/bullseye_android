@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.Users"></activity>
         <activity
             android:name=".activities.HomeActivity"
             android:theme="@style/MaterialThemeNoActionBar">
@@ -26,6 +25,10 @@
             android:name=".activities.AdminSignUpActivity"
             android:theme="@style/MaterialThemeWithActionBar"
             android:label="Admin Sign Up"/>
+        <activity
+            android:name=".activities.Users"
+            android:theme="@style/MaterialThemeWithActionBar"
+            android:label="Users"/>
     </application>
 
 </manifest>
