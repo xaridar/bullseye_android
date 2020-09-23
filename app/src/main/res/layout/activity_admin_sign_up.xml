@@ -55,7 +55,7 @@
             <EditText
                 android:id="@+id/password"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints="@string/password"
                 android:ems="10"
@@ -84,7 +84,7 @@
             <EditText
                 android:id="@+id/confPassword"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints="@string/confirm_password"
                 android:ems="10"
