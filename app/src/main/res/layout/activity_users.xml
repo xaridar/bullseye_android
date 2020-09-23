@@ -11,8 +11,8 @@
         android:layout_width="143dp"
         android:layout_height="137dp"
         android:layout_marginBottom="304dp"
-        android:background="@drawable/button_round"
-        android:text="Button"
+        android:background="@drawable/pfp_default"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -21,8 +21,8 @@
         android:id="@+id/button5"
         android:layout_width="143dp"
         android:layout_height="137dp"
-        android:background="@drawable/button_round"
-        android:text="Button"
+        android:background="@drawable/pfp_logo"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="2dp" />
@@ -31,12 +31,11 @@
         android:id="@+id/button7"
         android:layout_width="143dp"
         android:layout_height="137dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="104dp"
         android:background="@drawable/ic_plus"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.552"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
