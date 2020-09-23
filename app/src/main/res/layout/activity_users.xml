@@ -6,37 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".activities.Users">
 
-    <Button
+    <ImageButton
         android:id="@+id/button4"
         android:layout_width="143dp"
         android:layout_height="137dp"
-        android:layout_marginBottom="268dp"
-        android:background="@drawable/pfp_default"
+        android:layout_marginBottom="248dp"
+        android:src="@drawable/pfp_default"
         android:text=""
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button5"
         android:layout_width="143dp"
         android:layout_height="137dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/pfp_archer"
+        android:src="@drawable/pfp_archer"
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/button7"
         android:layout_width="143dp"
         android:layout_height="137dp"
-        android:layout_marginBottom="60dp"
-        android:background="@drawable/ic_plus"
+        android:layout_marginBottom="56dp"
+        android:src="@drawable/ic_plus"
         android:text=""
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.451"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
