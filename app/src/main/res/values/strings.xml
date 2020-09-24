@@ -9,4 +9,6 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="go">GO</string>
     <string name="button">Button</string>
+    <string name="log_out">Log Out</string>
+    <string name="settings">Settings</string>
 </resources>
