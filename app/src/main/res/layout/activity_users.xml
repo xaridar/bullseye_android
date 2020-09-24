@@ -10,7 +10,7 @@
         android:id="@+id/button4"
         android:layout_width="143dp"
         android:layout_height="137dp"
-        android:layout_marginBottom="248dp"
+        android:layout_marginBottom="256dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/pfp_default"
