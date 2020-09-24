@@ -10,27 +10,27 @@
         android:id="@+id/button4"
         android:layout_width="143dp"
         android:layout_height="137dp"
-        android:layout_marginBottom="256dp"
+        android:layout_marginBottom="448dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/pfp_default"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintHorizontal_bias="0.858"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/button5"
         android:layout_width="143dp"
         android:layout_height="137dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/pfp_archer"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintHorizontal_bias="0.104"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,14 +38,13 @@
         android:id="@+id/button7"
         android:layout_width="143dp"
         android:layout_height="137dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="80dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_plus"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
