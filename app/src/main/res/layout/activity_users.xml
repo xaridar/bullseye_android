@@ -18,7 +18,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.858"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="pfp"/>
 
     <ImageButton
         android:id="@+id/button5"
@@ -32,7 +33,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.104"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="pfp"/>
 
     <ImageButton
         android:id="@+id/button7"
@@ -45,6 +47,31 @@
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="pfp"/>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="172dp"
+        android:scaleType="fitCenter"
+        android:layout_height="134dp"
+        android:background="@android:color/transparent"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="280dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/pfp_boy" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="172dp"
+        android:layout_height="134dp"
+        android:layout_marginStart="228dp"
+        android:layout_marginBottom="268dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/pfp_girl" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
