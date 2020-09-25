@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.bullseye_android.R;
 
-public class Users extends AppCompatActivity {
+public class UsersActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

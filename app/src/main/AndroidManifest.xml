@@ -30,7 +30,7 @@
             android:label="Admin Sign Up"
             android:theme="@style/MaterialThemeWithActionBar" />
         <activity
-            android:name=".activities.Users"
+            android:name=".activities.UsersActivity"
             android:label="Users"
             android:theme="@style/MaterialThemeWithActionBar" />
     </application>
