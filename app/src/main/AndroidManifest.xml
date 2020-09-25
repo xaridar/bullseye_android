@@ -3,20 +3,27 @@
     package="com.example.bullseye_android">
 
     <application
-        android:fullBackupContent="true"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialThemeWithActionBar">
         <activity
+            android:name=".activities.AdminSettingsActivity"
+            android:label="Admin Settings"
+            android:theme="@style/MaterialThemeWithActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.AdminDashboardActivity"
+                />
+
+        </activity>
+        <activity
             android:name=".activities.AdminDashboardActivity"
             android:label="Admin Dashboard"
-            android:theme="@style/MaterialThemeWithActionBar" />
-        <activity
-            android:name=".activities.HomeActivity"
-            android:theme="@style/MaterialThemeNoActionBar">
+            android:theme="@style/MaterialThemeWithActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,13 +31,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.HomeActivity"
+            android:theme="@style/MaterialThemeNoActionBar" />
+        <activity
             android:name=".activities.TransitionActivity"
             android:theme="@style/Transition" />
         <activity
             android:name=".activities.AdminSignUpActivity"
             android:label="Admin Sign Up"
-            android:theme="@style/MaterialThemeWithActionBar" >
-        </activity>
+            android:theme="@style/MaterialThemeWithActionBar" />
         <activity
             android:name=".activities.UsersActivity"
             android:label="Users"

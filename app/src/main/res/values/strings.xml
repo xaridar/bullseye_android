@@ -11,4 +11,14 @@
     <string name="button">Button</string>
     <string name="log_out">Log Out</string>
     <string name="settings">Settings</string>
+    <string name="stats">Stats</string>
+    <string name="welcome_mom">Welcome, Mom!</string>
+    <string name="manage_profiles">Manage Profiles</string>
+    <string name="back_to_dashboard">Back To Dashboard</string>
+    <string name="delete_progress">Delete Progress</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="warning_message">Selecting \'Yes\' will remove all data from this app, including accounts, sign-in information, and statistics. Are you sure you would like to proceed?</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="change_password">Change Password</string>
 </resources>
