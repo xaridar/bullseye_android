@@ -2,6 +2,7 @@ package com.example.bullseye_android.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.app.PendingIntent;
 import android.content.DialogInterface;
@@ -13,26 +14,42 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.database.Fetcher;
+import com.example.bullseye_android.database.User;
+import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.util.ShowPassListener;
 
 public class AdminSettingsActivity extends AppCompatActivity {
 
-    private Button manageProfiles;
-    private Button backToDashboard;
-    private Button deleteProgress;
-    private CheckBox togglePass;
-    private EditText password;
+    private UserViewModel mUserViewModel;
+    private User admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        Fetcher.runNewAdminFetcher(mUserViewModel, this, user -> {
+            if (user != null) {
+                admin = user;
+                run();
+            } else {
+                startActivity(new Intent(AdminSettingsActivity.this, AdminSignUpActivity.class));
+                finish();
+            }
+            return null;
+        });
+    }
+
+    public void run() {
         setContentView(R.layout.activity_admin_settings);
 
-        manageProfiles = findViewById(R.id.manageProfiles);
-        backToDashboard = findViewById(R.id.backToDashboard);
-        deleteProgress = findViewById(R.id.deleteProgress);
-        togglePass = findViewById(R.id.togglePass);
-        password = findViewById(R.id.password);
+        Button manageProfiles = findViewById(R.id.manageProfiles);
+        Button backToDashboard = findViewById(R.id.backToDashboard);
+        Button deleteProgress = findViewById(R.id.deleteProgress);
+        CheckBox togglePass = findViewById(R.id.togglePass);
+        EditText password = findViewById(R.id.password);
+
+        password.setText(admin.getPassword());
 
         manageProfiles.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +66,6 @@ public class AdminSettingsActivity extends AppCompatActivity {
         deleteProgress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //deletes progress from all users, has popup warning
                 AlertDialog.Builder warning = new AlertDialog.Builder(AdminSettingsActivity.this)
                         .setTitle(R.string.are_you_sure)
                         .setMessage(R.string.warning_message)
@@ -57,7 +73,7 @@ public class AdminSettingsActivity extends AppCompatActivity {
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //Delete progress from database
+                                mUserViewModel.deleteAll();
                                 PendingIntent intent = PendingIntent.getActivity(AdminSettingsActivity.this, 1000, getIntent(), PendingIntent.FLAG_CANCEL_CURRENT);
                                 System.exit(0);
                             }

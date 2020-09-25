@@ -23,7 +23,7 @@
 
     <style name="MaterialFullScreen" parent="MaterialThemeNoActionBar">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
 
     <style name="Game" parent="MaterialFullScreen">

@@ -12,7 +12,7 @@
     <string name="log_out">Log Out</string>
     <string name="settings">Settings</string>
     <string name="stats">Stats</string>
-    <string name="welcome_mom">Welcome, Mom!</string>
+    <string name="welcome">Welcome, %1$s!</string>
     <string name="manage_profiles">Manage Profiles</string>
     <string name="back_to_dashboard">Back To Dashboard</string>
     <string name="delete_progress">Delete Progress</string>
