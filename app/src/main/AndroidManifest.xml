@@ -28,7 +28,8 @@
         <activity
             android:name=".activities.AdminSignUpActivity"
             android:label="Admin Sign Up"
-            android:theme="@style/MaterialThemeWithActionBar" />
+            android:theme="@style/MaterialThemeWithActionBar" >
+        </activity>
         <activity
             android:name=".activities.UsersActivity"
             android:label="Users"

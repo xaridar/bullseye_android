@@ -108,6 +108,7 @@ public class AdminSignUpActivity extends AppCompatActivity {
         finish();
         Log.i("HH", "user exists");
         return null;
+
     };
 
     private void createDialogue(String message) {

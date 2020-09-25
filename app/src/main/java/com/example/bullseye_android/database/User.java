@@ -23,7 +23,11 @@ public class User {
     public static final int POINTS = 100;
     public static final int ACC = 101;
     public static final int TIME = 102;
-    public static final int statsTypes = 3;
+    public int statsTypes = 3;
+
+    public static final int MAX_VOLUME = 200;
+
+    public static final List<String> avatars = new ArrayList<>(Arrays.asList("archer", "boy", "default", "girl", "logo", "logo_alt"));
 
     @ColumnInfo(name = "admin")
     private boolean admin;
@@ -58,18 +62,27 @@ public class User {
     @ColumnInfo(name = "lastGames")
     private List<Number[]>[] lastGames;
 
+    @Nullable
+    @ColumnInfo(name = "avatar")
+    private String avatar;
 
-    public User(@NonNull String name, long id) {
+    @ColumnInfo(name = "volume")
+    private int volume;
+
+
+    public User(@NonNull String name, long id, @Nullable String avatar) {
         this.name = name;
         this.admin = false;
         this.id = id;
-        playTime = new long[]{0, 0, 0, 0, 0, 0};
         email = null;
         password = null;
+        playTime = new long[]{0, 0, 0, 0, 0, 0};
         accuracy = new float[]{0, 0, 0, 0, 0};
         focusPoints = new int[] {0, 0, 0, 0, 0, 0};
         gamesPlayed = new int[] {0, 0, 0, 0, 0};
         lastGames = new ArrayList[]{new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>()};
+        this.avatar = avatar;
+        volume = 100;
     }
 
     @NonNull
@@ -192,5 +205,32 @@ public class User {
 
     public void setPassword(@NonNull String password) {
         this.password = password;
+    }
+
+    @Nullable
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(@Nullable String avatar) {
+        if (avatars.contains(avatar)) {
+            this.avatar = avatar;
+        } else {
+            this.avatar = "default";
+        }
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
+    public void setVolume(int volume) {
+        if (volume < 0) {
+            this.volume = 0;
+        } else if (volume > MAX_VOLUME) {
+            this.volume = MAX_VOLUME;
+        } else {
+            this.volume = volume;
+        }
     }
 }
