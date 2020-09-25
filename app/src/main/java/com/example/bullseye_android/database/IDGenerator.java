@@ -16,23 +16,27 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class IDGenerator {
 
-    private AndroidViewModel mWordViewModel;
+    private UserViewModel mUserViewModel;
     private LifecycleOwner owner;
     private ExecutorService service;
     private List<Long> ids = new ArrayList<>();
 
     public static IDGenerator INSTANCE;
 
-    public IDGenerator(AndroidViewModel androidViewModel, LifecycleOwner owner) {
-        mWordViewModel = androidViewModel;
+    public IDGenerator(UserViewModel userViewModel, LifecycleOwner owner) {
+        mUserViewModel = userViewModel;
         this.owner = owner;
         service = Executors.newFixedThreadPool(100);
-        service.submit(new getIDSAsync());
+        mUserViewModel.getUsers().observe(owner, u -> {
+            for (User user : u) {
+                ids.add(user.getId());
+            }
+        });
     }
 
-    public static IDGenerator getInstance(AndroidViewModel androidViewModel, LifecycleOwner owner) {
+    public static IDGenerator getInstance(UserViewModel userViewModel, LifecycleOwner owner) {
         if (INSTANCE == null) {
-            INSTANCE = new IDGenerator(androidViewModel, owner);
+            INSTANCE = new IDGenerator(userViewModel, owner);
         }
         return INSTANCE;
     }
@@ -53,12 +57,7 @@ public class IDGenerator {
         @Override
         public Void call() throws Exception {
             List<User> users = new ArrayList<>();
-            ((UserViewModel) mWordViewModel).getUsers().observe(owner, u -> {
-                users.addAll(u);
-                for (User user : users) {
-                    ids.add(user.getId());
-                }
-            });
+
             return null;
         }
     }
