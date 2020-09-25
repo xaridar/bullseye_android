@@ -24,21 +24,28 @@
             android:name=".activities.AdminDashboardActivity"
             android:label="Admin Dashboard"
             android:theme="@style/MaterialThemeWithActionBar">
+
+        </activity>
+        <activity
+            android:name=".activities.HomeActivity"
+            android:theme="@style/Transition">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity
-            android:name=".activities.HomeActivity"
-            android:theme="@style/MaterialThemeNoActionBar" />
         <activity
             android:name=".activities.TransitionActivity"
             android:theme="@style/Transition" />
         <activity
             android:name=".activities.AdminSignUpActivity"
             android:label="Admin Sign Up"
+            android:theme="@style/MaterialThemeWithActionBar" />
+        <activity
+            android:name=".activities.AdminSignInActivity"
+            android:label="Admin Sign In"
             android:theme="@style/MaterialThemeWithActionBar" />
         <activity
             android:name=".activities.UsersActivity"
