@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activities.AdminDashboardActivity"
+            android:label="Admin Dashboard"
+            android:theme="@style/MaterialThemeWithActionBar" />
+        <activity
             android:name=".activities.HomeActivity"
             android:theme="@style/MaterialThemeNoActionBar">
             <intent-filter>
@@ -23,13 +27,12 @@
             android:theme="@style/Transition" />
         <activity
             android:name=".activities.AdminSignUpActivity"
-            android:theme="@style/MaterialThemeWithActionBar"
-            android:label="Admin Sign Up">
-        </activity>
+            android:label="Admin Sign Up"
+            android:theme="@style/MaterialThemeWithActionBar" />
         <activity
             android:name=".activities.Users"
-            android:theme="@style/MaterialThemeWithActionBar"
-            android:label="Users"/>
+            android:label="Users"
+            android:theme="@style/MaterialThemeWithActionBar" />
     </application>
 
 </manifest>
