@@ -1,4 +1,4 @@
-package com.example.roomtut.users;
+package com.example.bullseye_android.database;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,9 +59,9 @@ public class User {
     private List<Number[]>[] lastGames;
 
 
-    public User(@NonNull String name, boolean admin, long id) {
+    public User(@NonNull String name, long id) {
         this.name = name;
-        this.admin = admin;
+        this.admin = false;
         this.id = id;
         playTime = new long[]{0, 0, 0, 0, 0, 0};
         email = null;

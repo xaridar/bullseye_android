@@ -1,4 +1,4 @@
-package com.example.roomtut.users;
+package com.example.bullseye_android.database;
 
 import android.app.Application;
 
@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.roomtut.words.Word;
-
 import java.util.List;
+
+import io.reactivex.Flowable;
 
 public class UserViewModel extends AndroidViewModel {
 
@@ -39,5 +39,13 @@ public class UserViewModel extends AndroidViewModel {
 
     public void update(User user) {
         userRepository.update(user);
+    }
+
+    public User getAdmin() {
+        return userRepository.getAdmin();
+    }
+
+    public User getUser(long id) {
+        return userRepository.getUser(id);
     }
 }

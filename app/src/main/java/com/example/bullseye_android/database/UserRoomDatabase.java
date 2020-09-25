@@ -1,4 +1,4 @@
-package com.example.roomtut.users;
+package com.example.bullseye_android.database;
 
 import android.content.Context;
 
@@ -6,14 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.roomtut.words.WordDao;
-
-@Database(entities = {User.class}, version = 5, exportSchema = false)
+@Database(entities = {User.class}, version = 1, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class UserRoomDatabase extends RoomDatabase {
 

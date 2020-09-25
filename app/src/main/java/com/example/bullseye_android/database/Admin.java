@@ -1,19 +1,12 @@
-package com.example.roomtut.users;
-
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
+package com.example.bullseye_android.database;
 
 public class Admin extends User {
 
-
-
-
     public Admin(String name, long id, String email, String password) {
-        super(name, true, id);
+        super(name, id);
+        super.setAdmin(true);
         super.setEmail(email);
         super.setPassword(password);
     }
-
 
 }
