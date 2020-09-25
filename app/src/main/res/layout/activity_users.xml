@@ -8,70 +8,84 @@
 
     <ImageButton
         android:id="@+id/button4"
-        android:layout_width="143dp"
-        android:layout_height="137dp"
-        android:layout_marginBottom="448dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="25dp"
         android:background="@android:color/transparent"
+        android:contentDescription="pfp"
         android:scaleType="fitCenter"
         android:src="@drawable/pfp_default"
         android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.858"
-        app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="pfp"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    --
 
     <ImageButton
         android:id="@+id/button5"
-        android:layout_width="143dp"
-        android:layout_height="137dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="25dp"
         android:background="@android:color/transparent"
+        android:contentDescription="pfp"
         android:scaleType="fitCenter"
         android:src="@drawable/pfp_archer"
         android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.104"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="pfp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/button7"
         android:layout_width="143dp"
         android:layout_height="137dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="30dp"
         android:background="@android:color/transparent"
+        android:contentDescription="pfp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_plus"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="pfp"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="172dp"
-        android:scaleType="fitCenter"
-        android:layout_height="134dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="25dp"
         android:background="@android:color/transparent"
-        android:layout_marginStart="28dp"
-        android:layout_marginBottom="280dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/pfp_boy" />
 
-    --<ImageButton
+    <ImageButton
         android:id="@+id/imageButton2"
-        android:layout_width="172dp"
-        android:layout_height="134dp"
-        android:layout_marginStart="228dp"
-        android:layout_marginBottom="268dp"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="25dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/pfp_girl" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:text="Admin Sign In"
+        app:layout_constraintBottom_toTopOf="@+id/button7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
