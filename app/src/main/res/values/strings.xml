@@ -30,4 +30,5 @@
     <string name="current_user_s_logo">Current user\'s logo</string>
     <string name="user_s_logo">User\'s logo</string>
     <string name="users_not_found">Either there are no users saved on your device, or something went wrong! Check to make sure that users have been created on this device.</string>
+    <string name="bullseye_logo">bullseye logo</string>
 </resources>
