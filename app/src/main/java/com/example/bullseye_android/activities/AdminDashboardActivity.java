@@ -50,7 +50,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
         statsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //move to stats activity
+                startActivity(new Intent(AdminDashboardActivity.this, StatsActivity.class));
             }
         });
         settingsButton.setOnClickListener(new View.OnClickListener() {

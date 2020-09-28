@@ -10,22 +10,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialThemeWithActionBar">
+        <activity android:name=".activities.StatsActivity" android:theme="@style/MaterialThemeNoActionBar"></activity>
         <activity
             android:name=".activities.AdminSettingsActivity"
             android:label="Admin Settings"
-            android:theme="@style/MaterialThemeWithActionBar" >
+            android:theme="@style/MaterialThemeWithActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.AdminDashboardActivity"
-                />
-
+                android:value=".activities.AdminDashboardActivity" />
         </activity>
         <activity
             android:name=".activities.AdminDashboardActivity"
             android:label="Admin Dashboard"
-            android:theme="@style/MaterialThemeWithActionBar">
-
-        </activity>
+            android:theme="@style/MaterialThemeWithActionBar"></activity>
         <activity
             android:name=".activities.HomeActivity"
             android:theme="@style/Transition">
@@ -34,7 +31,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".activities.TransitionActivity"

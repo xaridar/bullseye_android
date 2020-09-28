@@ -21,4 +21,13 @@
     <string name="cancel">Cancel</string>
     <string name="yes">Yes</string>
     <string name="change_password">Change Password</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="stats_header">%1$s\'s Stats</string>
+    <string name="sorting">Sorting</string>
+    <string name="memory">Memory</string>
+    <string name="export">EXPORT</string>
+    <string name="current_user_s_logo">Current user\'s logo</string>
+    <string name="user_s_logo">User\'s logo</string>
+    <string name="users_not_found">Either there are no users saved on your device, or something went wrong! Check to make sure that users have been created on this device.</string>
 </resources>

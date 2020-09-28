@@ -9,4 +9,6 @@
     <color name="color4">#5B3C3C</color>
     <color name="color5">#412B2B</color>
     <color name="hintColor">#B85B3C3C</color>
+    <color name="selectedBg">#412724</color>
+    <color name="selectedText">@color/color3</color>
 </resources>
