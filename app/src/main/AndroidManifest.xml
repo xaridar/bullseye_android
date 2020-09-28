@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialThemeWithActionBar">
         <activity android:name=".activities.StatsActivity" android:theme="@style/MaterialThemeNoActionBar"></activity>
+        <activity android:name=".activities.UserSignUpActivity"
+            android:label="User Sign Up"
+            android:theme="@style/MaterialThemeWithActionBar"/>
         <activity
             android:name=".activities.AdminSettingsActivity"
             android:label="Admin Settings"

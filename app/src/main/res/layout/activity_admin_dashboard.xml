@@ -30,7 +30,7 @@
         android:id="@+id/adminSettingsButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="104dp"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
         android:paddingTop="30dp"
@@ -42,6 +42,7 @@
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toTopOf="@+id/adminLogOutButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/color5"
         tools:ignore="UnknownId" />
@@ -50,7 +51,7 @@
         android:id="@+id/adminStatsButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="116dp"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
         android:paddingTop="30dp"
@@ -62,6 +63,7 @@
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toTopOf="@+id/adminSettingsButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/color5" />
 
