@@ -21,4 +21,8 @@
     <string name="cancel">Cancel</string>
     <string name="yes">Yes</string>
     <string name="change_password">Change Password</string>
+    <string name="bullseye">Bullseye</string>
+    <string name="bullseye_logo">bullseye logo</string>
+    <string name="name">Name</string>
+    <string name="user_name">User Name</string>
 </resources>
