@@ -1,22 +1,41 @@
 package com.example.bullseye_android.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.database.Fetcher;
+import com.example.bullseye_android.database.UserViewModel;
 
 public class UsersActivity extends AppCompatActivity {
+
+    private UserViewModel mUserViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
-        run();
+
+        mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+
+        Fetcher.runNewAdminFetcher(mUserViewModel, this, user -> {
+            if (user == null) {
+                Toast.makeText(this, "No admin account found. Please make one.", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(UsersActivity.this, AdminSignUpActivity.class));
+                finish();
+            } else {
+                run();
+            }
+            return null;
+        });
+
 
     }
 
