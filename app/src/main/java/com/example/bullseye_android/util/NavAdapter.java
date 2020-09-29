@@ -25,13 +25,9 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.NavViewHolder> {
     private Context context;
     private User current;
 
-    public NavAdapter(Context context, List<User> users, User current) {
+    public NavAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
-        this.current = current;
-        setUsers(users);
-        removeUser(current);
-        ((StatsActivity) context).changeFirst(current);
     }
 
     public void setUsers(List<User> users) {
@@ -41,8 +37,16 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.NavViewHolder> {
                     this.users.add(user);
                 }
             }
+
         } else {
-            users = new ArrayList<>();
+            this.users = new ArrayList<>();
+        }
+        if (this.users.size() > 0) {
+            if (current == null) {
+                current = this.users.get(0);
+            }
+            removeUser(current);
+            ((StatsActivity) context).changeFirst(current);
         }
     }
 

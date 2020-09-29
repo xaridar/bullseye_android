@@ -7,8 +7,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
-
     <style name="MaterialThemeWithActionBar" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -34,9 +32,12 @@
         <item name="android:windowActivityTransitions">true</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="DrawerActivity" parent="MaterialThemeNoActionBar">
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">false</item>
     </style>
 
     <style name="SignInText" parent="Widget.AppCompat.EditText">

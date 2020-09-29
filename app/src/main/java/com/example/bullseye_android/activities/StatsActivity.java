@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ShareCompat;
@@ -49,8 +50,8 @@ public class StatsActivity extends AppCompatActivity {
     private TextView sorting;
     private List<TextView> bottomNav = new ArrayList<>();
     /* replacement point */
-    private List<User> users;
-//     private LiveData<List<User>> users;
+//    private List<User> users;
+     private LiveData<List<User>> users;
     private UserViewModel mUserViewModel;
     private ExtendedFloatingActionButton exportFab;
 
@@ -61,10 +62,10 @@ public class StatsActivity extends AppCompatActivity {
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
         /* replacement point */
-        users = new ArrayList<>(Arrays.asList(new User("Chuck", 1, "archer"), new User("Chris", 2, "default"), new User("Beverly", 3, "boy"), new User("Ryan", 4, "girl")));
-//        users = mUserViewModel.getUsers();
+//        users = new ArrayList<>(Arrays.asList(new User("Chuck", 1, "archer"), new User("Chris", 2, "default"), new User("Beverly", 3, "boy"), new User("Ryan", 4, "girl")));
+        users = mUserViewModel.getUsers();
         /* set stats for example - removal point */
-        users.get(0).addGame(User.GAME_MEMORY_HARD, .43f, 34, 56);
+//        users.get(0).addGame(User.GAME_MEMORY_HARD, .43f, 34, 56);
 
         currentUser = new MutableLiveData<>();
 
@@ -75,8 +76,8 @@ public class StatsActivity extends AppCompatActivity {
         };
 
         /* replacement point */
-        callback.apply(users.get(0));
-//        Fetcher.runNewUserFetcher(mUserViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), callback);
+//        callback.apply(users.get(0));
+        Fetcher.runNewUserFetcher(mUserViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), callback);
 
     }
 
@@ -109,14 +110,7 @@ public class StatsActivity extends AppCompatActivity {
         navActionBarDrawerToggle.getDrawerArrowDrawable().setColor(getColor(android.R.color.white));
 
 
-        /* replacement point */
-//        if (currentUser.getValue() == null) {
-//            if (users.getValue() != null) {
-//                currentUser.setValue(users.getValue().get(0));
-//            }
-//        }
-//        final NavAdapter adapter = new NavAdapter(this, users.getValue(), currentUser.getValue());
-        final NavAdapter adapter = new NavAdapter(this, users, currentUser.getValue() == null ? currentUser.getValue() : users.get(0));
+        final NavAdapter adapter = new NavAdapter(this);
 
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -160,7 +154,7 @@ public class StatsActivity extends AppCompatActivity {
         });
 
         /* addition point */
-//        users.observe(this, adapter::setUsers);
+        users.observe(this, adapter::setUsers);
 
         memory.setOnClickListener(view -> {
             tab.setValue(MEMORY);
