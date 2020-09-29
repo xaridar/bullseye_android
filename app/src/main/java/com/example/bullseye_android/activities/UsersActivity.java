@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,15 @@ import com.example.bullseye_android.database.UserViewModel;
 public class UsersActivity extends AppCompatActivity {
 
     private UserViewModel mUserViewModel;
+    private View.OnClickListener avatarListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            long contentDescription = Long.parseLong(v.getContentDescription().toString());
+            SharedPreferences sharedPreferences = getSharedPreferences("userID", 0);
+            sharedPreferences.edit().putLong("id", contentDescription).apply();
+            Intent myIntent = new Intent(v.getContext(), UserDashboardActivity.class);
+            startActivity(myIntent);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,34 +57,21 @@ public class UsersActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
-        ImageButton button2 = findViewById(R.id.pfp1);
-        button2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), UserDashboardActivity.class);
-                startActivity(myIntent);
-            }
-        });
-        ImageButton button3 = findViewById(R.id.pfp2);
-        button3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), UserDashboardActivity.class);
-                startActivity(myIntent);
-            }
-        });
-        ImageButton button4 = findViewById(R.id.pfp3);
-        button4.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), UserDashboardActivity.class);
-                startActivity(myIntent);
-            }
-        });
-        ImageButton button5 = findViewById(R.id.pfp4);
-        button5.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), UserDashboardActivity.class);
-                startActivity(myIntent);
-            }
-        });
+
+
+
+        ImageButton avatar1 = findViewById(R.id.pfp1);
+        avatar1.setOnClickListener(avatarListener);
+
+        ImageButton avatar2 = findViewById(R.id.pfp2);
+        avatar2.setOnClickListener(avatarListener);
+
+        ImageButton avatar3 = findViewById(R.id.pfp3);
+        avatar3.setOnClickListener(avatarListener);
+
+        ImageButton avatar4 = findViewById(R.id.pfp4);
+        avatar4.setOnClickListener(avatarListener);
+
         Button button6 = findViewById(R.id.adminSignIn);
         button6.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

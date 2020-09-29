@@ -1,25 +1,47 @@
 package com.example.bullseye_android.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.database.Fetcher;
+import com.example.bullseye_android.database.User;
+import com.example.bullseye_android.database.UserViewModel;
 
 public class UserDashboardActivity extends AppCompatActivity {
+
+    User user;
+    UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_dashboard);
-        run();
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        SharedPreferences sharedPreferences = getSharedPreferences("userID", 0);
+        long id = sharedPreferences.getLong("id",0);
+        Fetcher.runNewUserFetcher(userViewModel, this, id, user -> {
+            if(user == null){
+                finish();
+            }else{
+                this.user = user;
+                run();
+            }
+            return null;
+
+        });
     }
 
     public void run() {
         setContentView(R.layout.activity_user_dashboard);
+
+
 
         Button matchingGameButton = findViewById(R.id.matchingGameButton);
         Button sortingGameButton = findViewById(R.id.sortingGameButton);
