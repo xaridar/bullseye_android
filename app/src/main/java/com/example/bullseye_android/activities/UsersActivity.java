@@ -31,29 +31,33 @@ public class UsersActivity extends AppCompatActivity {
         ImageButton button2 = findViewById(R.id.pfp1);
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), AdminSignInActivity.class);
-                startActivityForResult(myIntent, 0);
+                // should go to user dashboard
+//                Intent myIntent = new Intent(v.getContext(), UserDashboardActivity.class);
+//                startActivityForResult(myIntent, 0);
             }
         });
         ImageButton button3 = findViewById(R.id.pfp2);
         button3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), AdminSignInActivity.class);
-                startActivityForResult(myIntent, 0);
+                // should go to user dashboard
+//                Intent myIntent = new Intent(v.getContext(), UserDashboardActivity.class);
+//                startActivityForResult(myIntent, 0);
             }
         });
         ImageButton button4 = findViewById(R.id.pfp3);
         button4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), AdminSignInActivity.class);
-                startActivityForResult(myIntent, 0);
+                // should go to user dashboard
+//                Intent myIntent = new Intent(v.getContext(), UserDashboardActivity.class);
+//                startActivityForResult(myIntent, 0);
             }
         });
         ImageButton button5 = findViewById(R.id.pfp4);
         button5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), AdminSignInActivity.class);
-                startActivityForResult(myIntent, 0);
+                // should go to user dashboard
+//                Intent myIntent = new Intent(v.getContext(), UserDashboardActivity.class);
+//                startActivityForResult(myIntent, 0);
             }
         });
         Button button6 = findViewById(R.id.adminSignIn);
