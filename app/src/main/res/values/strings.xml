@@ -34,9 +34,5 @@
     <string name="user_name">User Name</string>
     <string name="admin_sign_in">Admin Sign In</string>
     <string name="pfp">pfp</string>
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 28e8fb833ae78272c5151e77c6a21cf02e85da28
     <string name="choose_profile_picture">Choose Profile Picture</string>
 </resources>
