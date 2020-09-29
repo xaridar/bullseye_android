@@ -31,14 +31,8 @@
     <string name="user_s_logo">User\'s logo</string>
     <string name="users_not_found">Either there are no users saved on your device, or something went wrong! Check to make sure that users have been created on this device.</string>
     <string name="bullseye_logo">bullseye logo</string>
-<<<<<<< HEAD
-    <string name="name">Name</string>
     <string name="user_name">User Name</string>
     <string name="admin_sign_in">Admin Sign In</string>
     <string name="pfp">pfp</string>
-    <string name="pfp">pfp</string>
-    <string name="pfp">pfp</string>
-=======
     <string name="choose_profile_picture">Choose Profile Picture</string>
->>>>>>> 77380fa354017f36d18a457be710b2e1400a08c9
 </resources>
