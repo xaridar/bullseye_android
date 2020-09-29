@@ -70,11 +70,12 @@ public class AdminSignInActivity extends AppCompatActivity {
                 return;
             }
             if (!pass.getText().toString().equals(admin.getPassword())) {
-                createDialogue("Incoreect Password");
+                createDialogue("Incorrect Password");
                 return;
             }
+            startActivity(new Intent(AdminSignInActivity.this, AdminDashboardActivity.class));
         });
-        setContentView(new View());
+
 
     }
 
