@@ -20,9 +20,9 @@ public class User {
     public static final int GAME_SORTING_SLOW = 4;
     public static final int GAME_SORING_FAST = 5;
 
-    public static final int POINTS = 100;
-    public static final int ACC = 101;
-    public static final int TIME = 102;
+    public static final int POINTS = 0;
+    public static final int ACC = 1;
+    public static final int TIME = 2;
     public int statsTypes = 3;
 
     public static final int MAX_VOLUME = 200;
@@ -157,9 +157,9 @@ public class User {
         addAcc(game, acc);
         addPoints(game, pointsToAdd);
         Number[] lastGame = new Number[statsTypes];
-        lastGame[POINTS - 100] = pointsToAdd;
-        lastGame[ACC - 100] = acc;
-        lastGame[TIME - 100] = time;
+        lastGame[POINTS] = pointsToAdd;
+        lastGame[ACC] = acc;
+        lastGame[TIME] = time;
         if (lastGames[game].size() < 5) {
             lastGames[game].add(lastGame);
         } else {

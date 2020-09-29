@@ -21,12 +21,24 @@
     <string name="cancel">Cancel</string>
     <string name="yes">Yes</string>
     <string name="change_password">Change Password</string>
-    <string name="bullseye">Bullseye</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="stats_header">%1$s\'s Stats</string>
+    <string name="sorting">Sorting</string>
+    <string name="memory">Memory</string>
+    <string name="export">EXPORT</string>
+    <string name="current_user_s_logo">Current user\'s logo</string>
+    <string name="user_s_logo">User\'s logo</string>
+    <string name="users_not_found">Either there are no users saved on your device, or something went wrong! Check to make sure that users have been created on this device.</string>
     <string name="bullseye_logo">bullseye logo</string>
+<<<<<<< HEAD
     <string name="name">Name</string>
     <string name="user_name">User Name</string>
     <string name="admin_sign_in">Admin Sign In</string>
     <string name="pfp">pfp</string>
     <string name="pfp">pfp</string>
     <string name="pfp">pfp</string>
+=======
+    <string name="choose_profile_picture">Choose Profile Picture</string>
+>>>>>>> 77380fa354017f36d18a457be710b2e1400a08c9
 </resources>
