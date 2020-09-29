@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color1"
+    tools:context=".activities.UsersSettingsActivity">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/changeProfileButton"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:letterSpacing="0.02"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:text="@string/change_avatar"
+        android:textAllCaps="false"
+        android:textColor="@color/color1"
+        android:textSize="27sp"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/changeNameButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="@color/color5" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/changeNameButton"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/roboto"
+        android:letterSpacing="0.02"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:text="@string/change_name"
+        android:textAllCaps="false"
+        android:textColor="@color/color1"
+        android:textSize="27sp"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/musicVolumeText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/color5" />
+
+    <TextView
+        android:id="@+id/musicVolumeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:fontFamily="@font/roboto"
+        android:text="@string/music_volume"
+        android:textColor="@color/color4"
+        android:textSize="27sp"
+        app:layout_constraintBottom_toTopOf="@+id/musicVolumeBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <SeekBar
+        android:id="@+id/musicVolumeBar"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:max="200"
+        android:progress="100"
+        app:layout_constraintBottom_toTopOf="@+id/gameVolumeText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/gameVolumeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:fontFamily="@font/roboto"
+        android:text="@string/game_volume"
+        android:textColor="@color/color4"
+        android:textSize="27sp"
+        app:layout_constraintBottom_toTopOf="@+id/gameVolumeBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <SeekBar
+        android:id="@+id/gameVolumeBar"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:max="200"
+        android:progress="100"
+        app:layout_constraintBottom_toTopOf="@+id/backToDashboardButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/backToDashboardButton"
+        android:layout_width="211dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:fontFamily="@font/roboto"
+        android:letterSpacing="0.02"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/back_to_dashboard"
+        android:textAllCaps="false"
+        android:textColor="@color/color1"
+        android:textSize="20sp"
+        app:cornerRadius="11dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/color5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
