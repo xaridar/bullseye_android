@@ -34,4 +34,8 @@
     <string name="admin_sign_in">Admin Sign In</string>
     <string name="pfp">pfp</string>
     <string name="choose_profile_picture">Choose Profile Picture</string>
+    <string name="chris">Chris</string>
+    <string name="chuck">Chuck</string>
+    <string name="beverly">Beverly</string>
+    <string name="jeffy">Jeffy</string>
 </resources>

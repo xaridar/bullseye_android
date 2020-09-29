@@ -44,7 +44,7 @@ public class UsersActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), UserSignUpActivity.class);
-                startActivityForResult(myIntent, 0);
+                startActivity(myIntent);
             }
         });
         ImageButton button2 = findViewById(R.id.pfp1);
