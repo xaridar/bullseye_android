@@ -8,7 +8,7 @@
     tools:context=".activities.UsersActivity">
 
     <ImageButton
-        android:id="@+id/button4"
+        android:id="@+id/pfp2"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_marginTop="16dp"
@@ -19,14 +19,14 @@
         android:scaleType="fitCenter"
         android:src="@drawable/pfp_default"
         android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/imageButton2"
+        app:layout_constraintBottom_toTopOf="@+id/pfp4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     --
 
     <ImageButton
-        android:id="@+id/button5"
+        android:id="@+id/pfp1"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_marginStart="40dp"
@@ -37,12 +37,12 @@
         android:scaleType="fitCenter"
         android:src="@drawable/pfp_archer"
         android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/imageButton"
+        app:layout_constraintBottom_toTopOf="@+id/pfp3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/button7"
+        android:id="@+id/addUser"
         android:layout_width="143dp"
         android:layout_height="137dp"
         android:layout_marginBottom="30dp"
@@ -56,36 +56,36 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/pfp3"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_marginStart="40dp"
         android:layout_marginBottom="25dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/adminSignIn"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/pfp_boy" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/pfp4"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="25dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/adminSignIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/pfp_girl" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/adminSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp"
         android:text="@string/admin_sign_in"
-        app:layout_constraintBottom_toTopOf="@+id/button7"
+        app:layout_constraintBottom_toTopOf="@+id/addUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
