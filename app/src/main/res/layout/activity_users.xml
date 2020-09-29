@@ -23,8 +23,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    --
-
     <ImageButton
         android:id="@+id/pfp1"
         android:layout_width="140dp"
@@ -79,7 +77,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/pfp_girl" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/adminSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,6 +85,7 @@
         android:text="@string/admin_sign_in"
         app:layout_constraintBottom_toTopOf="@+id/addUser"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/color5"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
