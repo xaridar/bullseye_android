@@ -38,8 +38,14 @@ public class UsersSettingsActivity extends AppCompatActivity {
                 user.observe(UsersSettingsActivity.this, new Observer<User>() {
                     @Override
                     public void onChanged(User u) {
-                        UsersSettingsActivity.this.user = u;
-                        run();
+                        if (u == null) {
+                            finish();
+                        }
+                        else {
+                            UsersSettingsActivity.this.user = u;
+                            user.removeObserver(this);
+                            run();
+                        }
                     }
                 });
             }
