@@ -27,6 +27,7 @@ public class UsersActivity extends AppCompatActivity {
         Intent myIntent = new Intent(v.getContext(), UserDashboardActivity.class);
         startActivity(myIntent);
     };
+    private User admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class UsersActivity extends AppCompatActivity {
                 startActivity(new Intent(UsersActivity.this, AdminSignUpActivity.class));
                 finish();
             } else {
+                admin = user;
                 run();
             }
             return null;
@@ -78,8 +80,9 @@ public class UsersActivity extends AppCompatActivity {
         ImageButton avatar4 = findViewById(R.id.pfp4);
         avatar4.setOnClickListener(avatarListener);
 
-        Button button6 = findViewById(R.id.adminSignIn);
-        button6.setOnClickListener(new View.OnClickListener() {
+        Button adminBtn = findViewById(R.id.adminSignIn);
+        adminBtn.setText(getString(R.string.admin_btn, admin.getName()));
+        adminBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(v.getContext(), AdminSignInActivity.class);
                 startActivity(myIntent);

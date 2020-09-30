@@ -40,4 +40,7 @@
     <string name="music_volume">Music Volume</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="confirm">confirm</string>
+    <string name="change_string">Change %1$s</string>
+    <string name="current_password">Current Password</string>
+    <string name="admin_btn">%1$s (Admin)</string>
 </resources>

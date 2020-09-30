@@ -64,8 +64,8 @@ public class UserRepository {
         }
     }
 
-    public User getUser(long id) {
-        Future<User> user = service.submit(new getUserAsyncTask(userDao, id));
+    public LiveData<User> getUser(long id) {
+        Future<LiveData<User>> user = service.submit(new getUserAsyncTask(userDao, id));
         try {
             return user.get();
         } catch (ExecutionException | InterruptedException e) {
@@ -140,7 +140,7 @@ public class UserRepository {
         }
     }
 
-    private class getUserAsyncTask implements Callable<User> {
+    private class getUserAsyncTask implements Callable<LiveData<User>> {
 
         private UserDao mAsyncTaskDao;
         private long id;
@@ -152,7 +152,7 @@ public class UserRepository {
 
 
         @Override
-        public User call() {
+        public LiveData<User> call() {
             return mAsyncTaskDao.getUser(id);
         }
     }

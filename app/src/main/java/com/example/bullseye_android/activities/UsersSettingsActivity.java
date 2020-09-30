@@ -3,6 +3,7 @@ package com.example.bullseye_android.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -20,6 +21,7 @@ import com.example.bullseye_android.database.UserViewModel;
 
 public class UsersSettingsActivity extends AppCompatActivity {
     public static final int AVATAR_REQ_CODE = 1;
+    public static final int NAME_REQ_CODE = 2;
 
     User user;
     UserViewModel mUserViewModel;
@@ -33,8 +35,13 @@ public class UsersSettingsActivity extends AppCompatActivity {
             if (user == null) {
                 finish();
             } else {
-                this.user = user;
-                run();
+                user.observe(UsersSettingsActivity.this, new Observer<User>() {
+                    @Override
+                    public void onChanged(User u) {
+                        UsersSettingsActivity.this.user = u;
+                        run();
+                    }
+                });
             }
             return null;
         });
@@ -57,6 +64,13 @@ public class UsersSettingsActivity extends AppCompatActivity {
 
         backToDashboard.setOnClickListener(v -> {
             finish();
+        });
+
+        changeName.setOnClickListener(view -> {
+            Intent intent = new Intent(UsersSettingsActivity.this, ChangeStringActivity.class);
+            intent.putExtra("type", "name");
+            intent.putExtra("value", user.getName());
+            startActivityForResult(intent, NAME_REQ_CODE);
         });
 
         musicVolumeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -107,6 +121,11 @@ public class UsersSettingsActivity extends AppCompatActivity {
         if (requestCode == AVATAR_REQ_CODE) {
             if (resultCode == RESULT_OK) {
                 user.setAvatar(data.getStringExtra("avatar"));
+            }
+        } else if (requestCode == NAME_REQ_CODE) {
+            if (resultCode == RESULT_OK) {
+                Log.i("HH", data.getStringExtra("value"));
+                user.setName(data.getStringExtra("value"));
             }
         }
     }

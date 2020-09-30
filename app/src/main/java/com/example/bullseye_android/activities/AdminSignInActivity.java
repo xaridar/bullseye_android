@@ -21,6 +21,7 @@ import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.util.ContinueFromEditTextListener;
 import com.example.bullseye_android.util.ShowPassListener;
 
 import java.util.function.Function;
@@ -60,13 +61,7 @@ public class AdminSignInActivity extends AppCompatActivity {
         togglePass.setOnClickListener(new ShowPassListener(pass, togglePass));
         button = findViewById(R.id.btn);
 
-        pass.setOnEditorActionListener((textView, i, event) -> {
-            if ((event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) || i == EditorInfo.IME_ACTION_DONE) {
-                button.performClick();
-                return true;
-            }
-            return false;
-        });
+        pass.setOnEditorActionListener(new ContinueFromEditTextListener(button));
 
         button.setOnClickListener((view) -> {
             if (name.getText().toString().equals("")) {
@@ -78,7 +73,7 @@ public class AdminSignInActivity extends AppCompatActivity {
                 return;
             }
             if (!name.getText().toString().equals(admin.getName())) {
-                createDialogue("Incorrect Password");
+                createDialogue("Incorrect Username");
                 return;
             }
             if (!pass.getText().toString().equals(admin.getPassword())) {

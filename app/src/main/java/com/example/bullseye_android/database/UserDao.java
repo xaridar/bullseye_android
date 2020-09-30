@@ -25,7 +25,7 @@ public interface UserDao {
     User getAdmin(boolean bool);
 
     @Query("SELECT * from user_table where id == :id")
-    User getUser(long id);
+    LiveData<User> getUser(long id);
 
     @Update
     void update(User user);

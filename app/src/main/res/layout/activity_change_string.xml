@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color1"
+    tools:context=".activities.ChangeStringActivity">
+
+    <LinearLayout
+        android:id="@+id/oldPasswordLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="50dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/oldPasswordEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autofillHints="@string/password"
+            android:ems="10"
+            android:hint="@string/current_password"
+            android:inputType="textPassword"
+            android:theme="@style/SignInText"
+            android:visibility="visible" />
+
+        <CheckBox
+            android:id="@+id/oldPasswordToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:button="@drawable/selector_check"
+            android:buttonTint="@color/color4"
+            android:theme="@style/CheckBox"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/oldPasswordLayout">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autofillHints="@string/password"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:theme="@style/SignInText" />
+
+        <CheckBox
+            android:id="@+id/toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:button="@drawable/selector_check"
+            android:buttonTint="@color/color4"
+            android:theme="@style/CheckBox"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <EditText
+            android:id="@+id/confEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:autofillHints="@string/password"
+            android:ems="10"
+            android:hint="@string/confirm_password"
+            android:inputType="textPassword"
+            android:theme="@style/SignInText"
+            android:visibility="invisible" />
+
+        <CheckBox
+            android:id="@+id/confToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:button="@drawable/selector_check"
+            android:buttonTint="@color/color4"
+            android:theme="@style/CheckBox"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button"
+        android:layout_width="194dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/color4"
+        android:text="@string/confirm"
+        app:cornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/color5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

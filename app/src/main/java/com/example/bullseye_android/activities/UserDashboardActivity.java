@@ -1,7 +1,9 @@
 //Dylan coded and created layout
 package com.example.bullseye_android.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -18,8 +20,9 @@ import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 
 public class UserDashboardActivity extends AppCompatActivity {
+    public static final int SETTINGS_REQ = 100;
 
-    User user;
+    LiveData<User> user;
     UserViewModel userViewModel;
 
     @Override
@@ -44,7 +47,9 @@ public class UserDashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_dashboard);
 
         TextView welcomeTxt = findViewById(R.id.userWelcomeText);
-        welcomeTxt.setText(getString(R.string.welcome, user.getName()));
+        user.observe(this, user -> {
+            welcomeTxt.setText(getString(R.string.welcome, user.getName()));
+        });
 
         Button matchingGameButton = findViewById(R.id.matchingGameButton);
         Button sortingGameButton = findViewById(R.id.sortingGameButton);
@@ -78,5 +83,15 @@ public class UserDashboardActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
     }
 }

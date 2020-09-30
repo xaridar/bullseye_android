@@ -2,9 +2,12 @@ package com.example.bullseye_android.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bullseye_android.R;
@@ -78,5 +81,14 @@ public class AvatarChooserActivity extends AppCompatActivity {
                 ava.setBackgroundColor(getColor(android.R.color.transparent));
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

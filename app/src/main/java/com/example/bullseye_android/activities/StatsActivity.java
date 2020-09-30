@@ -73,8 +73,8 @@ public class StatsActivity extends AppCompatActivity {
 
         /* replacement point */
 //        callback.apply(users.get(0));
-        Fetcher.runNewUserFetcher(mUserViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), callback);
-
+//        Fetcher.runNewUserFetcher(mUserViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), callback);
+        run();
     }
 
     private void run() {

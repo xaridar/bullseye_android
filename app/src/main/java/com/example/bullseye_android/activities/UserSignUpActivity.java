@@ -10,19 +10,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserSerializable;
+import com.example.bullseye_android.util.ContinueFromEditTextListener;
 
 import java.util.function.Function;
 
 public class UserSignUpActivity extends AppCompatActivity {
     public static final int AVATAR_REQ_CODE = 0;
-    Button btn;
-    ImageButton avaPicker;
-    String avatar;
+    private Button btn;
+    private ImageButton avaPicker;
+    private String avatar;
+    private EditText name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class UserSignUpActivity extends AppCompatActivity {
     public void run(){
         btn = findViewById(R.id.btn);
         avaPicker = findViewById(R.id.ava);
+        name = findViewById(R.id.name);
 
         btn.setOnClickListener((view) -> {
             Intent intent = new Intent(UserSignUpActivity.this, TransitionActivity.class);
@@ -50,6 +54,8 @@ public class UserSignUpActivity extends AppCompatActivity {
             intent.putExtra("avatar", avatar);
             startActivityForResult(intent, AVATAR_REQ_CODE);
         });
+
+        name.setOnEditorActionListener(new ContinueFromEditTextListener(btn));
     }
 
     @Override

@@ -45,7 +45,7 @@ public class UserViewModel extends AndroidViewModel {
         return userRepository.getAdmin();
     }
 
-    public User getUser(long id) {
+    public LiveData<User> getUser(long id) {
         return userRepository.getUser(id);
     }
 }

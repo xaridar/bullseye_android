@@ -23,6 +23,7 @@ import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.IDGenerator;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.util.ContinueFromEditTextListener;
 import com.example.bullseye_android.util.EmailChecker;
 import com.example.bullseye_android.util.ShowPassListener;
 
@@ -107,13 +108,7 @@ public class AdminSignUpActivity extends AppCompatActivity {
         togglePass.setOnClickListener(new ShowPassListener(pass, togglePass));
         toggleConfPass.setOnClickListener(new ShowPassListener(confPass, toggleConfPass));
 
-        confPass.setOnEditorActionListener((textView, i, event) -> {
-            if ((event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) || i == EditorInfo.IME_ACTION_DONE) {
-                btn.performClick();
-                return true;
-            }
-            return false;
-        });
+        confPass.setOnEditorActionListener(new ContinueFromEditTextListener(btn));
     };
 
     private void createDialogue(String message) {
