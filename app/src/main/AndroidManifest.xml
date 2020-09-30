@@ -51,9 +51,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.TransitionActivity"
-            android:theme="@style/Transition" />
-        <activity
             android:name=".activities.AdminSignUpActivity"
             android:label="Admin Sign Up"
             android:theme="@style/MaterialThemeWithActionBar" />
