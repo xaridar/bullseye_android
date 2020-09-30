@@ -120,7 +120,6 @@ public class StatsActivity extends AppCompatActivity {
                 ((TextView) findViewById(R.id.nameView)).setText(user.getName());
                 ((ImageView) findViewById(R.id.imageView)).setImageResource(getResources().getIdentifier("pfp_" + user.getAvatar(), "drawable", "com.example.bullseye_android"));
                 toolbar.setTitle(getString(R.string.stats_header, user.getName()));
-
             }
             tab.setValue(MEMORY);
         });
@@ -150,7 +149,9 @@ public class StatsActivity extends AppCompatActivity {
         });
 
         /* addition point */
-        users.observe(this, adapter::setUsers);
+        users.observe(this, users -> {
+            adapter.setUsers(users);
+        });
 
         memory.setOnClickListener(view -> {
             tab.setValue(MEMORY);

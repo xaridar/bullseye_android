@@ -8,10 +8,13 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bullseye_android.R;
@@ -56,6 +59,14 @@ public class AdminSignInActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         togglePass.setOnClickListener(new ShowPassListener(pass, togglePass));
         button = findViewById(R.id.btn);
+
+        pass.setOnEditorActionListener((textView, i, event) -> {
+            if ((event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) || i == EditorInfo.IME_ACTION_DONE) {
+                button.performClick();
+                return true;
+            }
+            return false;
+        });
 
         button.setOnClickListener((view) -> {
             if (name.getText().toString().equals("")) {
