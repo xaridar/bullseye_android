@@ -31,7 +31,7 @@ public class TransitionActivity extends AppCompatActivity {
             if (sendingActivity.equals("adminSignUp")) {
                 toActivity = UsersActivity.class;
             } else if (sendingActivity.equals("userSignUp")) {
-                // user dashboard
+                toActivity = UserDashboardActivity.class;
             }
         }
         new Timer().schedule(new TimerTask() {

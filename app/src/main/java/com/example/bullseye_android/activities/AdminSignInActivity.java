@@ -73,8 +73,8 @@ public class AdminSignInActivity extends AppCompatActivity {
                 createDialogue("Incoreect Password");
                 return;
             }
+            startActivity(new Intent(AdminSignInActivity.this, AdminDashboardActivity.class));
         });
-        setContentView(new View());
 
     }
 

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
+import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 
 public class UsersActivity extends AppCompatActivity {
@@ -50,6 +51,13 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     public void run(){
+
+        // hard-coded users for now, for the four users on the users activity
+        mUserViewModel.insert(new User("Chuck", 1, "archer"));
+        mUserViewModel.insert(new User("Chris", 2, "default"));
+        mUserViewModel.insert(new User("Jeffy", 3, "boy"));
+        mUserViewModel.insert(new User("Beverly", 4, "girl"));
+
         ImageButton button = findViewById(R.id.addUser);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

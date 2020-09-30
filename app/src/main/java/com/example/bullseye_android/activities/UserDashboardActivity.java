@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bullseye_android.R;
@@ -41,7 +42,8 @@ public class UserDashboardActivity extends AppCompatActivity {
     public void run() {
         setContentView(R.layout.activity_user_dashboard);
 
-
+        TextView welcomeTxt = findViewById(R.id.userWelcomeText);
+        welcomeTxt.setText(getString(R.string.welcome, user.getName()));
 
         Button matchingGameButton = findViewById(R.id.matchingGameButton);
         Button sortingGameButton = findViewById(R.id.sortingGameButton);

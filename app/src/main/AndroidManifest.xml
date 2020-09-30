@@ -13,7 +13,11 @@
         <activity
             android:name=".activities.UsersSettingsActivity"
             android:label="Settings"
-            android:theme="@style/MaterialThemeWithActionBar" />
+            android:theme="@style/MaterialThemeWithActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.AdminDashboardActivity" />
+        </activity>
         <activity
             android:name=".activities.UserDashboardActivity"
             android:label="Dashboard"
@@ -39,7 +43,6 @@
             android:theme="@style/MaterialThemeWithActionBar" />
         <activity
             android:name=".activities.HomeActivity"
-<<<<<<< HEAD
             android:theme="@style/Transition">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,9 +50,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-=======
-            android:theme="@style/Transition" />
->>>>>>> f0716344875261853cedbec114b51853fd299865
         <activity
             android:name=".activities.TransitionActivity"
             android:theme="@style/Transition" />
@@ -64,17 +64,7 @@
         <activity
             android:name=".activities.UsersActivity"
             android:label="Users"
-<<<<<<< HEAD
-            android:theme="@style/MaterialThemeWithActionBar"/>
-=======
             android:theme="@style/MaterialThemeWithActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
->>>>>>> f0716344875261853cedbec114b51853fd299865
     </application>
-
 </manifest>

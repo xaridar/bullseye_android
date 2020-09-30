@@ -27,7 +27,7 @@
         android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="171dp"
-        android:contentDescription="@string/bullseye_logo"
+        android:contentDescription="Bullseye logo"
         app:layout_constraintBottom_toTopOf="@+id/name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

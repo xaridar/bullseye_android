@@ -66,8 +66,11 @@ public class User {
     @ColumnInfo(name = "avatar")
     private String avatar;
 
-    @ColumnInfo(name = "volume")
-    private int volume;
+    @ColumnInfo(name = "musicVolume")
+    private int musicVolume;
+
+    @ColumnInfo(name = "gameVolume")
+    private int gameVolume;
 
 
     public User(@NonNull String name, long id, @Nullable String avatar) {
@@ -82,7 +85,8 @@ public class User {
         gamesPlayed = new int[] {0, 0, 0, 0, 0};
         lastGames = new ArrayList[]{new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>()};
         this.avatar = avatar;
-        volume = 100;
+        musicVolume = 100;
+        gameVolume = 100;
     }
 
     @NonNull
@@ -220,17 +224,31 @@ public class User {
         }
     }
 
-    public int getVolume() {
-        return volume;
+    public int getMusicVolume() {
+        return musicVolume;
     }
 
-    public void setVolume(int volume) {
+    public void setMusicVolume(int volume) {
         if (volume < 0) {
-            this.volume = 0;
+            this.musicVolume = 0;
         } else if (volume > MAX_VOLUME) {
-            this.volume = MAX_VOLUME;
+            this.musicVolume = MAX_VOLUME;
         } else {
-            this.volume = volume;
+            this.musicVolume = volume;
+        }
+    }
+
+    public int getGameVolume() {
+        return gameVolume;
+    }
+
+    public void setGameVolume(int volume) {
+        if (volume < 0) {
+            this.gameVolume = 0;
+        } else if (volume > MAX_VOLUME) {
+            this.gameVolume = MAX_VOLUME;
+        } else {
+            this.gameVolume = volume;
         }
     }
 }
