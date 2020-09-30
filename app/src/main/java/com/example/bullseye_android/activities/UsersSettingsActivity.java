@@ -1,9 +1,11 @@
 //Dylan coded and created layout
 package com.example.bullseye_android.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 
 public class UsersSettingsActivity extends AppCompatActivity {
+    public static final int AVATAR_REQ_CODE = 1;
 
     User user;
     UserViewModel mUserViewModel;
@@ -53,7 +56,6 @@ public class UsersSettingsActivity extends AppCompatActivity {
         gameVolumeBar.setProgress(user.getGameVolume());
 
         backToDashboard.setOnClickListener(v -> {
-            mUserViewModel.update(user);
             finish();
         });
 
@@ -91,5 +93,27 @@ public class UsersSettingsActivity extends AppCompatActivity {
             }
         });
 
+        changeAvatar.setOnClickListener(view -> {
+            Intent intent = new Intent(UsersSettingsActivity.this, AvatarChooserActivity.class);
+            intent.putExtra("avatar", user.getAvatar());
+            startActivityForResult(intent, AVATAR_REQ_CODE);
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AVATAR_REQ_CODE) {
+            if (resultCode == RESULT_OK) {
+                user.setAvatar(data.getStringExtra("avatar"));
+            }
+        }
+    }
+
+    @Override
+    public void finish() {
+        mUserViewModel.update(user);
+        super.finish();
     }
 }
