@@ -30,17 +30,10 @@
     <string name="current_user_s_logo">Current user\'s logo</string>
     <string name="user_s_logo">User\'s logo</string>
     <string name="users_not_found">Either there are no users saved on your device, or something went wrong! Check to make sure that users have been created on this device.</string>
-    <string name="bullseye_logo">bullseye logo</string>
     <string name="admin_sign_in">Admin Sign In</string>
-    <string name="pfp">pfp</string>
     <string name="choose_profile_picture">Choose Profile Picture</string>
-    <string name="chris">Chris</string>
-    <string name="chuck">Chuck</string>
-    <string name="beverly">Beverly</string>
-    <string name="jeffy">Jeffy</string>
     <string name="sorting_game">Sorting Game</string>
     <string name="matching_game">Matching Game</string>
-    <string name="welcome_chuck">Welcome, Chuck!</string>
     <string name="change_name">Change Name</string>
     <string name="change_avatar">Change Avatar</string>
     <string name="game_volume">Game Volume</string>

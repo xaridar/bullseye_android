@@ -13,7 +13,11 @@
         <activity
             android:name=".activities.UsersSettingsActivity"
             android:label="Settings"
-            android:theme="@style/MaterialThemeWithActionBar" />
+            android:theme="@style/MaterialThemeWithActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.AdminDashboardActivity" />
+        </activity>
         <activity
             android:name=".activities.UserDashboardActivity"
             android:label="Dashboard"
@@ -45,9 +49,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <activity
-            android:name=".activities.TransitionActivity"
-            android:theme="@style/Transition" />
+        </activity>
         <activity
             android:name=".activities.AdminSignUpActivity"
             android:label="Admin Sign Up"
@@ -59,9 +61,7 @@
         <activity
             android:name=".activities.UsersActivity"
             android:label="Users"
-            android:theme="@style/MaterialThemeWithActionBar"/>
-
-
+            android:theme="@style/MaterialThemeWithActionBar">
+        </activity>
     </application>
-
 </manifest>

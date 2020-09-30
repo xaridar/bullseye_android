@@ -76,7 +76,6 @@ public class AdminSignInActivity extends AppCompatActivity {
             startActivity(new Intent(AdminSignInActivity.this, AdminDashboardActivity.class));
         });
 
-
     }
 
     private void createDialogue(String s) {
