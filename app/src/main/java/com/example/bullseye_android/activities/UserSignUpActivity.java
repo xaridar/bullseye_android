@@ -2,6 +2,7 @@ package com.example.bullseye_android.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,19 +20,18 @@ public class UserSignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_sign_up);
-
+        run();
         };
 
 
     public void run(){
         btn = findViewById(R.id.btn2);
         btn.setOnClickListener((view) -> {
-
-            startActivity(new Intent(UserSignUpActivity.this, TransitionActivity.class));
-            Intent intent = new Intent(UserSignUpActivity.this, UsersActivity.class);
+            Intent intent = new Intent(UserSignUpActivity.this, TransitionActivity.class);
             intent.putExtra("sender", "userSignUp");
-            Log.i(getPackageName(), "user exists");
-            startActivity(intent);
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(UserSignUpActivity.this, btn, "bigButton");
+            startActivity(intent, options.toBundle());
+            finish();
         });
 
     }

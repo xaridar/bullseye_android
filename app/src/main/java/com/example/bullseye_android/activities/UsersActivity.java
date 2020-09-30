@@ -51,7 +51,6 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     public void run(){
-
         // hard-coded users for now, for the four users on the users activity
         mUserViewModel.insert(new User("Chuck", 1, "archer"));
         mUserViewModel.insert(new User("Chris", 2, "default"));

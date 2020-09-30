@@ -18,6 +18,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.AdminDashboardActivity" />
         </activity>
+        <activity android:name=".activities.TransitionActivity"
+            android:theme="@style/Transition"/>
         <activity
             android:name=".activities.UserDashboardActivity"
             android:label="Dashboard"
