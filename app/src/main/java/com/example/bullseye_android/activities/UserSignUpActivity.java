@@ -14,29 +14,24 @@ import java.util.function.Function;
 
 public class UserSignUpActivity extends AppCompatActivity {
     Button btn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_sign_up);
-        Function<User, Void> adminCallback = user -> {
-            if (user != null) {
-                Intent intent = new Intent(UserSignUpActivity.this, UsersActivity.class);
-                intent.putExtra("sender", "userSignUp");
-                Log.i(getPackageName(), "user exists");
-                startActivity(intent);
-                finish();
-            } else {
-                run();
-            }
-            return null;
+
         };
-    }
+
 
     public void run(){
         btn = findViewById(R.id.btn2);
         btn.setOnClickListener((view) -> {
 
             startActivity(new Intent(UserSignUpActivity.this, TransitionActivity.class));
+            Intent intent = new Intent(UserSignUpActivity.this, UsersActivity.class);
+            intent.putExtra("sender", "userSignUp");
+            Log.i(getPackageName(), "user exists");
+            startActivity(intent);
         });
 
     }
