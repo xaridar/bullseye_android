@@ -10,16 +10,18 @@
         android:roundIcon="@mipmap/bullseye_logo_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialThemeWithActionBar">
+        <activity android:name=".activities.AvatarChooserActivity" android:label="Choose an Avatar" android:theme="@style/MaterialThemeWithActionBar"/>
         <activity
             android:name=".activities.UsersSettingsActivity"
             android:label="Settings"
-            android:theme="@style/MaterialThemeWithActionBar" >
+            android:theme="@style/MaterialThemeWithActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.AdminDashboardActivity" />
         </activity>
-        <activity android:name=".activities.TransitionActivity"
-            android:theme="@style/Transition"/>
+        <activity
+            android:name=".activities.TransitionActivity"
+            android:theme="@style/Transition" />
         <activity
             android:name=".activities.UserDashboardActivity"
             android:label="Dashboard"
@@ -63,7 +65,7 @@
         <activity
             android:name=".activities.UsersActivity"
             android:label="Users"
-            android:theme="@style/MaterialThemeWithActionBar">
-        </activity>
+            android:theme="@style/MaterialThemeWithActionBar"></activity>
     </application>
+
 </manifest>

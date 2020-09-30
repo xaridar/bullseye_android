@@ -20,14 +20,12 @@ import com.example.bullseye_android.database.UserViewModel;
 public class UsersActivity extends AppCompatActivity {
 
     private UserViewModel mUserViewModel;
-    private View.OnClickListener avatarListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            long contentDescription = Long.parseLong(v.getContentDescription().toString());
-            SharedPreferences sharedPreferences = getSharedPreferences("userID", 0);
-            sharedPreferences.edit().putLong("id", contentDescription).apply();
-            Intent myIntent = new Intent(v.getContext(), UserDashboardActivity.class);
-            startActivity(myIntent);
-        }
+    private View.OnClickListener avatarListener = v -> {
+        long contentDescription = Long.parseLong(v.getContentDescription().toString());
+        SharedPreferences sharedPreferences = getSharedPreferences("userID", 0);
+        sharedPreferences.edit().putLong("id", contentDescription).apply();
+        Intent myIntent = new Intent(v.getContext(), UserDashboardActivity.class);
+        startActivity(myIntent);
     };
 
     @Override

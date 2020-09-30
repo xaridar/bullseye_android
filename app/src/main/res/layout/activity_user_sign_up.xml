@@ -8,7 +8,7 @@
     tools:context=".activities.UserSignUpActivity">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn2"
+        android:id="@+id/btn"
         android:layout_width="194dp"
         android:layout_height="63dp"
         android:backgroundTint="@color/color4"
@@ -23,21 +23,20 @@
         app:rippleColor="@color/color5" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="@string/memory"
+        android:hint="@string/name"
         android:inputType="textPersonName"
         android:theme="@style/SignInText"
-        app:layout_constraintBottom_toTopOf="@+id/btn2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.38" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/ava"
         android:layout_width="145dp"
         android:layout_height="145dp"
         android:layout_marginTop="80dp"
@@ -52,9 +51,9 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/choose_profile_picture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
+        app:layout_constraintTop_toBottomOf="@+id/ava" />
 </androidx.constraintlayout.widget.ConstraintLayout>
