@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -36,12 +37,14 @@ public class AdminSignUpActivity extends AppCompatActivity {
     private EditText confPass;
     private EditText name;
     private EditText email;
+    private boolean clicked;
 
     private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        clicked = false;
 
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
@@ -71,38 +74,45 @@ public class AdminSignUpActivity extends AppCompatActivity {
         pass = findViewById(R.id.password);
         confPass = findViewById(R.id.confPassword);
 
-        btn.setOnClickListener((view) -> {
-            if (name.getText().toString().equals("")) {
-                createDialogue("The name field cannot be empty.");
-                return;
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!clicked) {
+                    if (name.getText().toString().equals("")) {
+                        AdminSignUpActivity.this.createDialogue("The name field cannot be empty.");
+                        return;
+                    }
+                    if (email.getText().toString().equals("")) {
+                        AdminSignUpActivity.this.createDialogue("The email field cannot be empty.");
+                        return;
+                    }
+                    if (pass.getText().toString().equals("")) {
+                        AdminSignUpActivity.this.createDialogue("The password field cannot be empty.");
+                        return;
+                    }
+                    if (confPass.getText().toString().equals("")) {
+                        AdminSignUpActivity.this.createDialogue("The confirm password field cannot be empty.");
+                        return;
+                    }
+                    if (!EmailChecker.checkEmail(email.getText().toString())) {
+                        AdminSignUpActivity.this.createDialogue("The provided email is invalid.");
+                        return;
+                    }
+                    if (!pass.getText().toString().equals(confPass.getText().toString())) {
+                        AdminSignUpActivity.this.createDialogue("Please make sure that both passwords match.");
+                        return;
+                    }
+                    btn.setEnabled(false);
+                    clicked = true;
+                    userViewModel.insert(new Admin(name.getText().toString(), IDGenerator.getInstance(userViewModel, AdminSignUpActivity.this).getId(), email.getText().toString(), pass.getText().toString()));
+                    Toast.makeText(AdminSignUpActivity.this, "Admin account created", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(AdminSignUpActivity.this, TransitionActivity.class);
+                    intent.putExtra("sender", "adminSignUp");
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(AdminSignUpActivity.this, btn, "bigButton");
+                    AdminSignUpActivity.this.startActivity(intent, options.toBundle());
+                    AdminSignUpActivity.this.finish();
+                }
             }
-            if (email.getText().toString().equals("")) {
-                createDialogue("The email field cannot be empty.");
-                return;
-            }
-            if (pass.getText().toString().equals("")) {
-                createDialogue("The password field cannot be empty.");
-                return;
-            }
-            if (confPass.getText().toString().equals("")) {
-                createDialogue("The confirm password field cannot be empty.");
-                return;
-            }
-            if (!EmailChecker.checkEmail(email.getText().toString())) {
-                createDialogue("The provided email is invalid.");
-                return;
-            }
-            if (!pass.getText().toString().equals(confPass.getText().toString())) {
-                createDialogue("Please make sure that both passwords match.");
-                return;
-            }
-            userViewModel.insert(new Admin(name.getText().toString(), IDGenerator.getInstance(userViewModel, this).getId(), email.getText().toString(), pass.getText().toString()));
-            Toast.makeText(this, "Admin account created", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(AdminSignUpActivity.this, TransitionActivity.class);
-            intent.putExtra("sender", "adminSignUp");
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(AdminSignUpActivity.this, btn, "bigButton");
-            startActivity(intent, options.toBundle());
-            finish();
         });
 
         togglePass.setOnClickListener(new ShowPassListener(pass, togglePass));

@@ -53,4 +53,13 @@
         <item name="colorControlActivated">@android:color/transparent</item>
     </style>
 
+    <style name="UsernameStyle">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textColor">@color/color4</item>
+    </style>
+
+    <style name="MoreUsersStyle" parent="UsernameStyle">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

@@ -1,6 +1,7 @@
 // all Stats activity design was done by Elliot
 package com.example.bullseye_android.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;

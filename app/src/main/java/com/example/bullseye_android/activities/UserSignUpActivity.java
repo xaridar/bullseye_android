@@ -3,6 +3,7 @@ package com.example.bullseye_android.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.ImageButton;
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserSerializable;
+import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.util.ContinueFromEditTextListener;
 
 import java.util.function.Function;

@@ -1,21 +1,45 @@
 // Aakash coded and created layout
 package com.example.bullseye_android.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.media.Image;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ClickableSpan;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
+import com.google.android.material.button.MaterialButton;
+
+import java.util.List;
 
 public class UsersActivity extends AppCompatActivity {
 
@@ -28,6 +52,12 @@ public class UsersActivity extends AppCompatActivity {
         startActivity(myIntent);
     };
     private User admin;
+    private LiveData<User> lastUser;
+    private LiveData<List<User>> users;
+    private LinearLayout userLayout;
+    private int c;
+    private ImageButton button;
+    private MaterialButton adminBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +66,10 @@ public class UsersActivity extends AppCompatActivity {
 
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
+        users = mUserViewModel.getUsers();
+
+        c = 0;
+
         Fetcher.runNewAdminFetcher(mUserViewModel, this, user -> {
             if (user == null) {
                 Toast.makeText(this, "No admin account found. Please make one.", Toast.LENGTH_SHORT).show();
@@ -43,51 +77,187 @@ public class UsersActivity extends AppCompatActivity {
                 finish();
             } else {
                 admin = user;
-                run();
+                c++;
+                checkForRun();
             }
             return null;
         });
 
+        Fetcher.runNewUserFetcher(mUserViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), user -> {
+            lastUser = user;
+            c++;
+            checkForRun();
+            return null;
+        });
+    }
 
+    private void checkForRun() {
+        if (c == 2) {
+            run();
+        }
     }
 
     public void run(){
         // hard-coded users for now, for the four users on the users activity
-        mUserViewModel.insert(new User("Chuck", 1, "archer"));
-        mUserViewModel.insert(new User("Chris", 2, "default"));
-        mUserViewModel.insert(new User("Jeffy", 3, "boy"));
-        mUserViewModel.insert(new User("Beverly", 4, "girl"));
+        mUserViewModel.insert(new User("", 1, null));
+        mUserViewModel.insert(new User("", 2, null));
+        mUserViewModel.insert(new User("", 3, null));
+        mUserViewModel.insert(new User("", 4, null));
+        mUserViewModel.insert(new User("", 5, null));
+        mUserViewModel.insert(new User("", 6, null));
+        mUserViewModel.insert(new User("", 7, null));
+        mUserViewModel.insert(new User("", 8, null));
+        mUserViewModel.insert(new User("", 9, null));
+        mUserViewModel.insert(new User("", 10, null));
 
-        ImageButton button = findViewById(R.id.addUser);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), UserSignUpActivity.class);
-                startActivity(myIntent);
+        userLayout = findViewById(R.id.userLayout);
+
+        adminBtn = findViewById(R.id.adminSignIn);
+
+        button = findViewById(R.id.addUser);
+        button.setOnClickListener(v -> {
+            Intent myIntent = new Intent(v.getContext(), UserSignUpActivity.class);
+            startActivity(myIntent);
+        });
+
+        users.observe(this, this::createLayout);
+
+        lastUser.observe(this, user -> {
+            if (users.getValue() != null) {
+                createLayout(users.getValue());
             }
         });
 
-
-
-        ImageButton avatar1 = findViewById(R.id.pfp1);
-        avatar1.setOnClickListener(avatarListener);
-
-        ImageButton avatar2 = findViewById(R.id.pfp2);
-        avatar2.setOnClickListener(avatarListener);
-
-        ImageButton avatar3 = findViewById(R.id.pfp3);
-        avatar3.setOnClickListener(avatarListener);
-
-        ImageButton avatar4 = findViewById(R.id.pfp4);
-        avatar4.setOnClickListener(avatarListener);
-
-        Button adminBtn = findViewById(R.id.adminSignIn);
         adminBtn.setText(getString(R.string.admin_btn, admin.getName()));
-        adminBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(v.getContext(), AdminSignInActivity.class);
-                startActivity(myIntent);
-            }
+        adminBtn.setOnClickListener(v -> {
+            Intent myIntent = new Intent(v.getContext(), AdminSignInActivity.class);
+            startActivity(myIntent);
         });
 
+    }
+
+    private void createLayout(List<User> users) {
+        for (User user : users) {
+            if (user.isAdmin()) {
+                users.remove(user);
+            }
+        }
+        userLayout.removeAllViews();
+        int userNum = users.size();
+        LinearLayout inner = null;
+        int viewsPerRow = 1;
+        if (userNum <= 6) {
+            viewsPerRow = Math.round((userNum / 2f) + .05f);
+        } else {
+            viewsPerRow = 3;
+        }
+        boolean greater = false;
+        if (lastUser.getValue() != null) {
+            User first = null;
+            for (User user : users) {
+                if (user.getId() == lastUser.getValue().getId()) {
+                    first = users.remove(users.indexOf(user));
+                    break;
+                }
+            }
+            users.add(0, first);
+        }
+        if (userNum > 9) {
+            userNum = 8;
+            users = users.subList(0, 8);
+            greater = true;
+        }
+        for (int i = 0; i < userNum; i++) {
+            if (i % viewsPerRow == 0) {
+
+                inner = new LinearLayout(this);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                layoutParams.weight = 1;
+                inner.setLayoutParams(layoutParams);
+                inner.setOrientation(LinearLayout.HORIZONTAL);
+                userLayout.addView(inner);
+
+            }
+
+            LinearLayout specLayout = new LinearLayout(this);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.weight = 1;
+            specLayout.setLayoutParams(params);
+            specLayout.setPadding(10, 10, 10, 10);
+            specLayout.setOrientation(LinearLayout.VERTICAL);
+
+            ImageButton avaBtn = new ImageButton(this);
+            LinearLayout.LayoutParams avaParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
+            avaParams.weight = 1;
+            avaParams.gravity = Gravity.CENTER_HORIZONTAL;
+            avaBtn.setLayoutParams(avaParams);
+            avaBtn.setBackgroundColor(getColor(android.R.color.transparent));
+            avaBtn.setImageResource(getResources().getIdentifier("pfp_" + users.get(i).getAvatar(), "drawable", "com.example.bullseye_android"));
+            avaBtn.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            avaBtn.setContentDescription(String.valueOf(users.get(i).getId()));
+            avaBtn.setOnClickListener(avatarListener);
+
+            TextView nameTxt = new TextView(new ContextThemeWrapper(this, R.style.UsernameStyle));
+            LinearLayout.LayoutParams txtParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            txtParams.gravity = Gravity.CENTER_HORIZONTAL;
+            nameTxt.setLayoutParams(txtParams);
+            nameTxt.setText(users.get(i).getName());
+            if (userNum == 1) {
+                nameTxt.setTextSize(20);
+            } else {
+                nameTxt.setTextSize(14);
+            }
+
+            specLayout.addView(avaBtn);
+            specLayout.addView(nameTxt);
+            inner.addView(specLayout);
+
+        }
+        if (greater) {
+
+            LinearLayout specLayout = new LinearLayout(this);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.weight = 1;
+            specLayout.setLayoutParams(params);
+            specLayout.setPadding(10, 10, 10, 10);
+            specLayout.setOrientation(LinearLayout.VERTICAL);
+
+            MaterialButton moreBtn = new MaterialButton(new ContextThemeWrapper(this, R.style.MoreUsersStyle));
+            LinearLayout.LayoutParams btnParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
+            btnParams.weight = 1;
+            btnParams.gravity = Gravity.CENTER_HORIZONTAL;
+            moreBtn.setLayoutParams(btnParams);
+            moreBtn.setBackground(ContextCompat.getDrawable(this, R.drawable.ic_circle));
+            moreBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.color4)));
+//            moreBtn.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_eye_closed));
+//            moreBtn.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
+//            moreBtn.setIconTint(ColorStateList.valueOf(getColor(android.R.color.white)));
+//            moreBtn.setIconSize(100);
+            moreBtn.setText(R.string.more_users);
+            moreBtn.setAllCaps(false);
+            moreBtn.setTextColor(getColor(R.color.color1));
+            moreBtn.setOnClickListener(view -> {
+                // all users screen
+            });
+
+            TextView text = new TextView(this);
+            LinearLayout.LayoutParams txtParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            txtParams.gravity = Gravity.CENTER_HORIZONTAL;
+            text.setLayoutParams(txtParams);
+
+            specLayout.addView(moreBtn);
+            specLayout.addView(text);
+            inner.addView(specLayout);
+        }
+        ConstraintLayout.LayoutParams params = ((ConstraintLayout.LayoutParams) button.getLayoutParams());
+        if (userNum == 0) {
+            params.setMargins(0, 0, 0, (int) convertDpToPixel(200, this));
+        } else {
+            params.setMargins(0, 0, 0, (int) convertDpToPixel(30, this));
+        }
+        button.setLayoutParams(params);
+    }
+    public static float convertDpToPixel(float dp, Context context){
+        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 }

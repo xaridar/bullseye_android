@@ -43,4 +43,9 @@
     <string name="change_string">Change %1$s</string>
     <string name="current_password">Current Password</string>
     <string name="admin_btn">%1$s (Admin)</string>
+    <string name="plus_icon">plus icon</string>
+    <string name="see_all">See all users</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="more_users">more users</string>
 </resources>

@@ -85,6 +85,9 @@ public class User {
         gamesPlayed = new int[] {0, 0, 0, 0, 0};
         lastGames = new ArrayList[]{new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>()};
         this.avatar = avatar;
+        if (avatar == null) {
+            this.avatar = "default";
+        }
         musicVolume = 100;
         gameVolume = 100;
     }
