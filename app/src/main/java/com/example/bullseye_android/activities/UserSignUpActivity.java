@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.database.IDGenerator;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserSerializable;
 import com.example.bullseye_android.database.UserViewModel;
@@ -28,12 +29,16 @@ public class UserSignUpActivity extends AppCompatActivity {
     private ImageButton avaPicker;
     private String avatar;
     private EditText name;
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_sign_up);
         avatar = "default";
+
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+
         run();
     };
 
@@ -46,6 +51,9 @@ public class UserSignUpActivity extends AppCompatActivity {
         btn.setOnClickListener((view) -> {
             Intent intent = new Intent(UserSignUpActivity.this, TransitionActivity.class);
             intent.putExtra("sender", "userSignUp");
+            long id = IDGenerator.getInstance(userViewModel, this).getId();
+            userViewModel.insert(new User(name.getText().toString(), id, avatar));
+            getSharedPreferences("userID", 0).edit().putLong("id", id).apply();
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(UserSignUpActivity.this, btn, "bigButton");
             startActivity(intent, options.toBundle());
             finish();

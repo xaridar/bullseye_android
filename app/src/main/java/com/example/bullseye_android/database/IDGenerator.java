@@ -51,14 +51,4 @@ public class IDGenerator {
         } while (id == 0);
         return id;
     }
-
-    private class getIDSAsync implements Callable<Void> {
-
-        @Override
-        public Void call() throws Exception {
-            List<User> users = new ArrayList<>();
-
-            return null;
-        }
-    }
 }

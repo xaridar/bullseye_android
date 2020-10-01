@@ -98,17 +98,6 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     public void run(){
-        // hard-coded users for now, for the four users on the users activity
-        mUserViewModel.insert(new User("", 1, null));
-        mUserViewModel.insert(new User("", 2, null));
-        mUserViewModel.insert(new User("", 3, null));
-        mUserViewModel.insert(new User("", 4, null));
-        mUserViewModel.insert(new User("", 5, null));
-        mUserViewModel.insert(new User("", 6, null));
-        mUserViewModel.insert(new User("", 7, null));
-        mUserViewModel.insert(new User("", 8, null));
-        mUserViewModel.insert(new User("", 9, null));
-        mUserViewModel.insert(new User("", 10, null));
 
         userLayout = findViewById(R.id.userLayout);
 
