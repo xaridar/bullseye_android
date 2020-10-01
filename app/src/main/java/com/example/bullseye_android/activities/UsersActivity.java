@@ -39,6 +39,8 @@ import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UsersActivity extends AppCompatActivity {
@@ -125,38 +127,46 @@ public class UsersActivity extends AppCompatActivity {
 
     }
 
-    private void createLayout(List<User> users) {
-        for (User user : users) {
+    private void createLayout(List<User> givenUsers) {
+        List<User> removeList = new ArrayList<>();
+        for (User user : givenUsers) {
             if (user.isAdmin()) {
-                users.remove(user);
+                removeList.add(user);
+                break;
             }
         }
+        givenUsers.removeAll(removeList);
         userLayout.removeAllViews();
-        int userNum = users.size();
         LinearLayout inner = null;
         int viewsPerRow = 1;
+        boolean greater = false;
+        if (lastUser.getValue() != null) {
+            User first = null;
+            for (User user : givenUsers) {
+                if (user.getId() == lastUser.getValue().getId()) {
+                    first = givenUsers.get(givenUsers.indexOf(user));
+                    break;
+                }
+            }
+            givenUsers.remove(first);
+
+            if (first != null) {
+                givenUsers.add(0, first);
+            }
+        }
+        int userNum = givenUsers.size();
         if (userNum <= 6) {
             viewsPerRow = Math.round((userNum / 2f) + .05f);
         } else {
             viewsPerRow = 3;
         }
-        boolean greater = false;
-        if (lastUser.getValue() != null) {
-            User first = null;
-            for (User user : users) {
-                if (user.getId() == lastUser.getValue().getId()) {
-                    first = users.remove(users.indexOf(user));
-                    break;
-                }
-            }
-            users.add(0, first);
-        }
         if (userNum > 9) {
             userNum = 8;
-            users = users.subList(0, 8);
+            givenUsers = givenUsers.subList(0, 8);
             greater = true;
         }
-        for (int i = 0; i < userNum; i++) {
+        Log.i("HH", givenUsers.toString());
+        for (int i = 0; i < givenUsers.size(); i++) {
             if (i % viewsPerRow == 0) {
 
                 inner = new LinearLayout(this);
@@ -181,16 +191,16 @@ public class UsersActivity extends AppCompatActivity {
             avaParams.gravity = Gravity.CENTER_HORIZONTAL;
             avaBtn.setLayoutParams(avaParams);
             avaBtn.setBackgroundColor(getColor(android.R.color.transparent));
-            avaBtn.setImageResource(getResources().getIdentifier("pfp_" + users.get(i).getAvatar(), "drawable", "com.example.bullseye_android"));
+            avaBtn.setImageResource(getResources().getIdentifier("pfp_" + givenUsers.get(i).getAvatar(), "drawable", "com.example.bullseye_android"));
             avaBtn.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            avaBtn.setContentDescription(String.valueOf(users.get(i).getId()));
+            avaBtn.setContentDescription(String.valueOf(givenUsers.get(i).getId()));
             avaBtn.setOnClickListener(avatarListener);
 
             TextView nameTxt = new TextView(new ContextThemeWrapper(this, R.style.UsernameStyle));
             LinearLayout.LayoutParams txtParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             txtParams.gravity = Gravity.CENTER_HORIZONTAL;
             nameTxt.setLayoutParams(txtParams);
-            nameTxt.setText(users.get(i).getName());
+            nameTxt.setText(givenUsers.get(i).getName());
             if (userNum == 1) {
                 nameTxt.setTextSize(20);
             } else {

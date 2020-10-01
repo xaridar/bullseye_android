@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class UserSignUpActivity extends AppCompatActivity {
     private String avatar;
     private EditText name;
     private UserViewModel userViewModel;
+    boolean clicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +50,28 @@ public class UserSignUpActivity extends AppCompatActivity {
         avaPicker = findViewById(R.id.ava);
         name = findViewById(R.id.name);
 
+        clicked = false;
+
         btn.setOnClickListener((view) -> {
-            Intent intent = new Intent(UserSignUpActivity.this, TransitionActivity.class);
-            intent.putExtra("sender", "userSignUp");
-            long id = IDGenerator.getInstance(userViewModel, this).getId();
-            userViewModel.insert(new User(name.getText().toString(), id, avatar));
-            getSharedPreferences("userID", 0).edit().putLong("id", id).apply();
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(UserSignUpActivity.this, btn, "bigButton");
-            startActivity(intent, options.toBundle());
-            finish();
+            if (!clicked) {
+                if (name.getText().toString().equals("")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                            .setMessage("Please enter a name.")
+                            .setTitle("Incorrect Input")
+                            .setPositiveButton("OK", null);
+                    builder.show();
+                    return;
+                }
+                clicked = true;
+                Intent intent = new Intent(UserSignUpActivity.this, TransitionActivity.class);
+                intent.putExtra("sender", "userSignUp");
+                long id = IDGenerator.getInstance(userViewModel, this).getId();
+                userViewModel.insert(new User(name.getText().toString(), id, avatar));
+                getSharedPreferences("userID", 0).edit().putLong("id", id).apply();
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(UserSignUpActivity.this, btn, "bigButton");
+                startActivity(intent, options.toBundle());
+                finish();
+            }
         });
 
         avaPicker.setOnClickListener(view -> {
