@@ -1,5 +1,7 @@
 package com.example.bullseye_android.database;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
@@ -18,7 +20,7 @@ public class User {
     public static final int GAME_MEMORY_NORMAL = 2;
     public static final int GAME_MEMORY_HARD = 3;
     public static final int GAME_SORTING_SLOW = 4;
-    public static final int GAME_SORING_FAST = 5;
+    public static final int GAME_SORTING_FAST = 5;
 
     public static final int POINTS = 0;
     public static final int ACC = 1;
@@ -72,6 +74,9 @@ public class User {
     @ColumnInfo(name = "gameVolume")
     private int gameVolume;
 
+    @ColumnInfo(name = "highScores")
+    private long[] highScores;
+
 
     public User(@NonNull String name, long id, @Nullable String avatar) {
         this.name = name;
@@ -79,11 +84,12 @@ public class User {
         this.id = id;
         email = null;
         password = null;
-        playTime = new long[]{0, 0, 0, 0, 0, 0};
-        accuracy = new float[]{0, 0, 0, 0, 0};
+        playTime = new long[] {0, 0, 0, 0, 0, 0};
+        accuracy = new float[]{0, 0, 0, 0, 0, 0};
         focusPoints = new int[] {0, 0, 0, 0, 0, 0};
-        gamesPlayed = new int[] {0, 0, 0, 0, 0};
-        lastGames = new ArrayList[]{new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>()};
+        gamesPlayed = new int[] {0, 0, 0, 0, 0, 0};
+        highScores = new long[] {0, 5999, 5999, 5999, 0, 0};
+        lastGames = new ArrayList[]{new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(), new ArrayList<>()};
         this.avatar = avatar;
         if (avatar == null) {
             this.avatar = "default";
@@ -167,16 +173,26 @@ public class User {
         lastGame[POINTS] = pointsToAdd;
         lastGame[ACC] = acc;
         lastGame[TIME] = time;
+        Log.i("HH", lastGames[game].size()+"");
         if (lastGames[game].size() < 5) {
             lastGames[game].add(lastGame);
         } else {
-            Number[][] last = (Number[][]) lastGames[game].toArray();
-            last[0] = last[1];
-            last[1] = last[2];
-            last[2] = last[3];
-            last[3] = last[4];
-            last[4] = lastGame;
-            lastGames[game] = Arrays.asList(last);
+            List<Number[]> lastG = lastGames[game];
+            lastG.set(0, lastG.get(1));
+            lastG.set(1, lastG.get(2));
+            lastG.set(2, lastG.get(3));
+            lastG.set(3, lastG.get(4));
+            lastG.set(0, lastGame);
+            lastGames[game] = lastG;
+        }
+        if (game >= 1 && game <= 3) {
+            if (time < highScores[game]) {
+                highScores[game] = time;
+            }
+        } else if (game >= 4 && game <= 5) {
+            if (time > highScores[game]) {
+                highScores[game] = time;
+            }
         }
     }
 
@@ -234,11 +250,7 @@ public class User {
     public void setMusicVolume(int volume) {
         if (volume < 0) {
             this.musicVolume = 0;
-        } else if (volume > MAX_VOLUME) {
-            this.musicVolume = MAX_VOLUME;
-        } else {
-            this.musicVolume = volume;
-        }
+        } else this.musicVolume = Math.min(volume, MAX_VOLUME);
     }
 
     public int getGameVolume() {
@@ -248,10 +260,14 @@ public class User {
     public void setGameVolume(int volume) {
         if (volume < 0) {
             this.gameVolume = 0;
-        } else if (volume > MAX_VOLUME) {
-            this.gameVolume = MAX_VOLUME;
-        } else {
-            this.gameVolume = volume;
-        }
+        } else this.gameVolume = Math.min(volume, MAX_VOLUME);
+    }
+
+    public long[] getHighScores() {
+        return highScores;
+    }
+
+    public void setHighScores(long[] highScores) {
+        this.highScores = highScores;
     }
 }

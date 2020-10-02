@@ -18,6 +18,8 @@ import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.games.memory.MemoryActivity;
+import com.example.bullseye_android.games.sorting.SortingActivity;
 
 public class UserDashboardActivity extends AppCompatActivity {
     public static final int SETTINGS_REQ = 100;
@@ -59,13 +61,13 @@ public class UserDashboardActivity extends AppCompatActivity {
         matchingGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Goes to matching game
+                startActivity(new Intent(UserDashboardActivity.this, MemoryActivity.class));
             }
         });
         sortingGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Goes to sorting game
+                startActivity(new Intent(UserDashboardActivity.this, SortingActivity.class));
             }
         });
         settingsButton.setOnClickListener(new View.OnClickListener() {

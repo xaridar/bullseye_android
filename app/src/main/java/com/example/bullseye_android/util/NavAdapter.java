@@ -65,7 +65,6 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.NavViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, holder.nameText.getText().toString(), Toast.LENGTH_SHORT).show();
                 addUser(current);
                 current = user;
                 removeUser(current);

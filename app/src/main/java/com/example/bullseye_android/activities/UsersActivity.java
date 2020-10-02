@@ -144,7 +144,7 @@ public class UsersActivity extends AppCompatActivity {
             User first = null;
             for (User user : givenUsers) {
                 if (user.getId() == lastUser.getValue().getId()) {
-                    first = givenUsers.get(givenUsers.indexOf(user));
+                        first = givenUsers.get(givenUsers.indexOf(user));
                     break;
                 }
             }
@@ -165,7 +165,6 @@ public class UsersActivity extends AppCompatActivity {
             givenUsers = givenUsers.subList(0, 8);
             greater = true;
         }
-        Log.i("HH", givenUsers.toString());
         for (int i = 0; i < givenUsers.size(); i++) {
             if (i % viewsPerRow == 0) {
 
@@ -228,15 +227,11 @@ public class UsersActivity extends AppCompatActivity {
             moreBtn.setLayoutParams(btnParams);
             moreBtn.setBackground(ContextCompat.getDrawable(this, R.drawable.ic_circle));
             moreBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.color4)));
-//            moreBtn.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_eye_closed));
-//            moreBtn.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
-//            moreBtn.setIconTint(ColorStateList.valueOf(getColor(android.R.color.white)));
-//            moreBtn.setIconSize(100);
             moreBtn.setText(R.string.more_users);
             moreBtn.setAllCaps(false);
             moreBtn.setTextColor(getColor(R.color.color1));
             moreBtn.setOnClickListener(view -> {
-                // all users screen
+                startActivity(new Intent(UsersActivity.this, MoreUsersActivity.class));
             });
 
             TextView text = new TextView(this);

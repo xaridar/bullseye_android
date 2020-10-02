@@ -10,10 +10,23 @@
         android:roundIcon="@mipmap/bullseye_logo_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialThemeWithActionBar">
-        <activity android:name=".activities.ChangeStringActivity" android:label="@string/change_string" android:theme="@style/MaterialThemeWithActionBar">
+        <activity android:name=".games.memory.MemoryActivity" android:theme="@style/Game"/>
+        <activity android:name=".games.sorting.SortingActivity" android:theme="@style/Game"/>
+        <activity
+            android:name=".activities.MoreUsersActivity"
+            android:label="All Users"
+            android:theme="@style/MaterialThemeWithActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.UsersSettingsActivity"/>
+                android:value=".activities.UsersActivity" />
+        </activity>
+        <activity
+            android:name=".activities.ChangeStringActivity"
+            android:label="@string/change_string"
+            android:theme="@style/MaterialThemeWithActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.UsersSettingsActivity" />
         </activity>
         <activity
             android:name=".activities.AvatarChooserActivity"

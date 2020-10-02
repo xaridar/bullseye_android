@@ -55,7 +55,12 @@ public class TransitionActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         if (shouldFinish) {
-            finish();
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            }, 1000);
         }
     }
 }

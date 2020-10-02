@@ -27,8 +27,8 @@
     <string name="sorting">Sorting</string>
     <string name="memory">Memory</string>
     <string name="export">EXPORT</string>
-    <string name="current_user_s_logo">Current user\'s logo</string>
-    <string name="user_s_logo">User\'s logo</string>
+    <string name="current_user_s_logo">Current user\'s profile picture</string>
+    <string name="user_s_logo">User\'s profile picture</string>
     <string name="users_not_found">Either there are no users saved on your device, or something went wrong! Check to make sure that users have been created on this device.</string>
     <string name="admin_sign_in">Admin Sign In</string>
     <string name="choose_profile_picture">Choose Profile Picture</string>
@@ -45,7 +45,23 @@
     <string name="admin_btn">%1$s (Admin)</string>
     <string name="plus_icon">plus icon</string>
     <string name="see_all">See all users</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="more_users">more users</string>
+    <string name="more_users">More Users</string>
+
+    <string name="time">%1$s:%2$s</string>
+    <string name="final_time">Your time was:\n%1$s</string>
+    <string name="points">Pairs: %1$d</string>
+    <string name="high_score">High Score: %1$s:%2$s</string>
+
+    <string name="num">%1$d</string>
+    <string name="survived_for">You lasted for:\n%1$s</string>
+    <string name="memory_game">Memory Game</string>
+    <string name="start">Start</string>
+    <string name="slow">Slow</string>
+    <string name="fast">Fast</string>
+    <string name="speed">Speed</string>
+    <string name="right_bucket_desc">pink bucket on the right of the screen</string>
+    <string name="left_bucket_desc">brown bucket on the left of the screen</string>
+    <string name="play_again">Play Again</string>
+    <string name="_00_00">00:00</string>
+    <string name="high_score_00_00">High Score: 00:00</string>
 </resources>
