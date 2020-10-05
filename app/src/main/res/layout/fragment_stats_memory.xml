@@ -8,69 +8,76 @@
     tools:context=".activities.MemoryStatsFragment">
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/medium_accuracy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="310dp" />
+        android:text="Accuracy:"
+        app:layout_constraintEnd_toEndOf="@+id/medium_average_time"
+        app:layout_constraintStart_toStartOf="@+id/medium_average_time"
+        app:layout_constraintTop_toBottomOf="@+id/medium_average_time" />
 
     <TextView
-        android:id="@+id/textView24"
+        android:id="@+id/difficult_accuracy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="183dp"
-        tools:layout_editor_absoluteY="470dp" />
+        android:text="Accuracy:"
+        app:layout_constraintEnd_toEndOf="@+id/textView23"
+        app:layout_constraintStart_toStartOf="@+id/textView23"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/difficult_games_played"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="179dp"
-        tools:layout_editor_absoluteY="395dp" />
+        android:text="Games Played:"
+        app:layout_constraintEnd_toEndOf="@+id/textView12"
+        app:layout_constraintStart_toStartOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <TextView
-        android:id="@+id/textView22"
+        android:id="@+id/difficult_high_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="181dp"
-        tools:layout_editor_absoluteY="419dp" />
+        android:text="High Score:"
+        app:layout_constraintEnd_toEndOf="@+id/difficult_games_played"
+        app:layout_constraintStart_toStartOf="@+id/difficult_games_played"
+        app:layout_constraintTop_toBottomOf="@+id/difficult_games_played" />
 
     <TextView
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="182dp"
-        tools:layout_editor_absoluteY="443dp" />
+        android:text="Average Time:"
+        app:layout_constraintEnd_toEndOf="@+id/difficult_high_score"
+        app:layout_constraintStart_toStartOf="@+id/difficult_high_score"
+        app:layout_constraintTop_toBottomOf="@+id/difficult_high_score" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/medium_high_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="310dp"
-        tools:layout_editor_absoluteY="269dp" />
+        android:text="High Score:"
+        app:layout_constraintEnd_toEndOf="@+id/medium_games_played"
+        app:layout_constraintStart_toStartOf="@+id/medium_games_played"
+        app:layout_constraintTop_toBottomOf="@+id/medium_games_played" />
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/medium_average_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="310dp"
-        tools:layout_editor_absoluteY="311dp" />
+        android:text="Average Time:"
+        app:layout_constraintEnd_toEndOf="@+id/medium_high_score"
+        app:layout_constraintStart_toStartOf="@+id/medium_high_score"
+        app:layout_constraintTop_toBottomOf="@+id/medium_high_score" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/medium_games_played"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="310dp"
-        tools:layout_editor_absoluteY="242dp" />
+        android:text="Games Played:"
+        app:layout_constraintEnd_toEndOf="@+id/textView10"
+        app:layout_constraintStart_toStartOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
         android:id="@+id/textView5"
@@ -110,7 +117,7 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="70dp"
         android:text="Easy"
         app:layout_constraintStart_toStartOf="parent"
@@ -121,7 +128,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="100dp"
         android:text="Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -137,42 +144,48 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/easy_games played"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="243dp" />
+        android:text="Games Played:"
+        app:layout_constraintEnd_toEndOf="@+id/textView7"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/easy_high_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="269dp" />
+        android:text="High Score:"
+        app:layout_constraintEnd_toEndOf="@+id/easy_games played"
+        app:layout_constraintStart_toStartOf="@+id/easy_games played"
+        app:layout_constraintTop_toBottomOf="@+id/easy_games played" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/easy_average_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="303dp" />
+        android:text="Average Time:"
+        app:layout_constraintEnd_toEndOf="@+id/easy_high_score"
+        app:layout_constraintStart_toStartOf="@+id/easy_high_score"
+        app:layout_constraintTop_toBottomOf="@+id/easy_high_score" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/easy_accuracy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="340dp" />
+        android:text="Accuracy:"
+        app:layout_constraintEnd_toEndOf="@+id/easy_average_time"
+        app:layout_constraintStart_toStartOf="@+id/easy_average_time"
+        app:layout_constraintTop_toBottomOf="@+id/easy_average_time" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/memory_export"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="291dp"
-        tools:layout_editor_absoluteY="527dp" />
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
+        android:text="Export"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
