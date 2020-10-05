@@ -9,8 +9,8 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/adminLogOutButton"
-        android:layout_width="146dp"
-        android:layout_height="wrap_content"
+        android:layout_width="194dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="64dp"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
@@ -24,7 +24,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/color5" />
+        app:rippleColor="@color/color5"
+        tools:text="Back to Login" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/adminSettingsButton"

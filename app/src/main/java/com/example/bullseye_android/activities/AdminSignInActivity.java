@@ -37,6 +37,7 @@ public class AdminSignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_admin_sign_in);
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 

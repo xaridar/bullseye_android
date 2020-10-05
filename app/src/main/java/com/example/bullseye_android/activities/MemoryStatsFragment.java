@@ -35,6 +35,7 @@ public class MemoryStatsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             user = ((UserSerializable) getArguments().getSerializable(ARG_USER)).getUser();

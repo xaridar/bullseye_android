@@ -33,26 +33,22 @@
         android:id="@+id/adminSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:textColor="@color/color1"
-        app:layout_constraintBottom_toTopOf="@+id/addUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/color5" />
+        app:rippleColor="@color/color5"
+        tools:layout_editor_absoluteY="419dp" />
 
-    <ImageButton
+    <Button
         android:id="@+id/addUser"
-        android:layout_width="143dp"
-        android:layout_height="137dp"
-        android:layout_marginBottom="30dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/plus_icon"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_plus"
-        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:text="Add User"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adminSignIn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

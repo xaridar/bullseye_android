@@ -21,6 +21,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getWindow().setExitTransition(new Fade());
         setContentView(R.layout.activity_home);
         new Timer().schedule(new TimerTask() {

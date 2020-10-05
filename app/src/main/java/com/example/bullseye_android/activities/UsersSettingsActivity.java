@@ -29,7 +29,7 @@ public class UsersSettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         Fetcher.runNewUserFetcher(mUserViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), user -> {
             if (user == null) {
