@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        shouldFinish = false;
         getWindow().setExitTransition(new Fade());
         setContentView(R.layout.activity_home);
         new Timer().schedule(new TimerTask() {
@@ -29,7 +29,6 @@ public class HomeActivity extends AppCompatActivity {
             public void run() {
                 Looper.prepare();
                 runOnUiThread(() -> {
-
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this);
                     startActivity(new Intent(HomeActivity.this, UsersActivity.class), options.toBundle());
                     shouldFinish = true;

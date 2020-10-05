@@ -3,10 +3,14 @@ package com.example.bullseye_android.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +20,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +30,7 @@ import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.util.NavAdapter;
+import com.example.bullseye_android.util.NewNavAdapter;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
@@ -52,7 +58,6 @@ public class StatsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
@@ -61,13 +66,19 @@ public class StatsActivity extends AppCompatActivity {
 
         currentUser = new MutableLiveData<>();
 
-        Function<User, Void> callback = user -> {
-            currentUser.setValue(user);
-            run();
+        Function<LiveData<User>, Void> callback = user -> {
+            user.observe(this, new Observer<User>() {
+                @Override
+                public void onChanged(User u) {
+                    currentUser.setValue(u);
+                    user.removeObserver(this);
+                    run();
+                }
+            });
             return null;
         };
 
-        run();
+        Fetcher.runNewUserFetcher(mUserViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), callback);
     }
 
     private void run() {
@@ -77,7 +88,7 @@ public class StatsActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         Toolbar navtoolbar = findViewById(R.id.navtoolbar);
         drawerLayout = findViewById(R.id.drawer);
-        CardView current = findViewById(R.id.current);
+//        CardView current = findViewById(R.id.current);
         sorting = findViewById(R.id.sorting_bottom);
         memory = findViewById(R.id.memory_bottom);
         exportFab = findViewById(R.id.exportFab);
@@ -99,22 +110,38 @@ public class StatsActivity extends AppCompatActivity {
         navActionBarDrawerToggle.getDrawerArrowDrawable().setColor(getColor(android.R.color.white));
 
 
-        final NavAdapter adapter = new NavAdapter(this);
+        final NewNavAdapter adapter = new NewNavAdapter(this, rv);
 
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        current.setOnClickListener(view -> {
-            drawerLayout.closeDrawer(GravityCompat.START);
+        rv.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {}
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
         });
+//        current.setOnClickListener(view -> {
+//            drawerLayout.closeDrawer(GravityCompat.START);
+//        });
 
         currentUser.observe(this, user -> {
             if (user != null) {
                 drawerLayout.closeDrawer(GravityCompat.START);
-                ((TextView) findViewById(R.id.nameView)).setText(user.getName());
-                ((ImageView) findViewById(R.id.imageView)).setImageResource(getResources().getIdentifier("pfp_" + user.getAvatar(), "drawable", "com.example.bullseye_android"));
                 toolbar.setTitle(getString(R.string.stats_header, user.getName()));
+                adapter.setFirst(user);
             }
             tab.setValue(MEMORY);
+        });
+
+        currentUser.observe(this, user -> {
+
         });
 
         tab.observe(this, integer -> {
@@ -141,9 +168,9 @@ public class StatsActivity extends AppCompatActivity {
             }
         });
 
-        users.observe(this, users -> {
-            adapter.setUsers(users);
-        });
+//        users.observe(this, users -> {
+//            adapter.setUsers(users);
+//        });
 
         memory.setOnClickListener(view -> {
             tab.setValue(MEMORY);
