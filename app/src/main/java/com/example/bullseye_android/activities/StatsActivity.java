@@ -54,7 +54,6 @@ public class StatsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
