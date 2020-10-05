@@ -1,20 +1,15 @@
 // all Stats activity design was done by Elliot
 package com.example.bullseye_android.activities;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ShareCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -30,7 +25,6 @@ import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.util.NavAdapter;
-import com.example.bullseye_android.util.NewNavAdapter;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;
@@ -38,9 +32,6 @@ import java.util.List;
 import java.util.function.Function;
 
 public class StatsActivity extends AppCompatActivity {
-    /*
-    Commented out code is for use with database - next to lines to be removed when database is implemented
-     */
 
     public static final int MEMORY = 0;
     public static final int SORTING = 1;
@@ -110,7 +101,7 @@ public class StatsActivity extends AppCompatActivity {
         navActionBarDrawerToggle.getDrawerArrowDrawable().setColor(getColor(android.R.color.white));
 
 
-        final NewNavAdapter adapter = new NewNavAdapter(this, rv);
+        final NavAdapter adapter = new NavAdapter(this, rv);
 
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
