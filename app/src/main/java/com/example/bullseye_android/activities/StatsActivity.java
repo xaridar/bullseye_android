@@ -46,8 +46,6 @@ public class StatsActivity extends AppCompatActivity {
     private TextView memory;
     private TextView sorting;
     private List<TextView> bottomNav = new ArrayList<>();
-    /* replacement point */
-//    private List<User> users;
      private LiveData<List<User>> users;
     private UserViewModel mUserViewModel;
     private ExtendedFloatingActionButton exportFab;
@@ -59,11 +57,7 @@ public class StatsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stats);
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
-        /* replacement point */
-//        users = new ArrayList<>(Arrays.asList(new User("Chuck", 1, "archer"), new User("Chris", 2, "default"), new User("Beverly", 3, "boy"), new User("Ryan", 4, "girl")));
         users = mUserViewModel.getUsers();
-        /* set stats for example - removal point */
-//        users.get(0).addGame(User.GAME_MEMORY_HARD, .43f, 34, 56);
 
         currentUser = new MutableLiveData<>();
 
@@ -73,9 +67,6 @@ public class StatsActivity extends AppCompatActivity {
             return null;
         };
 
-        /* replacement point */
-//        callback.apply(users.get(0));
-//        Fetcher.runNewUserFetcher(mUserViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), callback);
         run();
     }
 
@@ -150,7 +141,6 @@ public class StatsActivity extends AppCompatActivity {
             }
         });
 
-        /* addition point */
         users.observe(this, users -> {
             adapter.setUsers(users);
         });
