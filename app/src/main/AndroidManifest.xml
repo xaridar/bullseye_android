@@ -57,7 +57,10 @@
         <activity
             android:name=".activities.UserSignUpActivity"
             android:label="User Sign Up"
-            android:theme="@style/MaterialThemeWithActionBar" />
+            android:theme="@style/MaterialThemeWithActionBar" >
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.UsersActivity"/>
+        </activity>
         <activity
             android:name=".activities.AdminSettingsActivity"
             android:label="Admin Settings"
@@ -86,7 +89,10 @@
         <activity
             android:name=".activities.AdminSignInActivity"
             android:label="Admin Sign In"
-            android:theme="@style/MaterialThemeWithActionBar" />
+            android:theme="@style/MaterialThemeWithActionBar" >
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.UsersActivity"/>
+        </activity>
         <activity
             android:name=".activities.UsersActivity"
             android:label="Users"
