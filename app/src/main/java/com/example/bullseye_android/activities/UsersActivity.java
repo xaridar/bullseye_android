@@ -58,7 +58,7 @@ public class UsersActivity extends AppCompatActivity {
     private LiveData<List<User>> users;
     private LinearLayout userLayout;
     private int c;
-    private ImageButton button;
+    private Button button;
     private MaterialButton adminBtn;
 
     @Override
