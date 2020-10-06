@@ -11,7 +11,9 @@
         android:id="@+id/medium_accuracy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
         android:text="Accuracy:"
+        android:textColor="#5B3C3C"
         app:layout_constraintEnd_toEndOf="@+id/medium_average_time"
         app:layout_constraintStart_toStartOf="@+id/medium_average_time"
         app:layout_constraintTop_toBottomOf="@+id/medium_average_time" />
@@ -21,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Accuracy:"
+        android:textColor="#5B3C3C"
         app:layout_constraintEnd_toEndOf="@+id/textView23"
         app:layout_constraintStart_toStartOf="@+id/textView23"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
@@ -30,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Games Played:"
+        android:textColor="#5B3C3C"
         app:layout_constraintEnd_toEndOf="@+id/textView12"
         app:layout_constraintStart_toStartOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
@@ -39,6 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="High Score:"
+        android:textColor="#5B3C3C"
         app:layout_constraintEnd_toEndOf="@+id/difficult_games_played"
         app:layout_constraintStart_toStartOf="@+id/difficult_games_played"
         app:layout_constraintTop_toBottomOf="@+id/difficult_games_played" />
@@ -48,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Average Time:"
+        android:textColor="#5B3C3C"
         app:layout_constraintEnd_toEndOf="@+id/difficult_high_score"
         app:layout_constraintStart_toStartOf="@+id/difficult_high_score"
         app:layout_constraintTop_toBottomOf="@+id/difficult_high_score" />
@@ -56,7 +62,9 @@
         android:id="@+id/medium_high_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
         android:text="High Score:"
+        android:textColor="#5B3C3C"
         app:layout_constraintEnd_toEndOf="@+id/medium_games_played"
         app:layout_constraintStart_toStartOf="@+id/medium_games_played"
         app:layout_constraintTop_toBottomOf="@+id/medium_games_played" />
@@ -65,7 +73,9 @@
         android:id="@+id/medium_average_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
         android:text="Average Time:"
+        android:textColor="#5B3C3C"
         app:layout_constraintEnd_toEndOf="@+id/medium_high_score"
         app:layout_constraintStart_toStartOf="@+id/medium_high_score"
         app:layout_constraintTop_toBottomOf="@+id/medium_high_score" />
@@ -74,7 +84,9 @@
         android:id="@+id/medium_games_played"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
         android:text="Games Played:"
+        android:textColor="#5B3C3C"
         app:layout_constraintEnd_toEndOf="@+id/textView10"
         app:layout_constraintStart_toStartOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -84,6 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:fontFamily="@font/roboto"
         android:text="Total Focus Points"
         android:textColor="@color/color5"
         android:textSize="18sp"
@@ -105,7 +118,9 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
         android:text="@string/memory"
+        android:textColor="#5B3C3C"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,6 +136,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="70dp"
         android:text="Easy"
+        android:textColor="#5B3C3C"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -132,6 +148,7 @@
         android:layout_marginTop="70dp"
         android:layout_marginEnd="100dp"
         android:text="Medium"
+        android:textColor="#5B3C3C"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -142,6 +159,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="220dp"
         android:text="Difficult"
+        android:textColor="#5B3C3C"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -152,6 +170,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/games_played"
+        android:textColor="#5B3C3C"
         app:layout_constraintEnd_toEndOf="@+id/textView7"
         app:layout_constraintStart_toStartOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
@@ -161,6 +180,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="High Score:"
+        android:textColor="#5B3C3C"
         app:layout_constraintEnd_toEndOf="@+id/easy_games_played"
         app:layout_constraintStart_toStartOf="@+id/easy_games_played"
         app:layout_constraintTop_toBottomOf="@+id/easy_games_played" />
@@ -170,6 +190,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/average_time"
+        android:textColor="#5B3C3C"
         app:layout_constraintEnd_toEndOf="@+id/easy_high_score"
         app:layout_constraintStart_toStartOf="@+id/easy_high_score"
         app:layout_constraintTop_toBottomOf="@+id/easy_high_score" />
@@ -179,6 +200,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/accuracy"
+        android:textColor="#5B3C3C"
         app:layout_constraintEnd_toEndOf="@+id/easy_average_time"
         app:layout_constraintStart_toStartOf="@+id/easy_average_time"
         app:layout_constraintTop_toBottomOf="@+id/easy_average_time" />
