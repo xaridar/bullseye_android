@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.DragEvent;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,6 @@ public class SortingActivity extends AppCompatActivity {
 
     private ConstraintLayout layout;
 
-    final ListenerManager listenerManager = new ListenerManager();
     private int backCount;
     private Toast toast;
 
@@ -271,7 +271,6 @@ public class SortingActivity extends AppCompatActivity {
         String side;
         List<ImageButton> delete = new ArrayList<>();
         for (ImageButton imageButton : views) {
-            DragListen dragListen = listenerManager.map.get(imageButton);
             if (dragListen != null) {
                 if (imageButton.getVisibility() == View.VISIBLE && ((ConstraintLayout.LayoutParams) imageButton.getLayoutParams()).topMargin >= height - (((ConstraintLayout.LayoutParams) despawn.getLayoutParams()).bottomMargin + 225)) {
                     side = "bottom";
@@ -283,7 +282,6 @@ public class SortingActivity extends AppCompatActivity {
                     sent++;
                 } else if(imageButton.getVisibility() == View.INVISIBLE && !dragListen.colorHit.equals("")) {
                     if (listenerManager.map.get(imageButton) != null) {
-                        side = dragListen.colorHit;
                         delete.add(imageButton);
                         layout.removeView(imageButton);}
                     else{
@@ -355,30 +353,21 @@ public class SortingActivity extends AppCompatActivity {
                 imageButton.setScaleType(ImageButton.ScaleType.FIT_CENTER);
                 imageButton.setLayoutParams(params);
                 imageButton.setContentDescription(color.equals("pink") ? "right" : color.equals("brown") ? "left" : "bottom");
-                listenerManager.addListener(imageButton);
                 views.add(imageButton);
             });
         }
 
     }
 
-    class ListenerManager {
-        public Map<ImageButton, DragListen> map;
-        public ListenerManager() {
-            map = new HashMap<>();
-        }
 
-        public void addListener(ImageButton button) {
-            DragListen listener = new DragListen();
-            map.put(button, listener);
-            button.setOnTouchListener(listener);
-        }
-    }
 
-    class DragListen implements View.OnTouchListener {
+    class OnSwipeTouchListener implements View.OnTouchListener {
 
         public String colorHit;
-
+        private final GestureDetector gestureDetector;
+        public OnSwipeTouchListener (Context ctx){
+            gestureDetector = new GestureDetector(ctx, new GestureListener());
+        }
         public DragListen () {
             colorHit = "";
         }
