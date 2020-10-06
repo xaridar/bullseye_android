@@ -285,13 +285,13 @@ public class SortingActivity extends AppCompatActivity {
                     if (listenerManager.map.get(imageButton) != null) {
                         side = dragListen.colorHit;
                         delete.add(imageButton);
-                        layout.removeView(imageButton);
-                        if (!side.contentEquals(imageButton.getContentDescription())) {
-                            lives--;
+                        layout.removeView(imageButton);}
+                    else{
+                        lives--;
                         }
                         sent++;
                         correct++;
-                    }
+
                 }
             }
         }
@@ -394,7 +394,7 @@ public class SortingActivity extends AppCompatActivity {
                 if (dragEvent.getAction() == DragEvent.ACTION_DROP) {
                     if (inViewInBounds(findViewById(R.id.bucket_left), (int) dragEvent.getX(), (int) dragEvent.getY())) {
                         colorHit = "left";
-                    } else if (inViewInBounds(findViewById(R.id.bucket_right), (int) dragEvent.getX(), (int) dragEvent.getY())) {
+                    //} else if (inViewInBounds(findViewById(R.id.bucket_right), (int) dragEvent.getX(), (int) dragEvent.getY())) {
                         colorHit = "right";
                     } else {
                         view.setVisibility(View.VISIBLE);
