@@ -30,7 +30,6 @@ public class UserDashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         SharedPreferences sharedPreferences = getSharedPreferences("userID", 0);
         long id = sharedPreferences.getLong("id",0);

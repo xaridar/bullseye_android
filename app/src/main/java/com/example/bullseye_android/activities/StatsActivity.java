@@ -1,21 +1,21 @@
 // all Stats activity design was done by Elliot
 package com.example.bullseye_android.activities;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ShareCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,9 +32,6 @@ import java.util.List;
 import java.util.function.Function;
 
 public class StatsActivity extends AppCompatActivity {
-    /*
-    Commented out code is for use with database - next to lines to be removed when database is implemented
-     */
 
     public static final int MEMORY = 0;
     public static final int SORTING = 1;
@@ -46,37 +43,33 @@ public class StatsActivity extends AppCompatActivity {
     private TextView memory;
     private TextView sorting;
     private List<TextView> bottomNav = new ArrayList<>();
-    /* replacement point */
-//    private List<User> users;
      private LiveData<List<User>> users;
     private UserViewModel mUserViewModel;
     private ExtendedFloatingActionButton exportFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
-        /* replacement point */
-//        users = new ArrayList<>(Arrays.asList(new User("Chuck", 1, "archer"), new User("Chris", 2, "default"), new User("Beverly", 3, "boy"), new User("Ryan", 4, "girl")));
         users = mUserViewModel.getUsers();
-        /* set stats for example - removal point */
-//        users.get(0).addGame(User.GAME_MEMORY_HARD, .43f, 34, 56);
 
         currentUser = new MutableLiveData<>();
 
-        Function<User, Void> callback = user -> {
-            currentUser.setValue(user);
-            run();
+        Function<LiveData<User>, Void> callback = user -> {
+            user.observe(this, new Observer<User>() {
+                @Override
+                public void onChanged(User u) {
+                    currentUser.setValue(u);
+                    user.removeObserver(this);
+                    run();
+                }
+            });
             return null;
         };
 
-        /* replacement point */
-//        callback.apply(users.get(0));
-//        Fetcher.runNewUserFetcher(mUserViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), callback);
-        run();
+        Fetcher.runNewUserFetcher(mUserViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), callback);
     }
 
     private void run() {
@@ -86,7 +79,7 @@ public class StatsActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         Toolbar navtoolbar = findViewById(R.id.navtoolbar);
         drawerLayout = findViewById(R.id.drawer);
-        CardView current = findViewById(R.id.current);
+//        CardView current = findViewById(R.id.current);
         sorting = findViewById(R.id.sorting_bottom);
         memory = findViewById(R.id.memory_bottom);
         exportFab = findViewById(R.id.exportFab);
@@ -108,22 +101,38 @@ public class StatsActivity extends AppCompatActivity {
         navActionBarDrawerToggle.getDrawerArrowDrawable().setColor(getColor(android.R.color.white));
 
 
-        final NavAdapter adapter = new NavAdapter(this);
+        final NavAdapter adapter = new NavAdapter(this, rv);
 
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        current.setOnClickListener(view -> {
-            drawerLayout.closeDrawer(GravityCompat.START);
+        rv.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {}
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
         });
+//        current.setOnClickListener(view -> {
+//            drawerLayout.closeDrawer(GravityCompat.START);
+//        });
 
         currentUser.observe(this, user -> {
             if (user != null) {
                 drawerLayout.closeDrawer(GravityCompat.START);
-                ((TextView) findViewById(R.id.nameView)).setText(user.getName());
-                ((ImageView) findViewById(R.id.imageView)).setImageResource(getResources().getIdentifier("pfp_" + user.getAvatar(), "drawable", "com.example.bullseye_android"));
                 toolbar.setTitle(getString(R.string.stats_header, user.getName()));
+                adapter.setFirst(user);
             }
             tab.setValue(MEMORY);
+        });
+
+        currentUser.observe(this, user -> {
+
         });
 
         tab.observe(this, integer -> {
@@ -150,10 +159,9 @@ public class StatsActivity extends AppCompatActivity {
             }
         });
 
-        /* addition point */
-        users.observe(this, users -> {
-            adapter.setUsers(users);
-        });
+//        users.observe(this, users -> {
+//            adapter.setUsers(users);
+//        });
 
         memory.setOnClickListener(view -> {
             tab.setValue(MEMORY);

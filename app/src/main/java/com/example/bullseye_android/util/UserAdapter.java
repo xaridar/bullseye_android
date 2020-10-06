@@ -87,7 +87,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 }
             }
             users.getValue().removeAll(remove);
-            activeUsers.set(0, this.first);
+            activeUsers.add(0, this.first);
             notifyDataSetChanged();
         }
     }

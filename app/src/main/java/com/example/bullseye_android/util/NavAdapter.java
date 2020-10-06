@@ -1,106 +1,125 @@
-// Elliot wrote
 package com.example.bullseye_android.util;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.activities.StatsActivity;
 import com.example.bullseye_android.database.User;
+import com.example.bullseye_android.database.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NavAdapter extends RecyclerView.Adapter<NavAdapter.NavViewHolder> {
-    private final LayoutInflater mInflater;
-    private List<User> users = new ArrayList<>();
-    private Context context;
-    private User current;
 
-    public NavAdapter(Context context) {
-        mInflater = LayoutInflater.from(context);
-        this.context = context;
-    }
+    private LayoutInflater mInflater;
+    private UserViewModel userViewModel;
+    private LiveData<List<User>> users;
+    private List<User> activeUsers = new ArrayList<>();
+    private Context ctx;
+    private User first;
+    private RecyclerView rv;
 
-    public void setUsers(List<User> users) {
-        if (users != null) {
+    public NavAdapter(AppCompatActivity activity, RecyclerView rv) {
+        mInflater = LayoutInflater.from(activity);
+        userViewModel = ViewModelProviders.of(activity).get(UserViewModel.class);
+        users = userViewModel.getUsers();
+        users.observe(activity, users -> {
+            List<User> remove = new ArrayList<>();
             for (User user : users) {
-                if (!user.isAdmin()) {
-                    this.users.add(user);
+                if (user.isAdmin()) {
+                    remove.add(user);
+                } else if (this.first != null && user.getId() == this.first.getId()) {
+                    remove.add(user);
                 }
             }
-
-        } else {
-            this.users = new ArrayList<>();
-        }
-        if (this.users.size() > 0) {
-            if (current == null) {
-                current = this.users.get(0);
+            users.removeAll(remove);
+            activeUsers = users;
+            if (this.first != null) {
+                activeUsers.add(0, this.first);
+            } else {
+                ((StatsActivity) activity).changeFirst(activeUsers.get(0));
             }
-            removeUser(current);
-            ((StatsActivity) context).changeFirst(current);
-        }
+            notifyDataSetChanged();
+        });
+        ctx = activity;
+        this.rv = rv;
     }
 
     @NonNull
     @Override
     public NavViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.nav_item, parent, false);
+        Log.i("HH", parent.toString());
         return new NavViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final NavViewHolder holder, int position) {
-        final User user = users.get(position);
-        holder.image.setImageResource(context.getResources().getIdentifier("pfp_" + user.getAvatar(), "drawable", "com.example.bullseye_android"));
-        holder.nameText.setText(user.getName());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addUser(current);
-                current = user;
-                removeUser(current);
-                ((StatsActivity) context).changeFirst(current);
-            }
+    public void onBindViewHolder(@NonNull NavViewHolder holder, int position) {
+        if (position == 0) {
+            ((CardView) holder.itemView).setCardBackgroundColor(ctx.getColor(R.color.color2));
+            CardView.LayoutParams params = new CardView.LayoutParams(dpToPixels(60), dpToPixels(60));
+            params.setMargins(dpToPixels(15), dpToPixels(10), dpToPixels(50), dpToPixels(10));
+            holder.avatar.setLayoutParams(params);
+
+            holder.name.setTextColor(ctx.getColor(R.color.color5));
+            holder.name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+        }
+        User user = activeUsers.get(position);
+        holder.name.setText(user.getName());
+        holder.avatar.setImageResource(ctx.getResources().getIdentifier("pfp_" + user.getAvatar(), "drawable", "com.example.bullseye_android"));
+        holder.itemView.setOnClickListener(view -> {
+            ((StatsActivity) ctx).changeFirst(user);
         });
-    }
-
-    public void removeUser(User name) {
-        users.remove(name);
-        notifyDataSetChanged();
-    }
-
-    public void addUser(User name) {
-        users.add(name);
-        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return activeUsers.size();
     }
 
-    public User getCurrent() {
-        return current;
+    public void setFirst(User first) {
+        this.first = first;
+        if (users.getValue() != null && this.first != null) {
+            List<User> remove = new ArrayList<>();
+            for (User user : users.getValue()) {
+                if (user.isAdmin() || user.getId() == this.first.getId()) {
+                    remove.add(user);
+                }
+            }
+            users.getValue().removeAll(remove);
+            activeUsers.add(0, this.first);
+            notifyDataSetChanged();
+        }
     }
 
-    static class NavViewHolder extends RecyclerView.ViewHolder {
+    private int dpToPixels(int dp) {
+        return dp * (ctx.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
 
-        private TextView nameText;
-        private ImageView image;
+    public static class NavViewHolder extends RecyclerView.ViewHolder {
+        private TextView name;
+        private ImageView avatar;
 
-        private NavViewHolder(View itemView) {
+        public NavViewHolder(@NonNull View itemView) {
             super(itemView);
-            nameText = itemView.findViewById(R.id.nameView);
-            image = itemView.findViewById(R.id.imageView);
+            name = itemView.findViewById(R.id.nameView);
+            avatar = itemView.findViewById(R.id.imageView);
         }
     }
 }
