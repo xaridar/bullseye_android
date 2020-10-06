@@ -47,11 +47,14 @@ public class AdminSettingsActivity extends AppCompatActivity {
         Button manageProfiles = findViewById(R.id.manageProfiles);
         Button backToDashboard = findViewById(R.id.backToDashboard);
         Button deleteProgress = findViewById(R.id.deleteProgress);
-        CheckBox togglePass = findViewById(R.id.togglePass);
-        EditText password = findViewById(R.id.password);
+        Button changePassword = findViewById(R.id.changePassword);
 
-        password.setText(admin.getPassword());
-
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //moves to change password activity
+            }
+        });
         manageProfiles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +85,5 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 warning.show();
             }
         });
-        togglePass.setOnClickListener(new ShowPassListener(password, togglePass));
     }
 }

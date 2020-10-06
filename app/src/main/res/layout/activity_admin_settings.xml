@@ -7,40 +7,6 @@
     android:background="@color/color1"
     tools:context=".activities.AdminSettingsActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="50dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings">
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:autofillHints="@string/password"
-            android:ems="10"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:textColor="@color/color4"
-            android:theme="@style/SignInText" />
-
-        <CheckBox
-            android:id="@+id/togglePass"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:button="@drawable/selector_check"
-            android:buttonTint="@color/color4"
-            android:theme="@style/CheckBox" />
-
-    </LinearLayout>
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/manageProfiles"
         android:layout_width="211dp"
@@ -58,6 +24,25 @@
         app:layout_constraintBottom_toTopOf="@+id/backToDashboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/color5" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/changePassword"
+        android:layout_width="211dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:letterSpacing="0.02"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/change_password"
+        android:textAllCaps="false"
+        android:textColor="@color/color1"
+        android:textSize="20sp"
+        app:cornerRadius="11dp"
+        app:layout_constraintBottom_toTopOf="@+id/manageProfiles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:rippleColor="@color/color5" />
 
     <com.google.android.material.button.MaterialButton
@@ -98,17 +83,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/color5" />
-
-    <TextView
-        android:id="@+id/settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/change_password"
-        android:textColor="@color/color4"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

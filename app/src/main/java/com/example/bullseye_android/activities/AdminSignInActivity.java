@@ -1,12 +1,18 @@
 // Aakash coded and created layout
 package com.example.bullseye_android.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.database.Admin;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
@@ -33,6 +40,7 @@ public class AdminSignInActivity extends AppCompatActivity {
     UserViewModel mUserViewModel;
     Button button;
     EditText name;
+    TextView forgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +68,28 @@ public class AdminSignInActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         togglePass.setOnClickListener(new ShowPassListener(pass, togglePass));
         button = findViewById(R.id.btn);
+        forgotPassword = findViewById(R.id.textView11);
 
         pass.setOnEditorActionListener(new ContinueFromEditTextListener(button));
 
+        String text = "Forgot Password";
+
+        SpannableString spannableString = new SpannableString(text);
+        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getColor(R.color.color3));
+        BackgroundColorSpan backgroundColorSpan = new BackgroundColorSpan(getColor(R.color.color1));
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                Intent intent = new Intent(AdminSignInActivity.this, AdminForgotPassword.class);
+                startActivity(intent);
+            }
+        };
+        spannableString.setSpan(clickableSpan, 0, text.length(), 0);
+        spannableString.setSpan(foregroundColorSpan, 0, text.length(), 0);
+        spannableString.setSpan(backgroundColorSpan, 0, text.length(), 0);
+
+        forgotPassword.setText(spannableString);
+        forgotPassword.setMovementMethod(LinkMovementMethod.getInstance());
         button.setOnClickListener((view) -> {
             if (name.getText().toString().equals("")) {
                 createDialogue("The name field cannot be empty.");

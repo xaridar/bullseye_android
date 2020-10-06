@@ -10,8 +10,20 @@
         android:roundIcon="@mipmap/bullseye_logo_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialThemeWithActionBar">
-        <activity android:name=".games.memory.MemoryActivity" android:theme="@style/Game"/>
-        <activity android:name=".games.sorting.SortingActivity" android:theme="@style/Game"/>
+        <activity
+            android:name=".activities.AdminForgotPassword"
+            android:theme="@style/MaterialThemeWithActionBar"
+            android:label="Forgot Password" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.AdminSignInActivity" />
+        </activity>
+        <activity
+            android:name=".games.memory.MemoryActivity"
+            android:theme="@style/Game" />
+        <activity
+            android:name=".games.sorting.SortingActivity"
+            android:theme="@style/Game" />
         <activity
             android:name=".activities.MoreUsersActivity"
             android:label="All Users"
@@ -57,9 +69,10 @@
         <activity
             android:name=".activities.UserSignUpActivity"
             android:label="User Sign Up"
-            android:theme="@style/MaterialThemeWithActionBar" >
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.UsersActivity"/>
+            android:theme="@style/MaterialThemeWithActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.UsersActivity" />
         </activity>
         <activity
             android:name=".activities.AdminSettingsActivity"
@@ -89,9 +102,10 @@
         <activity
             android:name=".activities.AdminSignInActivity"
             android:label="Admin Sign In"
-            android:theme="@style/MaterialThemeWithActionBar" >
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.UsersActivity"/>
+            android:theme="@style/MaterialThemeWithActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.UsersActivity" />
         </activity>
         <activity
             android:name=".activities.UsersActivity"

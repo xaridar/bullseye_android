@@ -69,4 +69,6 @@
     <string name="average_time">Average Time: %1$s</string>
     <string name="accuracy">Accuracy: %1$s</string>
     <string name="high_score_stats">High Score: %1$s</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="send_support_email">Send Support Email</string>
 </resources>
