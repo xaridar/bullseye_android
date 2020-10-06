@@ -66,7 +66,7 @@
     <string name="add_user">Add User</string>
     <string name="high_score_00_00">High Score: 00:00</string>
     <string name="games_played">Games Played: %1$s</string>
-    <string name="average_time">Average Time: %1$s</string>
+    <string name="average_time">Play Time: %1$s</string>
     <string name="accuracy">Accuracy: %1$s</string>
     <string name="high_score_stats">High Score: %1$s</string>
     <string name="enter_email">Enter Email</string>

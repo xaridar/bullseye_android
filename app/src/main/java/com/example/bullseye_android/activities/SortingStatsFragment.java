@@ -48,7 +48,24 @@ public class SortingStatsFragment extends Fragment {
     }
 
     public void run (View view) {
-
+        TextView slow_games_played = view.findViewById(R.id.slow_games_played);
+        TextView slow_high_score = view.findViewById(R.id.slow_high_score);
+        TextView slow_average_time = view.findViewById(R.id.slow_average_time);
+        TextView slow_accuracy = view.findViewById(R.id.slow_accuracy);
+        TextView fast_games_played = view.findViewById(R.id.fast_games_played);
+        TextView fast_high_score = view.findViewById(R.id.fast_high_score);
+        TextView fast_average_time = view.findViewById(R.id.fast_average_time);
+        TextView fast_accuracy = view.findViewById(R.id.fast_accuracy);
+        TextView points = view.findViewById(R.id.points);
+        points.setText(user.getFocusPoints()[User.ALL_GAMES] + "");
+        slow_games_played.setText(getString(R.string.games_played, user.getGamesPlayed()[User.GAME_SORTING_SLOW] + ""));
+        slow_high_score.setText(getString(R.string.high_score_stats, user.getHighScores()[User.GAME_SORTING_SLOW] + ""));
+        slow_average_time.setText(getString(R.string.average_time, user.getPlayTime()[User.GAME_SORTING_SLOW] + ""));
+        slow_accuracy.setText(getString(R.string.accuracy, user.getAccuracy()[User.GAME_SORTING_SLOW] + ""));
+        fast_games_played.setText(getString(R.string.games_played, user.getGamesPlayed()[User.GAME_SORTING_FAST] + ""));
+        fast_high_score.setText(getString(R.string.high_score_stats, user.getHighScores()[User.GAME_SORTING_FAST] + ""));
+        fast_average_time.setText(getString(R.string.average_time, user.getPlayTime()[User.GAME_SORTING_FAST] + ""));
+        fast_accuracy.setText(getString(R.string.accuracy, user.getAccuracy()[User.GAME_SORTING_FAST] + ""));
     }
 
     @Override

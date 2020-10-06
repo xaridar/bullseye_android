@@ -15,6 +15,8 @@ import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserSerializable;
 
+import org.w3c.dom.Text;
+
 public class MemoryStatsFragment extends Fragment {
 
     private static final String ARG_USER = "user";
@@ -49,7 +51,32 @@ public class MemoryStatsFragment extends Fragment {
     }
 
     public void run (View view) {
-
+        TextView easy_games_played = view.findViewById(R.id.easy_games_played);
+        TextView easy_high_score = view.findViewById(R.id.easy_high_score);
+        TextView easy_average_time = view.findViewById(R.id.easy_average_time);
+        TextView easy_accuracy = view.findViewById(R.id.easy_accuracy);
+        TextView medium_games_played = view.findViewById(R.id.medium_games_played);
+        TextView medium_high_score = view.findViewById(R.id.medium_high_score);
+        TextView medium_average_time = view.findViewById(R.id.medium_average_time);
+        TextView medium_accuracy = view.findViewById(R.id.medium_accuracy);
+        TextView difficult_games_played = view.findViewById(R.id.difficult_games_played);
+        TextView difficult_high_score = view.findViewById(R.id.difficult_high_score);
+        TextView difficult_average_time = view.findViewById(R.id.difficult_average_time);
+        TextView difficult_accuracy = view.findViewById(R.id.difficult_accuracy);
+        TextView points = view.findViewById(R.id.points);
+        points.setText(user.getFocusPoints()[User.ALL_GAMES] + "");
+        easy_games_played.setText(getString(R.string.games_played, user.getGamesPlayed()[User.GAME_MEMORY_EASY] + ""));
+        easy_high_score.setText(getString(R.string.high_score_stats, user.getHighScores()[User.GAME_MEMORY_EASY] + ""));
+        easy_average_time.setText(getString(R.string.average_time, user.getPlayTime()[User.GAME_MEMORY_EASY] + ""));
+        easy_accuracy.setText(getString(R.string.accuracy, user.getAccuracy()[User.GAME_MEMORY_EASY] + ""));
+        medium_games_played.setText(getString(R.string.games_played, user.getGamesPlayed()[User.GAME_MEMORY_NORMAL] + ""));
+        medium_high_score.setText(getString(R.string.high_score_stats, user.getHighScores()[User.GAME_MEMORY_NORMAL] + ""));
+        medium_average_time.setText(getString(R.string.average_time, user.getPlayTime()[User.GAME_MEMORY_NORMAL] + ""));
+        medium_accuracy.setText(getString(R.string.accuracy, user.getAccuracy()[User.GAME_MEMORY_NORMAL] + ""));
+        difficult_games_played.setText(getString(R.string.games_played, user.getGamesPlayed()[User.GAME_MEMORY_HARD] + ""));
+        difficult_high_score.setText(getString(R.string.high_score_stats, user.getHighScores()[User.GAME_MEMORY_HARD] + ""));
+        difficult_average_time.setText(getString(R.string.average_time, user.getPlayTime()[User.GAME_MEMORY_HARD] + ""));
+        difficult_accuracy.setText(getString(R.string.accuracy, user.getAccuracy()[User.GAME_MEMORY_HARD] + ""));
     }
 
     @Override
