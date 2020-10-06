@@ -387,8 +387,8 @@ public class SortingActivity extends AppCompatActivity {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             view.performClick();
             ClipData data = ClipData.newPlainText("", "");
-            View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-            view.startDragAndDrop(data, shadowBuilder, view, 0);
+            //View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+            //view.startDragAndDrop(data, shadowBuilder, view, 0);
             view.setVisibility(View.INVISIBLE);
             layout.setOnDragListener((view1, dragEvent) -> {
                 if (dragEvent.getAction() == DragEvent.ACTION_DROP) {
