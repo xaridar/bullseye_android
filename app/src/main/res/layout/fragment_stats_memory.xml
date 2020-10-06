@@ -144,7 +144,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
-        android:id="@+id/easy_games played"
+        android:id="@+id/easy_games_played"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Games Played:"
@@ -157,9 +157,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="High Score:"
-        app:layout_constraintEnd_toEndOf="@+id/easy_games played"
-        app:layout_constraintStart_toStartOf="@+id/easy_games played"
-        app:layout_constraintTop_toBottomOf="@+id/easy_games played" />
+        app:layout_constraintEnd_toEndOf="@+id/easy_games_played"
+        app:layout_constraintStart_toStartOf="@+id/easy_games_played"
+        app:layout_constraintTop_toBottomOf="@+id/easy_games_played" />
 
     <TextView
         android:id="@+id/easy_average_time"

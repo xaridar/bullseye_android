@@ -49,7 +49,7 @@ public class MemoryStatsFragment extends Fragment {
     }
 
     public void run (View view) {
-        ((TextView) view.findViewById(R.id.points)).setText(String.valueOf(user.getFocusPoints()[User.ALL_GAMES]));
+
     }
 
     @Override
