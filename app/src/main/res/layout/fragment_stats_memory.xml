@@ -106,6 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/memory"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
@@ -120,6 +121,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="70dp"
         android:text="Easy"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -130,6 +132,7 @@
         android:layout_marginTop="70dp"
         android:layout_marginEnd="100dp"
         android:text="Medium"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -139,6 +142,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="220dp"
         android:text="Difficult"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -147,7 +151,7 @@
         android:id="@+id/easy_games_played"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Games Played:"
+        android:text="@string/games_played"
         app:layout_constraintEnd_toEndOf="@+id/textView7"
         app:layout_constraintStart_toStartOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
@@ -165,7 +169,7 @@
         android:id="@+id/easy_average_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Average Time:"
+        android:text="@string/average_time"
         app:layout_constraintEnd_toEndOf="@+id/easy_high_score"
         app:layout_constraintStart_toStartOf="@+id/easy_high_score"
         app:layout_constraintTop_toBottomOf="@+id/easy_high_score" />
@@ -174,18 +178,9 @@
         android:id="@+id/easy_accuracy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Accuracy:"
+        android:text="@string/accuracy"
         app:layout_constraintEnd_toEndOf="@+id/easy_average_time"
         app:layout_constraintStart_toStartOf="@+id/easy_average_time"
         app:layout_constraintTop_toBottomOf="@+id/easy_average_time" />
 
-    <Button
-        android:id="@+id/memory_export"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="25dp"
-        android:text="Export"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
