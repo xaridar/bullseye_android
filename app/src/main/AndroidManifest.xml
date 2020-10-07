@@ -111,6 +111,8 @@
             android:name=".activities.UsersActivity"
             android:label="Users"
             android:theme="@style/MaterialThemeWithActionBar" />
+        <activity android:name=".games.sorting.SortingCopy" android:theme="@style/Game"
+            />
     </application>
 
 </manifest>
