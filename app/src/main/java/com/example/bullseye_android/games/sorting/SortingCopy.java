@@ -4,12 +4,15 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.gesture.GestureLibraries;
+import android.gesture.GestureUtils;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.DragEvent;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +24,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.view.GestureDetector;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -43,11 +46,11 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SortingActivity extends AppCompatActivity {
+public class SortingCopy extends AppCompatActivity {
 
     private ConstraintLayout layout;
 
-    final ListenerManager listenerManager = new ListenerManager();
+    final ListenerManager listenerManager = new ListenerManager(this);
     private int backCount;
     private Toast toast;
 
@@ -76,7 +79,7 @@ public class SortingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sorting);
+        setContentView(R.layout.copy_sorting);
 
         prefs = getSharedPreferences("userID", MODE_PRIVATE);
         long id = prefs.getLong("id", 0);
@@ -86,7 +89,7 @@ public class SortingActivity extends AppCompatActivity {
         mUser.observe(this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                SortingActivity.this.user = user;
+                SortingCopy.this.user = user;
                 mUser.removeObserver(this);
                 run();
             }
@@ -162,9 +165,12 @@ public class SortingActivity extends AppCompatActivity {
                         new Timer().schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                countdown.setVisibility(View.INVISIBLE);
-                                countdown.setText("");
-                                runOnUiThread(SortingActivity.this::startGame);
+
+                                runOnUiThread(() -> {
+                                    countdown.setVisibility(View.INVISIBLE);
+                                    countdown.setText("");
+                                });
+                                runOnUiThread(SortingCopy.this::startGame);
                             }
                         }, 1000);
                     }
@@ -200,7 +206,7 @@ public class SortingActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     millis[0]++;
                     if (millis[0] % delay[0] == 0) {
-                        SpawnTask task = new SpawnTask(SortingActivity.this, views);
+                        SpawnTask task = new SpawnTask(SortingCopy.this, views);
                         timer1.schedule(task, 0);
                         if (dropSpeed[0] > 3) {
                             dropSpeed[0] -= 0.05;
@@ -222,7 +228,7 @@ public class SortingActivity extends AppCompatActivity {
                     lives[0] = (int) objs.get("lives");
                     livesLayout.removeAllViews();
                     for (int i = 0; i < lives[0]; i++) {
-                        ImageView heart = new ImageView(SortingActivity.this);
+                        ImageView heart = new ImageView(SortingCopy.this);
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         params.weight = 1;
                         heart.setLayoutParams(params);
@@ -271,8 +277,8 @@ public class SortingActivity extends AppCompatActivity {
         String side;
         List<ImageButton> delete = new ArrayList<>();
         for (ImageButton imageButton : views) {
-            DragListen dragListen = listenerManager.map.get(imageButton);
-            if (dragListen != null) {
+            OnSwipeTouchListen touchListen = listenerManager.map.get(imageButton);
+            if (touchListen != null) {
                 if (imageButton.getVisibility() == View.VISIBLE && ((ConstraintLayout.LayoutParams) imageButton.getLayoutParams()).topMargin >= height - (((ConstraintLayout.LayoutParams) despawn.getLayoutParams()).bottomMargin + 225)) {
                     side = "bottom";
                     delete.add(imageButton);
@@ -281,9 +287,9 @@ public class SortingActivity extends AppCompatActivity {
                         lives--;
                     }
                     sent++;
-                } else if(imageButton.getVisibility() == View.INVISIBLE && !dragListen.colorHit.equals("")) {
+                } else if(imageButton.getVisibility() == View.INVISIBLE && !touchListen.colorHit.equals("")) {
                     if (listenerManager.map.get(imageButton) != null) {
-                        side = dragListen.colorHit;
+                        side = touchListen.colorHit;
                         delete.add(imageButton);
                         layout.removeView(imageButton);}
                     else{
@@ -346,7 +352,7 @@ public class SortingActivity extends AppCompatActivity {
                 ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(size, size);
                 String color = colors[random.nextInt(colors.length)];
                 imageButton.setBackgroundTintList(ColorStateList.valueOf(color.equals("pink") ? getColor(R.color.color3) : color.equals("brown") ? getColor(R.color.color5): getColor(android.R.color.black)));
-                imageButton.setBackground(ContextCompat.getDrawable(SortingActivity.this, R.drawable.ic_circle));
+                imageButton.setBackground(ContextCompat.getDrawable(SortingCopy.this, R.drawable.ic_circle));
                 imageButton.setId(View.generateViewId());
                 layout.addView(imageButton);
                 params.endToEnd = ConstraintSet.PARENT_ID;
@@ -363,47 +369,75 @@ public class SortingActivity extends AppCompatActivity {
     }
 
     class ListenerManager {
-        public Map<ImageButton, DragListen> map;
-        public ListenerManager() {
+        Context c;
+        public Map<ImageButton, OnSwipeTouchListen> map;
+        public ListenerManager(Context c) {
             map = new HashMap<>();
+            this.c = c;
         }
 
         public void addListener(ImageButton button) {
-            DragListen listener = new DragListen();
+            OnSwipeTouchListen listener = new OnSwipeTouchListen(c);
             map.put(button, listener);
             button.setOnTouchListener(listener);
         }
     }
 
-    class DragListen implements View.OnTouchListener {
+    class OnSwipeTouchListen implements View.OnTouchListener {
 
         public String colorHit;
+        private GestureDetector gestureDetector;
 
-        public DragListen () {
+        public OnSwipeTouchListen(Context c) {
+            gestureDetector = new GestureDetector(c, new GestureListener());
             colorHit = "";
         }
 
-        @Override
+
+
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            view.performClick();
-            ClipData data = ClipData.newPlainText("", "");
-            //View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-            //view.startDragAndDrop(data, shadowBuilder, view, 0);
-            view.setVisibility(View.INVISIBLE);
-            layout.setOnDragListener((view1, dragEvent) -> {
-                if (dragEvent.getAction() == DragEvent.ACTION_DROP) {
-                    if (inViewInBounds(findViewById(R.id.bucket_left), (int) dragEvent.getX(), (int) dragEvent.getY())) {
-                        colorHit = "left";
-                        //} else if (inViewInBounds(findViewById(R.id.bucket_right), (int) dragEvent.getX(), (int) dragEvent.getY())) {
-                        colorHit = "right";
-                    } else {
-                        view.setVisibility(View.VISIBLE);
-                        colorHit = "bottom";
+
+            return gestureDetector.onTouchEvent(motionEvent);
+        }
+        private final class GestureListener extends
+                GestureDetector.SimpleOnGestureListener {
+            private static final int SWIPE_THRESHOLD = 100;
+            private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                try {
+                    float diffY = e2.getY() - e1.getY();
+                    float diffX = e2.getX() - e1.getX();
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (diffX > 0) {
+                                onSwipeRight();
+                            } else {
+                                onSwipeLeft();
+                            }
+                        }
                     }
+
+                } catch (Exception exception) {
+                    exception.printStackTrace();
                 }
-                return true;
-            });
-            return false;
+                return false;
+            }
+
+            public void onSwipeRight() {
+                colorHit = "right";
+            }
+
+            public void onSwipeLeft() {
+                colorHit = "left";
+            }
+
+            public void onSwipeDown() {
+                colorHit = "bottom";
+            }
+
+
         }
     }
 

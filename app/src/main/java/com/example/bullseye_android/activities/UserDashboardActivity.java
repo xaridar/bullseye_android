@@ -1,7 +1,6 @@
 //Dylan coded and created layout
 package com.example.bullseye_android.activities;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
@@ -12,7 +11,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
@@ -20,6 +18,7 @@ import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.memory.MemoryActivity;
 import com.example.bullseye_android.games.sorting.SortingActivity;
+import com.example.bullseye_android.games.sorting.SortingCopy;
 
 public class UserDashboardActivity extends AppCompatActivity {
     public static final int SETTINGS_REQ = 100;
@@ -67,7 +66,7 @@ public class UserDashboardActivity extends AppCompatActivity {
         sortingGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UserDashboardActivity.this, SortingActivity.class));
+                startActivity(new Intent(UserDashboardActivity.this, SortingCopy.class));
             }
         });
         settingsButton.setOnClickListener(new View.OnClickListener() {
