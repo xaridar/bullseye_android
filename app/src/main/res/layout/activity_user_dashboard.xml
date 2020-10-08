@@ -87,7 +87,7 @@
         android:letterSpacing="0.02"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="@string/log_out"
+        android:text="@string/back_to_login"
         android:textAllCaps="false"
         android:textColor="@color/color1"
         android:textSize="20sp"
@@ -95,6 +95,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/color5"
-        tools:text="Back to Login" />
+        app:rippleColor="@color/color5" />
 </androidx.constraintlayout.widget.ConstraintLayout>

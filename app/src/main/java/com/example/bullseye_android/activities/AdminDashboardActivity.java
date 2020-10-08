@@ -25,7 +25,6 @@ public class AdminDashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         UserViewModel mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         Fetcher.runNewAdminFetcher(mUserViewModel, this, user -> {
             if (user != null) {

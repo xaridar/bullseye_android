@@ -1,6 +1,7 @@
 //Dylan coded and created layout
 package com.example.bullseye_android.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -22,6 +23,7 @@ import com.example.bullseye_android.util.ShowPassListener;
 
 public class AdminSettingsActivity extends AppCompatActivity {
 
+    public static final int CHANGE_PASSWORD_REQ_CODE = 20;
     private UserViewModel mUserViewModel;
     private User admin;
 
@@ -52,13 +54,18 @@ public class AdminSettingsActivity extends AppCompatActivity {
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //moves to change password activity
+                Intent intent = new Intent(AdminSettingsActivity.this, ChangeStringActivity.class);
+                intent.putExtra("type", "password");
+                intent.putExtra("oldPassword", admin.getPassword());
+                startActivityForResult(intent, CHANGE_PASSWORD_REQ_CODE);
             }
         });
         manageProfiles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //moves to user delete activity
+                Intent intent = new Intent(AdminSettingsActivity.this, MoreUsersActivity.class);
+                intent.putExtra("MoreUsersContext", 1);
+                startActivity(intent);
             }
         });
         backToDashboard.setOnClickListener(new View.OnClickListener() {
@@ -85,5 +92,19 @@ public class AdminSettingsActivity extends AppCompatActivity {
                 warning.show();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && requestCode == CHANGE_PASSWORD_REQ_CODE){
+            if (data != null) {
+                String pass = data.getStringExtra("value");
+                if (pass != null) {
+                    admin.setPassword(pass);
+                    mUserViewModel.update(admin);
+                }
+            }
+        }
     }
 }

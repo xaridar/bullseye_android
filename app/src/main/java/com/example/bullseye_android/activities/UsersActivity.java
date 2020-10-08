@@ -231,7 +231,9 @@ public class UsersActivity extends AppCompatActivity {
             moreBtn.setAllCaps(false);
             moreBtn.setTextColor(getColor(R.color.color1));
             moreBtn.setOnClickListener(view -> {
-                startActivity(new Intent(UsersActivity.this, MoreUsersActivity.class));
+                Intent intent = new Intent(UsersActivity.this, MoreUsersActivity.class);
+                intent.putExtra("MoreUsersContext", 0);
+                startActivity(intent);
             });
 
             TextView text = new TextView(this);

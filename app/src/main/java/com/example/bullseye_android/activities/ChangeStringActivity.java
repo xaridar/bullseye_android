@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -91,6 +92,7 @@ public class ChangeStringActivity extends AppCompatActivity {
 
         button.setOnClickListener(view -> {
             if (type.equals("password")) {
+                Log.i("HH", oldPassword);
                 if (oldPasswordEditText.getText().toString().equals("")) {
                     createDialogue("Please input your existing password to change it.");
                     return;

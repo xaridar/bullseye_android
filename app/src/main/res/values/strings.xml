@@ -71,4 +71,5 @@
     <string name="high_score_stats">High Score: %1$s</string>
     <string name="enter_email">Enter Email</string>
     <string name="send_support_email">Send Support Email</string>
+    <string name="back_to_login">Back to Login</string>
 </resources>

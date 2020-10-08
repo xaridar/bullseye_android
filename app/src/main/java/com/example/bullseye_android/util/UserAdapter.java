@@ -1,6 +1,7 @@
 package com.example.bullseye_android.util;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +30,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private LiveData<List<User>> users;
     private List<User> activeUsers = new ArrayList<>();
     private Context ctx;
+    private int ctxint;
     private User first;
 
-    public UserAdapter(AppCompatActivity activity) {
+    public UserAdapter(AppCompatActivity activity, int context) {
         mInflater = LayoutInflater.from(activity);
         userViewModel = ViewModelProviders.of(activity).get(UserViewModel.class);
         users = userViewModel.getUsers();
@@ -52,6 +54,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             notifyDataSetChanged();
         });
         ctx = activity;
+        ctxint = context;
     }
 
     @NonNull
@@ -63,13 +66,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        if (position == 0) {
+        if (position == 0 && ctxint == 0) {
             ((CardView) holder.itemView).setCardBackgroundColor(ctx.getColor(R.color.color2));
         }
         User user = activeUsers.get(position);
         holder.name.setText(user.getName());
         holder.avatar.setImageResource(ctx.getResources().getIdentifier("pfp_" + user.getAvatar(), "drawable", "com.example.bullseye_android"));
-        holder.itemView.setOnClickListener(view -> ((MoreUsersActivity) ctx).startUser(user));
+        holder.itemView.setOnClickListener(view -> {
+            if (ctxint == 0) {
+                ((MoreUsersActivity) ctx).startUser(user);
+            }
+        });
+        holder.itemView.setOnLongClickListener(view -> {
+            if (ctxint == 1) {
+                userViewModel.remove(user);
+            }
+            return true;
+        });
     }
 
     @Override

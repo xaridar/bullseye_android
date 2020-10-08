@@ -53,7 +53,9 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.NavViewHolder> {
             if (this.first != null) {
                 activeUsers.add(0, this.first);
             } else {
-                ((StatsActivity) activity).changeFirst(activeUsers.get(0));
+                if(activeUsers.size() > 0){
+                    ((StatsActivity) activity).changeFirst(activeUsers.get(0));
+                }
             }
             notifyDataSetChanged();
         });
