@@ -1,30 +1,26 @@
 // Aakash coded and created layout
 package com.example.bullseye_android.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.bullseye_android.R;
-import com.example.bullseye_android.database.Admin;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
@@ -75,7 +71,6 @@ public class AdminSignInActivity extends AppCompatActivity {
         String text = "Forgot Password";
 
         SpannableString spannableString = new SpannableString(text);
-        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getColor(R.color.color3));
         BackgroundColorSpan backgroundColorSpan = new BackgroundColorSpan(getColor(R.color.color1));
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
@@ -83,9 +78,9 @@ public class AdminSignInActivity extends AppCompatActivity {
                 Intent intent = new Intent(AdminSignInActivity.this, AdminForgotPassword.class);
                 startActivity(intent);
             }
+            @Override public void updateDrawState(@NonNull TextPaint ds) {ds.setUnderlineText(false);ds.setColor(getColor(R.color.color3));}
         };
         spannableString.setSpan(clickableSpan, 0, text.length(), 0);
-        spannableString.setSpan(foregroundColorSpan, 0, text.length(), 0);
         spannableString.setSpan(backgroundColorSpan, 0, text.length(), 0);
 
         forgotPassword.setText(spannableString);

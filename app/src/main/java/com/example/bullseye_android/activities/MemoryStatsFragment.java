@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserSerializable;
+import com.example.bullseye_android.util.TimeFormatter;
 
 import org.w3c.dom.Text;
 
@@ -67,16 +68,16 @@ public class MemoryStatsFragment extends Fragment {
         TextView points = view.findViewById(R.id.points);
         points.setText(user.getFocusPoints()[User.ALL_GAMES] + "");
         easy_games_played.setText(getString(R.string.games_played, user.getGamesPlayed()[User.GAME_MEMORY_EASY] + ""));
-        easy_high_score.setText(getString(R.string.high_score_stats, user.getHighScores()[User.GAME_MEMORY_EASY] + ""));
-        easy_average_time.setText(getString(R.string.average_time, user.getPlayTime()[User.GAME_MEMORY_EASY] + ""));
+        easy_high_score.setText(getString(R.string.high_score_stats, TimeFormatter.autoFormatTime(user.getHighScores()[User.GAME_MEMORY_EASY])));
+        easy_average_time.setText(getString(R.string.average_time, TimeFormatter.autoFormatTime(user.getPlayTime()[User.GAME_MEMORY_EASY])));
         easy_accuracy.setText(getString(R.string.accuracy, user.getAccuracy()[User.GAME_MEMORY_EASY] + ""));
         medium_games_played.setText(getString(R.string.games_played, user.getGamesPlayed()[User.GAME_MEMORY_NORMAL] + ""));
-        medium_high_score.setText(getString(R.string.high_score_stats, user.getHighScores()[User.GAME_MEMORY_NORMAL] + ""));
-        medium_average_time.setText(getString(R.string.average_time, user.getPlayTime()[User.GAME_MEMORY_NORMAL] + ""));
+        medium_high_score.setText(getString(R.string.high_score_stats, TimeFormatter.autoFormatTime(user.getHighScores()[User.GAME_MEMORY_NORMAL])));
+        medium_average_time.setText(getString(R.string.average_time, TimeFormatter.autoFormatTime(user.getPlayTime()[User.GAME_MEMORY_NORMAL])));
         medium_accuracy.setText(getString(R.string.accuracy, user.getAccuracy()[User.GAME_MEMORY_NORMAL] + ""));
         difficult_games_played.setText(getString(R.string.games_played, user.getGamesPlayed()[User.GAME_MEMORY_HARD] + ""));
-        difficult_high_score.setText(getString(R.string.high_score_stats, user.getHighScores()[User.GAME_MEMORY_HARD] + ""));
-        difficult_average_time.setText(getString(R.string.average_time, user.getPlayTime()[User.GAME_MEMORY_HARD] + ""));
+        difficult_high_score.setText(getString(R.string.high_score_stats, TimeFormatter.autoFormatTime(user.getHighScores()[User.GAME_MEMORY_HARD])));
+        difficult_average_time.setText(getString(R.string.average_time, TimeFormatter.autoFormatTime(user.getPlayTime()[User.GAME_MEMORY_HARD])));
         difficult_accuracy.setText(getString(R.string.accuracy, user.getAccuracy()[User.GAME_MEMORY_HARD] + ""));
     }
 

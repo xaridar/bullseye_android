@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserSerializable;
+import com.example.bullseye_android.util.TimeFormatter;
 
 public class SortingStatsFragment extends Fragment {
 
@@ -60,12 +61,12 @@ public class SortingStatsFragment extends Fragment {
         TextView points = view.findViewById(R.id.points);
         points.setText(user.getFocusPoints()[User.ALL_GAMES] + "");
         slow_games_played.setText(getString(R.string.games_played, user.getGamesPlayed()[User.GAME_SORTING_SLOW] + ""));
-        slow_high_score.setText(getString(R.string.high_score_stats, user.getHighScores()[User.GAME_SORTING_SLOW] + ""));
-        slow_average_time.setText(getString(R.string.average_time, user.getPlayTime()[User.GAME_SORTING_SLOW] + ""));
+        slow_high_score.setText(getString(R.string.high_score_stats, TimeFormatter.autoFormatTime(user.getHighScores()[User.GAME_SORTING_SLOW])));
+        slow_average_time.setText(getString(R.string.average_time, TimeFormatter.autoFormatTime(user.getPlayTime()[User.GAME_SORTING_SLOW])));
         slow_accuracy.setText(getString(R.string.accuracy, user.getAccuracy()[User.GAME_SORTING_SLOW] + ""));
         fast_games_played.setText(getString(R.string.games_played, user.getGamesPlayed()[User.GAME_SORTING_FAST] + ""));
-        fast_high_score.setText(getString(R.string.high_score_stats, user.getHighScores()[User.GAME_SORTING_FAST] + ""));
-        fast_average_time.setText(getString(R.string.average_time, user.getPlayTime()[User.GAME_SORTING_FAST] + ""));
+        fast_high_score.setText(getString(R.string.high_score_stats, TimeFormatter.autoFormatTime(user.getHighScores()[User.GAME_SORTING_FAST])));
+        fast_average_time.setText(getString(R.string.average_time, TimeFormatter.autoFormatTime(user.getPlayTime()[User.GAME_SORTING_FAST])));
         fast_accuracy.setText(getString(R.string.accuracy, user.getAccuracy()[User.GAME_SORTING_FAST] + ""));
     }
 
