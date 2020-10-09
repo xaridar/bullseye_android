@@ -327,7 +327,6 @@ public class MemoryActivity extends AppCompatActivity {
             }, 600);
         }
     }
-
     public void setBoard(){
         List<MemoryCard> c = new ArrayList<>();
         List<String> types = new ArrayList<>();
