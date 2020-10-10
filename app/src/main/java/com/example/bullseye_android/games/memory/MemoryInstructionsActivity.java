@@ -1,4 +1,4 @@
-package com.example.bullseye_android.activities;
+package com.example.bullseye_android.games.memory;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
