@@ -6,11 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color4"
-<<<<<<< HEAD
     tools:context=".games.memory.MemoryInstructionsActivity">
-=======
-    tools:context=".activities.MemoryInstructionsActivity">
->>>>>>> 2b6b029566fc6c0f4564b2c2ef4043c0effd1130
 
     <TextView
         android:id="@+id/textView13"
@@ -84,11 +80,7 @@
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/roboto"
         android:gravity="center"
-<<<<<<< HEAD
         android:text="Uncover two of the same card in a row, and they'll disappear!"
-=======
-        android:text="Get two of the same card in a row, and they'll disappear!"
->>>>>>> 2b6b029566fc6c0f4564b2c2ef4043c0effd1130
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,26 +108,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-<<<<<<< HEAD
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="32dp"
-=======
         android:layout_marginTop="48dp"
-        android:layout_marginEnd="24dp"
->>>>>>> 2b6b029566fc6c0f4564b2c2ef4043c0effd1130
         android:fontFamily="@font/roboto"
         android:gravity="center"
         android:text="Click anywhere on this screen to go back to the game."
         android:textColor="@color/color1"
         android:textSize="24sp"
-<<<<<<< HEAD
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-=======
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
-</androidx.constraintlayout.widget.ConstraintLayout>
->>>>>>> 2b6b029566fc6c0f4564b2c2ef4043c0effd1130
