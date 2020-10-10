@@ -17,7 +17,6 @@ import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.memory.MemoryActivity;
-import com.example.bullseye_android.games.sorting.SortingActivity;
 import com.example.bullseye_android.games.sorting.SortingCopy;
 
 public class UserDashboardActivity extends AppCompatActivity {

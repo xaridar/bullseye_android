@@ -2,6 +2,7 @@ package com.example.bullseye_android.games.sorting;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.gesture.GestureLibraries;
@@ -324,6 +325,10 @@ public class SortingCopy extends AppCompatActivity {
         return objs;
     }
 
+    public void viewInstructions(View view) {
+        startActivity(new Intent(this, SortingInstructionsActivity.class));
+    }
+
     class DropTask extends TimerTask {
 
         public final List<ImageButton> views;
@@ -352,7 +357,7 @@ public class SortingCopy extends AppCompatActivity {
     public class SpawnTask extends TimerTask {
         private final Context context;
         public final List<ImageButton> views;
-        private final String[] colors = {"pink", "brown", "black"};
+        private final String[] colors = {"left", "right", "bottom"};
         private final Random random;
 
         public SpawnTask(Context ctx, List<ImageButton> imageButtons) {
@@ -367,7 +372,7 @@ public class SortingCopy extends AppCompatActivity {
                 ImageButton imageButton = new ImageButton(context);
                 ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(size, size);
                 String color = colors[random.nextInt(colors.length)];
-                imageButton.setBackgroundTintList(ColorStateList.valueOf(color.equals("pink") ? getColor(R.color.color3) : color.equals("brown") ? getColor(R.color.color5): getColor(android.R.color.black)));
+                imageButton.setBackgroundTintList(ColorStateList.valueOf(color.equals("left") ? getColor(R.color.sortingLeft) : color.equals("right") ? getColor(R.color.sortingRight): getColor(android.R.color.black)));
                 imageButton.setBackground(ContextCompat.getDrawable(SortingCopy.this, R.drawable.ic_circle));
                 imageButton.setId(View.generateViewId());
                 layout.addView(imageButton);
@@ -376,7 +381,7 @@ public class SortingCopy extends AppCompatActivity {
                 params.topToTop = ConstraintSet.PARENT_ID;
                 imageButton.setScaleType(ImageButton.ScaleType.FIT_CENTER);
                 imageButton.setLayoutParams(params);
-                imageButton.setContentDescription(color.equals("pink") ? "right" : color.equals("brown") ? "left" : "bottom");
+                imageButton.setContentDescription(color);
                 //listenerManager.addListener(imageButton);
                 views.add(imageButton);
                 rightArrow.setVisibility(View.INVISIBLE);
