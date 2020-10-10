@@ -5,25 +5,24 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color4"
+    android:background="@color/sortingBackground"
     tools:context=".games.sorting.SortingCopy">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/start"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:layout_marginStart="64dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="64dp"
         android:background="#97000000"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:visibility="invisible">
+        app:layout_constraintVertical_bias="0.0">
 
         <Button
             android:id="@+id/btn"
@@ -49,7 +48,6 @@
             android:layout_height="wrap_content"
             android:checkedButton="@+id/slow"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/speed">
@@ -78,6 +76,18 @@
                 android:text="@string/fast"
                 android:textColor="#FFFFFF" />
         </RadioGroup>
+
+        <Button
+            android:id="@+id/howto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:onClick="viewInstructions"
+            android:text="@string/how_to_play"
+            app:layout_constraintBottom_toTopOf="@+id/btn"
+            app:layout_constraintEnd_toEndOf="@+id/speedChoice"
+            app:layout_constraintStart_toStartOf="@+id/speedChoice"
+            app:layout_constraintTop_toBottomOf="@+id/speedChoice" />
 
         <TextView
             android:id="@+id/speed"
@@ -122,29 +132,52 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:contentDescription="@string/right_bucket_desc"
         android:id="@+id/bucket_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:background="@drawable/bucket_right"
-        app:backgroundTint="@color/color3"
+        android:contentDescription="@string/right_bucket_desc"
+        app:backgroundTint="@color/sortingRight"
         app:layout_constraintBottom_toTopOf="@+id/despawn"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
-        android:contentDescription="@string/left_bucket_desc"
         android:id="@+id/bucket_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:background="@drawable/bucket_left"
+        android:contentDescription="@string/left_bucket_desc"
         android:rotation="0"
         android:rotationX="0"
         android:rotationY="0"
-        app:backgroundTint="@color/color5"
+        app:backgroundTint="@color/sortingLeft"
         app:layout_constraintBottom_toTopOf="@+id/despawn"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/leftArrow"
+        android:layout_width="116dp"
+        android:layout_height="94dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="75dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/abc_vector_test" />
+
+    <ImageView
+        android:id="@+id/rightArrow"
+        android:layout_width="116dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="15dp"
+        android:scaleX="-1"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/abc_vector_test" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/finishedLayout"
@@ -177,8 +210,10 @@
             android:layout_marginBottom="128dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/finalTime"
@@ -199,7 +234,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/color3"
+                android:backgroundTint="@color/sortingRight"
                 android:fontFamily="@font/roboto"
                 android:paddingStart="15dp"
                 android:paddingTop="10dp"
@@ -207,7 +242,7 @@
                 android:paddingBottom="10dp"
                 android:text="@string/play_again"
                 android:textAllCaps="false"
-                android:textColor="@color/color5"
+                android:textColor="@color/sortingLeft"
                 android:textSize="24sp"
                 app:cornerRadius="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -220,7 +255,7 @@
                 android:id="@+id/backBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/color3"
+                android:backgroundTint="@color/sortingRight"
                 android:fontFamily="@font/roboto"
                 android:paddingStart="15dp"
                 android:paddingTop="10dp"
@@ -228,13 +263,14 @@
                 android:paddingBottom="10dp"
                 android:text="@string/back_to_dashboard"
                 android:textAllCaps="false"
-                android:textColor="@color/color5"
+                android:textColor="@color/sortingLeft"
                 android:textSize="24sp"
                 app:cornerRadius="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/playAgain" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -251,7 +287,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/despawn"/>
+        app:layout_constraintTop_toBottomOf="@+id/despawn" />
 
     <TextView
         android:id="@+id/time"

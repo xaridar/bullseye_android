@@ -24,9 +24,6 @@
             android:name=".games.memory.MemoryActivity"
             android:theme="@style/Game" />
         <activity
-            android:name=".games.sorting.SortingActivity"
-            android:theme="@style/Game" />
-        <activity
             android:name=".activities.MoreUsersActivity"
             android:label="All Users"
             android:theme="@style/MaterialThemeWithActionBar">
