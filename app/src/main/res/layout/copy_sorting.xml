@@ -146,6 +146,27 @@
         app:layout_constraintBottom_toTopOf="@+id/despawn"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:id="@+id/leftArrow"
+        android:layout_width="116dp"
+        android:layout_height="94dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="75dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/abc_vector_test" />
+
+    <ImageView
+        android:id="@+id/rightArrow"
+        android:layout_width="116dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="15dp"
+        android:scaleX="-1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/abc_vector_test" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/finishedLayout"
         android:layout_width="match_parent"
@@ -177,8 +198,10 @@
             android:layout_marginBottom="128dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/finalTime"
@@ -235,6 +258,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/playAgain" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

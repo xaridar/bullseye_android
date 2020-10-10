@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -50,7 +51,7 @@ public class SortingCopy extends AppCompatActivity {
 
     private ConstraintLayout layout;
 
-    final ListenerManager listenerManager = new ListenerManager(this);
+    //final ListenerManager listenerManager = new ListenerManager(this);
     private int backCount;
     private Toast toast;
 
@@ -66,6 +67,10 @@ public class SortingCopy extends AppCompatActivity {
     private Button backBtn;
     private Button playAgain;
     private TextView finalTime;
+    ImageView rightArrow;
+    ImageView leftArrow;
+    String colorHit;
+    GestureDetector gestureDetector;
 
     private SharedPreferences prefs;
     private int sent;
@@ -80,10 +85,11 @@ public class SortingCopy extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.copy_sorting);
-
         prefs = getSharedPreferences("userID", MODE_PRIVATE);
+        gestureDetector = new GestureDetector(this, new GestureListener());
         long id = prefs.getLong("id", 0);
-
+        rightArrow = findViewById(R.id.rightArrow);
+        leftArrow = findViewById(R.id.leftArrow);
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         LiveData<User> mUser = userViewModel.getUser(id);
         mUser.observe(this, new Observer<User>() {
@@ -97,7 +103,8 @@ public class SortingCopy extends AppCompatActivity {
     }
     public void run() {
 
-
+        rightArrow.setVisibility(View.INVISIBLE);
+        leftArrow.setVisibility(View.INVISIBLE);
         backCount = 0;
         toast = Toast.makeText(this, "Press the back button twice at any time to go back to the dashboard.", Toast.LENGTH_SHORT);
         toast.show();
@@ -277,29 +284,38 @@ public class SortingCopy extends AppCompatActivity {
         String side;
         List<ImageButton> delete = new ArrayList<>();
         for (ImageButton imageButton : views) {
-            OnSwipeTouchListen touchListen = listenerManager.map.get(imageButton);
-            if (touchListen != null) {
+           // OnSwipeTouchListen touchListen = listenerManager.map.get(imageButton);
+            //if (touchListen != null) {
                 if (imageButton.getVisibility() == View.VISIBLE && ((ConstraintLayout.LayoutParams) imageButton.getLayoutParams()).topMargin >= height - (((ConstraintLayout.LayoutParams) despawn.getLayoutParams()).bottomMargin + 225)) {
                     side = "bottom";
                     delete.add(imageButton);
                     layout.removeView(imageButton);
                     if (!side.contentEquals(imageButton.getContentDescription())) {
                         lives--;
+                    }else{
+                        correct ++;
                     }
                     sent++;
-                } else if(imageButton.getVisibility() == View.INVISIBLE && !touchListen.colorHit.equals("")) {
-                    if (listenerManager.map.get(imageButton) != null) {
-                        side = touchListen.colorHit;
-                        delete.add(imageButton);
-                        layout.removeView(imageButton);}
-                    else{
-                        lives--;
-                    }
-                    sent++;
-                    correct++;
-
                 }
-            }
+                else if(imageButton.getVisibility() == View.INVISIBLE && !colorHit.equals("")) {
+                    //if () {
+                        side = colorHit;
+                        delete.add(imageButton);
+                        layout.removeView(imageButton);
+                //}
+                 //   else{
+                      //  lives--;
+                   // }
+                    if (!side.contentEquals(imageButton.getContentDescription())) {
+                        lives--;
+                    }else{
+                        correct ++;
+                    }
+                    sent++;
+
+
+              }
+            //}
         }
         views.removeAll(delete);
         final HashMap<String, Object> objs = new HashMap<>();
@@ -361,14 +377,16 @@ public class SortingCopy extends AppCompatActivity {
                 imageButton.setScaleType(ImageButton.ScaleType.FIT_CENTER);
                 imageButton.setLayoutParams(params);
                 imageButton.setContentDescription(color.equals("pink") ? "right" : color.equals("brown") ? "left" : "bottom");
-                listenerManager.addListener(imageButton);
+                //listenerManager.addListener(imageButton);
                 views.add(imageButton);
+                rightArrow.setVisibility(View.INVISIBLE);
+                leftArrow.setVisibility(View.INVISIBLE);
             });
         }
 
     }
 
-    class ListenerManager {
+    /*class ListenerManager {
         Context c;
         public Map<ImageButton, OnSwipeTouchListen> map;
         public ListenerManager(Context c) {
@@ -381,42 +399,40 @@ public class SortingCopy extends AppCompatActivity {
             map.put(button, listener);
             button.setOnTouchListener(listener);
         }
+    }*/
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.i("dfd", event.toString());
+        return gestureDetector.onTouchEvent(event);
+
     }
 
-    class OnSwipeTouchListen implements View.OnTouchListener {
-
-        public String colorHit;
-        private GestureDetector gestureDetector;
-
-        public OnSwipeTouchListen(Context c) {
-            gestureDetector = new GestureDetector(c, new GestureListener());
-            colorHit = "";
-        }
-
-
-
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-
-            return gestureDetector.onTouchEvent(motionEvent);
-        }
-        private final class GestureListener extends
-                GestureDetector.SimpleOnGestureListener {
+    private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
             private static final int SWIPE_THRESHOLD = 100;
             private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return true;
+            }
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 try {
                     float diffY = e2.getY() - e1.getY();
                     float diffX = e2.getX() - e1.getX();
                     if (Math.abs(diffX) > Math.abs(diffY)) {
+                        View view = views.get(0);
                         if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                             if (diffX > 0) {
-                                onSwipeRight();
+                                onSwipeRight(view);
+
                             } else {
-                                onSwipeLeft();
+                                onSwipeLeft(view);
                             }
+                            return true;
+
                         }
+
                     }
 
                 } catch (Exception exception) {
@@ -425,21 +441,26 @@ public class SortingCopy extends AppCompatActivity {
                 return false;
             }
 
-            public void onSwipeRight() {
+            public void onSwipeRight(View view) {
                 colorHit = "right";
+                view.setVisibility(View.INVISIBLE);
+                rightArrow.setVisibility(View.VISIBLE);
             }
 
-            public void onSwipeLeft() {
+            public void onSwipeLeft(View view) {
                 colorHit = "left";
+                view.setVisibility(View.INVISIBLE);
+                leftArrow.setVisibility(View.VISIBLE);
             }
 
-            public void onSwipeDown() {
+            public void onSwipeDown(View view) {
                 colorHit = "bottom";
+                view.setVisibility(View.INVISIBLE);
             }
 
 
         }
-    }
+
 
     // thanks to AMD on stackoverflow for the solution https://stackoverflow.com/questions/17931816/how-to-tell-if-an-x-and-y-coordinate-are-inside-my-button
     private boolean inViewInBounds(View view, int x, int y) {
