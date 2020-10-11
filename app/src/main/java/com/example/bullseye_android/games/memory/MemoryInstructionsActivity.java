@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.example.bullseye_android.R;
 
-public class MemoryInstuctionsActivity extends AppCompatActivity {
+public class MemoryInstructionsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
