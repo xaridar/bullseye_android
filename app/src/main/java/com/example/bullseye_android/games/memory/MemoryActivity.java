@@ -312,7 +312,7 @@ public class MemoryActivity extends AppCompatActivity {
                     buttons[i].setBackgroundTintList(ColorStateList.valueOf(card.getBackColor()));
                     buttons[i].setImageResource(0);
                 } else {
-                    String img = "mem_img_" + card.getType().toLowerCase();
+                    String img = "ic_mem_img_" + card.getType().toLowerCase();
                     int res = getResources().getIdentifier(img, "drawable", "com.example.bullseye_android");
                     buttons[i].setBackgroundTintList(ColorStateList.valueOf(getColor(MemoryCard.FRONT_COLOR)));
                     buttons[i].setImageResource(res);

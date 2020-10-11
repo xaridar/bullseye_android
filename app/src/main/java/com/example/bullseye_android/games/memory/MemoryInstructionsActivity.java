@@ -26,7 +26,7 @@ public class MemoryInstructionsActivity extends AppCompatActivity {
         cards[0] = findViewById(R.id.imageButton2);
         cards[1] = findViewById(R.id.imageButton);
         colors = new int[]{R.color.memCardColor1, R.color.memCardColor2};
-        resIds = new int[]{R.drawable.mem_img_cow, R.drawable.mem_img_snake};
+        resIds = new int[]{R.drawable.ic_mem_img_cow, R.drawable.ic_mem_img_snake};
         ConstraintLayout page = findViewById(R.id.instructions);
         page.setOnClickListener(view -> {
             finish();
