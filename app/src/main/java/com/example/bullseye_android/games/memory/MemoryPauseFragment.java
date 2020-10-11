@@ -26,6 +26,7 @@ public class MemoryPauseFragment extends Fragment {
     ImageButton button;
     TextView text;
     int time;
+    Timer timer;
 
     public MemoryPauseFragment() { }
 
@@ -59,7 +60,7 @@ public class MemoryPauseFragment extends Fragment {
             text.setTextSize(250);
             button.setVisibility(View.INVISIBLE);
             text.setText(String.valueOf(time));
-            Timer timer = new Timer();
+            timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
@@ -89,6 +90,18 @@ public class MemoryPauseFragment extends Fragment {
 
         }
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        timer.cancel();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        timer.cancel();
     }
 
     public void exitPauseMenu(){

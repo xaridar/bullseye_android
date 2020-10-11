@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -64,7 +65,7 @@ public class MemoryActivity extends AppCompatActivity {
     private User user;
     private UserViewModel userViewModel;
     private int diffInt;
-    //    public MediaPlayer tonePlayer;
+    public MediaPlayer tonePlayer;
     private ArrayList<MemoryCard> shownCards = new ArrayList<>();
     Toast toast;
     int tries;
@@ -86,6 +87,7 @@ public class MemoryActivity extends AppCompatActivity {
                     if (view == buttons[i]) {
                         MemoryCard card = cards[(i - (i % cards[0].length)) / cards[0].length][i % cards[0].length];
                         if (card.isFaceDown()) {
+                            tonePlayer.start();
                             shownCards.add(card);
                             cardsUp++;
                             card.setFaceDown(false);
@@ -156,7 +158,7 @@ public class MemoryActivity extends AppCompatActivity {
     private void run() {
         backCount = 0;
 
-//        tonePlayer = MediaPlayer.create(MemoryActivity.this, R.raw.tone);
+        tonePlayer = MediaPlayer.create(MemoryActivity.this, R.raw.card_flip);
 
         toast = Toast.makeText(this, "Press the back button twice at any time to go back to the dashboard.", Toast.LENGTH_SHORT);
         toast.show();
@@ -288,6 +290,7 @@ public class MemoryActivity extends AppCompatActivity {
             btn.setPadding(10,0,10,0);
             columns[i % columns.length].addView(btn);
             buttons[i] = btn;
+            buttons[i].setSoundEffectsEnabled(false);
             buttons[i].setOnClickListener(cardListener);
         }
         showBoard();
