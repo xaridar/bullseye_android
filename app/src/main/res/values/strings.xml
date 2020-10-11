@@ -73,4 +73,6 @@
     <string name="send_support_email">Send Support Email</string>
     <string name="back_to_login">Back to Login</string>
     <string name="how_to_play">How To Play</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

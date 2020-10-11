@@ -1,8 +1,12 @@
 package com.example.bullseye_android.games.memory;
 
+import com.example.bullseye_android.R;
+
 public class MemoryCard {
     private String type;
-    public static String[] CARD_TYPES = {"Cow", "Sheep", "Horse", "Pig", "Dog", "Cat", "Human", "Chicken", "Llama", "Goat", "Duck", "Donkey", "Rabbit", "Deer", "Fish"};
+    private int backColor;
+    public static int FRONT_COLOR = R.color.memCardFront;
+    public static String[] CARD_TYPES = {"Caracal", "Cat", "Chicken", "Cow", "Dog", "Duck", "Fish", "Frog", "Horse", "Monkey", "Owl", "Panda", "Pig", "Rabbit", "Snake"};
     private boolean faceDown = true;
     public MemoryCard(String type) {
         this.type = type;
@@ -23,4 +27,11 @@ public class MemoryCard {
     public boolean isFaceDown() {
         return faceDown;
     }
+
+    public int getBackColor() { return backColor; }
+
+    public void setBackColor(int backColor) {
+        this.backColor = backColor;
+    }
+
 }
