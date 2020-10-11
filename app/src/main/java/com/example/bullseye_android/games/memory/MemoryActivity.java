@@ -1,10 +1,13 @@
 package com.example.bullseye_android.games.memory;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -48,8 +51,11 @@ public class MemoryActivity extends AppCompatActivity {
     private TextView finalTime;
     private TextView pairTxt;
     private TextView highScore;
+    private ImageButton pauseButton;
     private int time;
     private Timer timer;
+    private Timer cardTimer;
+    private boolean cardTimerOn;
     private Random random = new Random();
     private int cardsUp = 0;
     private int pairs;
@@ -63,6 +69,15 @@ public class MemoryActivity extends AppCompatActivity {
     Toast toast;
     int tries;
     private ImageButton lastCardSelected;
+    private int backCount;
+    private int cardColor1;
+    private int cardColor2;
+
+    // ====================================
+    // || Listener for card clicks       ||
+    // || - sets card to button clicked  ||
+    // || - sets card clicked to face up ||
+    // ====================================
     private View.OnClickListener cardListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -83,8 +98,10 @@ public class MemoryActivity extends AppCompatActivity {
 
         }
     };
-    private int  backCount;
 
+    //====================================================
+    //|| Checks for Wins, and displays win screen if so ||
+    //====================================================
     private void checkForWin() {
         for (MemoryCard[] card : cards) {
             for (MemoryCard memoryCard : card) {
@@ -123,6 +140,8 @@ public class MemoryActivity extends AppCompatActivity {
 
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
+
+
         LiveData<User> mUser = userViewModel.getUser(id);
         mUser.observe(this, new Observer<User>() {
             @Override
@@ -154,7 +173,11 @@ public class MemoryActivity extends AppCompatActivity {
         diff = findViewById(R.id.settingLayout);
         diff.setVisibility(View.VISIBLE);
         playBtn = findViewById(R.id.playBtn);
+        pauseButton = findViewById(R.id.pauseButton);
+        pauseButton.setVisibility(View.INVISIBLE);
         diffChoice = findViewById(R.id.diffButtons);
+        cardColor1 = getColor(R.color.memCardColor1);
+        cardColor2 = getColor(R.color.memCardColor2);
 
         playBtn.setOnClickListener(view -> {
             difficulty = ((RadioButton) findViewById(diffChoice.getCheckedRadioButtonId())).getText() + "";
@@ -177,11 +200,17 @@ public class MemoryActivity extends AppCompatActivity {
         findViewById(R.id.backBtn).setOnClickListener(view -> finish());
     }
 
+    // ================
+    // || Sets Score ||
+    // ================
     private void setScore() {
         String[] formattedTime = TimeFormatter.formatTime(user.getHighScores()[diffInt]);
         runOnUiThread(() -> highScore.setText(getString(R.string.high_score, formattedTime[0], formattedTime[1])));
     }
 
+    // ======================================================================
+    // || Initializes the game with parameters of X and Y board dimensions ||
+    // ======================================================================
     public void start(int y, int x) {
         setScore();
         tries = 0;
@@ -192,11 +221,14 @@ public class MemoryActivity extends AppCompatActivity {
         pairTxt.setText(getString(R.string.points, pairs));
         pairTxt.setVisibility(View.VISIBLE);
         time = 0;
+        cardTimerOn = false;
+        cardTimer = new Timer();
         cards = new MemoryCard[y][x];
         buttons = new ImageButton[cards.length * cards[0].length];
         columns = new LinearLayout[cards[0].length];
         board.setVisibility(View.VISIBLE);
         board.removeAllViews();
+        pauseButton.setVisibility(View.VISIBLE);
         for (int i = 0; i < columns.length; i++) {
             LinearLayout column = new LinearLayout(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -212,13 +244,14 @@ public class MemoryActivity extends AppCompatActivity {
         for(int i = 0; i < buttons.length; i++) {
             ImageButton btn = new ImageButton(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            MemoryCard card = cards[(i - (i % cards[0].length)) / cards[0].length][i % cards[0].length];
             switch (difficulty) {
                 case "Easy":
                     btn.setBackground(ContextCompat.getDrawable(this, R.drawable.corners_easy));
                     if (i % 2 == 0) {
-                        btn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.color3)));
+                        card.setBackColor(cardColor1);
                     } else {
-                        btn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.color5)));
+                        card.setBackColor(cardColor2);
                     }
                     params.setMargins(24, 20, 24, 20);
                     break;
@@ -226,15 +259,15 @@ public class MemoryActivity extends AppCompatActivity {
                     btn.setBackground(ContextCompat.getDrawable(this, R.drawable.corners_normal));
                     if ((i - (i % x)) % 8 == 0) {
                         if (i % 2 == 0) {
-                            btn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.color3)));
+                            card.setBackColor(cardColor1);
                         } else {
-                            btn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.color5)));
+                            card.setBackColor(cardColor2);
                         }
                     } else {
                         if (i % 2 == 1) {
-                            btn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.color3)));
+                            card.setBackColor(cardColor1);
                         } else {
-                            btn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.color5)));
+                            card.setBackColor(cardColor2);
                         }
                     }
                     params.setMargins(5, 10, 5, 10);
@@ -242,9 +275,9 @@ public class MemoryActivity extends AppCompatActivity {
                 case "Hard":
                     btn.setBackground(ContextCompat.getDrawable(this, R.drawable.corners_hard));
                     if (i % 2 == 0) {
-                        btn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.color3)));
+                        card.setBackColor(cardColor1);
                     } else {
-                        btn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.color5)));
+                        card.setBackColor(cardColor2);
                     }
                     params.setMargins(0, 10, 0, 10);
                     break;
@@ -252,36 +285,33 @@ public class MemoryActivity extends AppCompatActivity {
             params.weight = 1;
             btn.setLayoutParams(params);
             btn.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            btn.setPadding(10,0,10,0);
             columns[i % columns.length].addView(btn);
             buttons[i] = btn;
             buttons[i].setOnClickListener(cardListener);
         }
         showBoard();
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                time++;
-                runOnUiThread(() -> {
-                    String[] formattedTime1 = TimeFormatter.formatTime(time);
-                    timeTxt.setText(getString(R.string.time, formattedTime1[0], formattedTime1[1]));
-                });
-            }
-        }, 1000, 1000);
+        resetTimer();
     }
 
-
-
+    // =========================================
+    // || - Runs every time a card is clicked ||
+    // || - Sets correct stats for every card ||
+    // || - Handles pairs on a 600ms timer    ||
+    // =========================================
     private void showBoard() {
+        // Sets state for every card
         for (int i = 0; i < buttons.length; i++) {
             MemoryCard card = cards[(i - (i % cards[0].length)) / cards[0].length][(i % cards[0].length)];
             if (card != null) {
                 // image res for card back/front
                 if (card.isFaceDown()) {
+                    buttons[i].setBackgroundTintList(ColorStateList.valueOf(card.getBackColor()));
                     buttons[i].setImageResource(0);
                 } else {
-                    String img = "drawable/mem_img_" + card.getType().toLowerCase();
-                    int res = getResources().getIdentifier(img, null, "com.example.bullseye_android");
+                    String img = "mem_img_" + card.getType().toLowerCase();
+                    int res = getResources().getIdentifier(img, "drawable", "com.example.bullseye_android");
+                    buttons[i].setBackgroundTintList(ColorStateList.valueOf(getColor(MemoryCard.FRONT_COLOR)));
                     buttons[i].setImageResource(res);
                 }
             } else {
@@ -290,12 +320,16 @@ public class MemoryActivity extends AppCompatActivity {
                 buttons[i].setOnClickListener(null);
             }
         }
+        // Runs when a second card is clicked
         if (cardsUp >= 2) {
-            new Timer().schedule(new TimerTask() {
+            cardTimer = new Timer();
+            cardTimerOn = true;
+            cardTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    cardTimerOn = false;
                     runOnUiThread(() -> {
-                        if (shownCards.get(0).getType().equals(shownCards.get(1).getType())) {
+                        if (shownCards.get(0).getType().equals(shownCards.get(1).getType())) { // Both cards shown up are of the same type
 //                            tonePlayer.start();
                             for (int i = 0; i < shownCards.size(); i++) {
                                 for (int x = 0; x < cards.length; x++) {
@@ -327,13 +361,18 @@ public class MemoryActivity extends AppCompatActivity {
                     });
                 }
             }, 600);
+
         }
     }
+
+    // ========================
+    // || Inits board values ||
+    // ========================
     public void setBoard(){
         List<MemoryCard> c = new ArrayList<>();
         List<String> types = new ArrayList<>();
         for(int i = 0; i < ((cards.length * cards[0].length) / 2); i++){
-            boolean novel = false;
+            boolean novel = false; //Elliot couldn't use new for the variable name so he took out his thesaurus
             String type = null;
             while(!novel){
                 int randNum = random.nextInt(MemoryCard.getTypes().length);
@@ -363,7 +402,10 @@ public class MemoryActivity extends AppCompatActivity {
                 c.remove(num);
             }
         }
+
     }
+
+
     @Override
     public void onBackPressed() {
         backCount++;
@@ -388,5 +430,84 @@ public class MemoryActivity extends AppCompatActivity {
     public void finish() {
         userViewModel.update(user);
         super.finish();
+    }
+
+    public void howToPlay(View view) {
+        Intent intent = new Intent(MemoryActivity.this, MemoryInstructionsActivity.class);
+        startActivity(intent);
+    }
+
+    public void pause(View view) {
+        timer.cancel();
+        cardTimer.cancel();
+        for (ImageButton button : buttons) {
+            button.setEnabled(false);
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.memory_game, MemoryPauseFragment.newInstance()).commit();
+    }
+
+    public void unpause() {
+        resetTimer();
+        if (cardTimerOn){
+            cardTimer = new Timer();
+            cardTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    cardTimerOn = false;
+                    runOnUiThread(() -> {
+                        if (shownCards.get(0).getType().equals(shownCards.get(1).getType())) { // Both cards shown up are of the same type
+//                            tonePlayer.start();
+                            for (int i = 0; i < shownCards.size(); i++) {
+                                for (int x = 0; x < cards.length; x++) {
+                                    for (int y = 0; y < cards[x].length; y++) {
+                                        if (cards[x][y] == shownCards.get(i)) {
+                                            cards[x][y] = null;
+                                        }
+                                    }
+                                }
+                            }
+                            pairs++;
+                            pairTxt.setText(getString(R.string.points, pairs));
+                            checkForWin();
+                        } else {
+                            for (int i = 0; i < shownCards.size(); i++) {
+                                for (MemoryCard[] card : cards) {
+                                    for (MemoryCard memoryCard : card) {
+                                        if (memoryCard == shownCards.get(i)) {
+                                            memoryCard.setFaceDown(true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        tries++;
+                        cardsUp = 0;
+                        shownCards.clear();
+                        showBoard();
+                    });
+                }
+            }, 600);
+
+        }
+        runOnUiThread(()-> {
+            for (ImageButton button : buttons) {
+                button.setEnabled(true);
+            }
+        });
+
+    }
+
+    public void resetTimer() {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                time++;
+                runOnUiThread(() -> {
+                    String[] formattedTime1 = TimeFormatter.formatTime(time);
+                    timeTxt.setText(getString(R.string.time, formattedTime1[0], formattedTime1[1]));
+                });
+            }
+        }, 1000, 1000);
     }
 }
