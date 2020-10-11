@@ -2,6 +2,7 @@ package com.example.bullseye_android.games.memory;
 
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -61,6 +62,7 @@ public class MemoryActivity extends AppCompatActivity {
     private ArrayList<MemoryCard> shownCards = new ArrayList<>();
     Toast toast;
     int tries;
+    private ImageButton lastCardSelected;
     private View.OnClickListener cardListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -362,7 +364,6 @@ public class MemoryActivity extends AppCompatActivity {
             }
         }
     }
-
     @Override
     public void onBackPressed() {
         backCount++;
