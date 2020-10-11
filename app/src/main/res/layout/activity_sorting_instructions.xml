@@ -5,7 +5,7 @@
     android:id="@+id/instructions"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color4"
+    android:background="#005168"
     tools:context=".games.memory.MemoryInstructionsActivity">
 
     <TextView
@@ -27,81 +27,60 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/amaranth"
-        android:text="Matching Game"
+        android:text="Sorting Game"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="75dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/corners_normal"
-        android:backgroundTint="@color/color3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
-        android:layout_marginEnd="75dp"
-        android:background="@drawable/corners_normal"
-        android:backgroundTint="@color/color5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageButton2" />
-
     <TextView
         android:id="@+id/textView15"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="48dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="25dp"
         android:fontFamily="@font/roboto"
         android:gravity="center"
-        android:text="Click a card to reveal what's underneath."
+        android:text="Swipe the falling balls to either side."
         android:textColor="#FFFFFF"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView16"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView16"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="25dp"
         android:fontFamily="@font/roboto"
         android:gravity="center"
-        android:text="Uncover two of the same card in a row, and they'll disappear!"
+        android:text="Get the balls in the correct bin and they will disappear! Let the black balls just fall."
         android:textColor="#FFFFFF"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView17"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView17"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="48dp"
         android:fontFamily="@font/roboto"
         android:gravity="center"
-        android:text="Clear the board to win!"
+        android:text="Try to last as long as possible."
         android:textColor="#FFFFFF"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView19"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView19"
@@ -110,7 +89,6 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="32dp"
-        android:layout_marginTop="48dp"
         android:fontFamily="@font/roboto"
         android:gravity="center"
         android:text="Click anywhere on this screen to go back to the game."
@@ -119,4 +97,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ic_circle"
+        android:backgroundTint="#FDFDFD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="200px"
+        android:layout_height="200px"
+        android:background="@drawable/ic_circle"
+        android:backgroundTint="#FF5722"
+        app:layout_constraintBottom_toTopOf="@+id/textView15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,4 +11,7 @@
     <color name="hintColor">#B85B3C3C</color>
     <color name="selectedBg">#412724</color>
     <color name="selectedText">@color/color3</color>
+    <color name="sortingBackground">#005168</color>
+    <color name="sortingLeft">#FDFDFD</color>
+    <color name="sortingRight">#FF5722</color>
 </resources>
