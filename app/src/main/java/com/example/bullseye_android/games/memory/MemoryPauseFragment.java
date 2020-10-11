@@ -95,13 +95,9 @@ public class MemoryPauseFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        timer.cancel();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        timer.cancel();
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 
     public void exitPauseMenu(){

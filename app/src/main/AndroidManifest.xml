@@ -53,7 +53,7 @@
             android:theme="@style/MaterialThemeWithActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.AdminDashboardActivity" />
+                android:value=".activities.UserDashboardActivity" />
         </activity>
         <activity
             android:name=".activities.TransitionActivity"
