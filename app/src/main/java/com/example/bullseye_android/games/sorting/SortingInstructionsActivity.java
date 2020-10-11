@@ -14,6 +14,10 @@ public class SortingInstructionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sorting_instructions);
+        ConstraintLayout page = findViewById(R.id.instructions);
+        page.setOnClickListener(view -> {
+            finish();
+        });
     }
 
     @Override
