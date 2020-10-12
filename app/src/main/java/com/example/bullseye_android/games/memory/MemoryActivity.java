@@ -536,6 +536,11 @@ public class MemoryActivity extends AppCompatActivity implements Game {
         return "matching";
     }
 
+
+    public void back(View view) {
+        finish();
+    }
+
     public void resetTimer() {
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
