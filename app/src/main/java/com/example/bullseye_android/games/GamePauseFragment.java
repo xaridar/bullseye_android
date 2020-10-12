@@ -1,4 +1,4 @@
-package com.example.bullseye_android.games.memory;
+package com.example.bullseye_android.games;
 
 import android.os.Bundle;
 
@@ -6,32 +6,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.bullseye_android.R;
-import com.example.bullseye_android.games.sorting.SortingCopy;
-import com.example.bullseye_android.util.TimeFormatter;
+import com.example.bullseye_android.games.memory.MemoryActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MemoryPauseFragment extends Fragment {
+public class GamePauseFragment extends Fragment {
 
     ImageButton button;
     TextView text;
     int time;
     Timer timer;
 
-    public MemoryPauseFragment() { }
+    public GamePauseFragment() { }
 
-    public static MemoryPauseFragment newInstance() {
-        return new MemoryPauseFragment();
+    public static GamePauseFragment newInstance() {
+        return new GamePauseFragment();
     }
 
     @Override
@@ -53,6 +50,7 @@ public class MemoryPauseFragment extends Fragment {
         button = view.findViewById(R.id.unpauseButton);
         text = view.findViewById(R.id.countdown);
         button.setOnClickListener(this::back);
+        view.findViewById(R.id.finish).setOnClickListener(this::finish);
     }
 
     public void back(View view) {
@@ -101,7 +99,11 @@ public class MemoryPauseFragment extends Fragment {
     }
 
     public void exitPauseMenu(){
-        ((MemoryActivity) getContext()).unpause();
-        ((MemoryActivity) getContext()).getSupportFragmentManager().beginTransaction().remove(this).commit();
+        ((Game) getContext()).unpause();
+        ((Game) getContext()).getSupportFragmentManager().beginTransaction().remove(this).commit();
+    }
+
+    public void finish(View view) {
+        getActivity().finish();
     }
 }
