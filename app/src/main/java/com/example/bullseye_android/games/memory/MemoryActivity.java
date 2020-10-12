@@ -6,8 +6,6 @@ import android.content.res.ColorStateList;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -28,6 +26,8 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.games.Game;
+import com.example.bullseye_android.games.GamePauseFragment;
 import com.example.bullseye_android.util.TimeFormatter;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class MemoryActivity extends AppCompatActivity {
+public class MemoryActivity extends AppCompatActivity implements Game {
 
     private ImageButton[] buttons;
     private MemoryCard[][] cards;
@@ -469,9 +469,10 @@ public class MemoryActivity extends AppCompatActivity {
         for (ImageButton button : buttons) {
             button.setEnabled(false);
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.memory_game, MemoryPauseFragment.newInstance()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.memory_game, GamePauseFragment.newInstance()).commit();
     }
 
+    @Override
     public void unpause() {
         resetTimer();
         if (cardTimerOn){
@@ -528,6 +529,11 @@ public class MemoryActivity extends AppCompatActivity {
      * ||  Resets onscreen timer based on current time ||
      * ==================================================
      */
+    @Override
+    public String getGame() {
+        return "matching";
+    }
+
     public void resetTimer() {
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {

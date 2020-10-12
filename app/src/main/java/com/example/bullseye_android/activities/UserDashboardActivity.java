@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bullseye_android.R;
@@ -47,8 +48,10 @@ public class UserDashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_dashboard);
 
         TextView welcomeTxt = findViewById(R.id.userWelcomeText);
+        ImageView avatarImg = findViewById(R.id.avatar);
         user.observe(this, user -> {
             welcomeTxt.setText(getString(R.string.welcome, user.getName()));
+            avatarImg.setImageResource(getResources().getIdentifier("pfp_" + user.getAvatar(), "drawable", "com.example.bullseye_android"));
         });
 
         Button matchingGameButton = findViewById(R.id.matchingGameButton);

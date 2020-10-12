@@ -38,6 +38,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.util.TimeFormatter;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SortingCopy extends AppCompatActivity {
+public class SortingCopy extends AppCompatActivity implements Game {
 
     private ConstraintLayout layout;
 
@@ -327,6 +328,16 @@ public class SortingCopy extends AppCompatActivity {
 
     public void viewInstructions(View view) {
         startActivity(new Intent(this, SortingInstructionsActivity.class));
+    }
+
+    @Override
+    public void unpause() {
+
+    }
+
+    @Override
+    public String getGame() {
+        return "sorting";
     }
 
     class DropTask extends TimerTask {

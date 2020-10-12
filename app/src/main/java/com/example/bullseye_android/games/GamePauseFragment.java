@@ -1,5 +1,6 @@
-package com.example.bullseye_android.games.memory;
+package com.example.bullseye_android.games;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,28 +11,29 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.bullseye_android.R;
-import com.example.bullseye_android.games.sorting.SortingCopy;
-import com.example.bullseye_android.util.TimeFormatter;
+import com.example.bullseye_android.games.memory.MemoryActivity;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MemoryPauseFragment extends Fragment {
+public class GamePauseFragment extends Fragment {
 
     ImageButton button;
     TextView text;
+    MaterialButton finish;
     int time;
     Timer timer;
+    Game ctx;
 
-    public MemoryPauseFragment() { }
+    public GamePauseFragment() { }
 
-    public static MemoryPauseFragment newInstance() {
-        return new MemoryPauseFragment();
+    public static GamePauseFragment newInstance() {
+        return new GamePauseFragment();
     }
 
     @Override
@@ -49,10 +51,27 @@ public class MemoryPauseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        time = 3;
-        button = view.findViewById(R.id.unpauseButton);
-        text = view.findViewById(R.id.countdown);
-        button.setOnClickListener(this::back);
+        if (getContext() != null) {
+            ctx = (Game) getContext();
+            time = 3;
+            button = view.findViewById(R.id.unpauseButton);
+            text = view.findViewById(R.id.countdown);
+            button.setOnClickListener(this::back);
+            finish = view.findViewById(R.id.finish);
+            finish.setOnClickListener(this::finish);
+            switch (ctx.getGame()) {
+                case "matching":
+                    view.setBackgroundColor(getContext().getColor(R.color.memBackground));
+                    button.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.memCardColor1)));
+                    finish.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.memCardColor1)));
+                    break;
+                case "sorting":
+                    view.setBackgroundColor(getContext().getColor(R.color.sortingBackground));
+                    button.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingLeft)));
+                    finish.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingLeft)));
+                    break;
+            }
+        }
     }
 
     public void back(View view) {
@@ -105,7 +124,11 @@ public class MemoryPauseFragment extends Fragment {
     }
 
     public void exitPauseMenu(){
-        ((MemoryActivity) getContext()).unpause();
-        ((MemoryActivity) getContext()).getSupportFragmentManager().beginTransaction().remove(this).commit();
+        ctx.unpause();
+        ctx.getSupportFragmentManager().beginTransaction().remove(this).commit();
+    }
+
+    public void finish(View view) {
+        getActivity().finish();
     }
 }

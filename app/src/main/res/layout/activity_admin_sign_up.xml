@@ -15,8 +15,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/btn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <EditText
             android:id="@+id/name"
@@ -25,11 +27,11 @@
             android:layout_marginStart="50dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="50dp"
+            android:autofillHints="@string/name"
             android:ems="10"
             android:hint="@string/name"
             android:inputType="textPersonName"
-            android:theme="@style/SignInText"
-            android:autofillHints="@string/name" />
+            android:theme="@style/SignInText" />
 
         <EditText
             android:id="@+id/email"
