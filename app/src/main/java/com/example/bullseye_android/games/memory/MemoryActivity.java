@@ -511,6 +511,11 @@ public class MemoryActivity extends AppCompatActivity implements Game {
 
     }
 
+    @Override
+    public String getGame() {
+        return "matching";
+    }
+
     public void resetTimer() {
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {

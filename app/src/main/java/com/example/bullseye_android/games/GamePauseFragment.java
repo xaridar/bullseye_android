@@ -1,11 +1,13 @@
 package com.example.bullseye_android.games;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.games.memory.MemoryActivity;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,8 +25,10 @@ public class GamePauseFragment extends Fragment {
 
     ImageButton button;
     TextView text;
+    MaterialButton finish;
     int time;
     Timer timer;
+    Game ctx;
 
     public GamePauseFragment() { }
 
@@ -46,11 +51,27 @@ public class GamePauseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        time = 3;
-        button = view.findViewById(R.id.unpauseButton);
-        text = view.findViewById(R.id.countdown);
-        button.setOnClickListener(this::back);
-        view.findViewById(R.id.finish).setOnClickListener(this::finish);
+        if (getContext() != null) {
+            ctx = (Game) getContext();
+            time = 3;
+            button = view.findViewById(R.id.unpauseButton);
+            text = view.findViewById(R.id.countdown);
+            button.setOnClickListener(this::back);
+            finish = view.findViewById(R.id.finish);
+            finish.setOnClickListener(this::finish);
+            switch (ctx.getGame()) {
+                case "matching":
+                    view.setBackgroundColor(getContext().getColor(R.color.memBackground));
+                    button.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.memCardColor1)));
+                    finish.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.memCardColor1)));
+                    break;
+                case "sorting":
+                    view.setBackgroundColor(getContext().getColor(R.color.sortingBackground));
+                    button.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingLeft)));
+                    finish.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingLeft)));
+                    break;
+            }
+        }
     }
 
     public void back(View view) {
@@ -99,8 +120,8 @@ public class GamePauseFragment extends Fragment {
     }
 
     public void exitPauseMenu(){
-        ((Game) getContext()).unpause();
-        ((Game) getContext()).getSupportFragmentManager().beginTransaction().remove(this).commit();
+        ctx.unpause();
+        ctx.getSupportFragmentManager().beginTransaction().remove(this).commit();
     }
 
     public void finish(View view) {

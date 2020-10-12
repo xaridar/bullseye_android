@@ -335,6 +335,11 @@ public class SortingCopy extends AppCompatActivity implements Game {
 
     }
 
+    @Override
+    public String getGame() {
+        return "sorting";
+    }
+
     class DropTask extends TimerTask {
 
         public final List<ImageButton> views;

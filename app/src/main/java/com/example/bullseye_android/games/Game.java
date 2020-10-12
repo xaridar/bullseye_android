@@ -4,5 +4,8 @@ import androidx.fragment.app.FragmentManager;
 
 public interface Game {
     void unpause();
+
     FragmentManager getSupportFragmentManager();
+
+    String getGame();
 }
