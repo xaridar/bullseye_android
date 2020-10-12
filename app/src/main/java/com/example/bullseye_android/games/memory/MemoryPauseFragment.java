@@ -99,6 +99,9 @@ public class MemoryPauseFragment extends Fragment {
             timer.cancel();
         }
 
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 
     public void exitPauseMenu(){

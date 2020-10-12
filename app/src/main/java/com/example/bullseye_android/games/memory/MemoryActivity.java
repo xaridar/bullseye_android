@@ -3,11 +3,10 @@ package com.example.bullseye_android.games.memory;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -65,7 +64,9 @@ public class MemoryActivity extends AppCompatActivity {
     private User user;
     private UserViewModel userViewModel;
     private int diffInt;
-    public MediaPlayer tonePlayer;
+    public MediaPlayer cardTone;
+    public MediaPlayer correctTone;
+    public MediaPlayer wrongTone;
     private ArrayList<MemoryCard> shownCards = new ArrayList<>();
     Toast toast;
     int tries;
@@ -87,7 +88,7 @@ public class MemoryActivity extends AppCompatActivity {
                     if (view == buttons[i]) {
                         MemoryCard card = cards[(i - (i % cards[0].length)) / cards[0].length][i % cards[0].length];
                         if (card.isFaceDown()) {
-                            tonePlayer.start();
+                            cardTone.start();
                             shownCards.add(card);
                             cardsUp++;
                             card.setFaceDown(false);
@@ -158,7 +159,15 @@ public class MemoryActivity extends AppCompatActivity {
     private void run() {
         backCount = 0;
 
-        tonePlayer = MediaPlayer.create(MemoryActivity.this, R.raw.card_flip);
+        cardTone = MediaPlayer.create(MemoryActivity.this, R.raw.card_flip);
+        correctTone = MediaPlayer.create(this, R.raw.mem_correct);
+        wrongTone = MediaPlayer.create(this, R.raw.mem_wrong);
+
+        float vol = (float) user.getGameVolume() / User.MAX_VOLUME;
+
+        cardTone.setVolume(vol, vol);
+        correctTone.setVolume(vol, vol);
+        wrongTone.setVolume(vol, vol);
 
         toast = Toast.makeText(this, "Press the back button twice at any time to go back to the dashboard.", Toast.LENGTH_SHORT);
         toast.show();
@@ -299,7 +308,7 @@ public class MemoryActivity extends AppCompatActivity {
 
     // =========================================
     // || - Runs every time a card is clicked ||
-    // || - Sets correct stats for every card ||
+    // || - Sets mem_correct stats for every card ||
     // || - Handles pairs on a 600ms timer    ||
     // =========================================
     private void showBoard() {
@@ -333,7 +342,7 @@ public class MemoryActivity extends AppCompatActivity {
                     cardTimerOn = false;
                     runOnUiThread(() -> {
                         if (shownCards.get(0).getType().equals(shownCards.get(1).getType())) { // Both cards shown up are of the same type
-//                            tonePlayer.start();
+                            correctTone.start();
                             for (int i = 0; i < shownCards.size(); i++) {
                                 for (int x = 0; x < cards.length; x++) {
                                     for (int y = 0; y < cards[x].length; y++) {
@@ -347,6 +356,7 @@ public class MemoryActivity extends AppCompatActivity {
                             pairTxt.setText(getString(R.string.points, pairs));
                             checkForWin();
                         } else {
+                            wrongTone.start();
                             for (int i = 0; i < shownCards.size(); i++) {
                                 for (MemoryCard[] card : cards) {
                                     for (MemoryCard memoryCard : card) {

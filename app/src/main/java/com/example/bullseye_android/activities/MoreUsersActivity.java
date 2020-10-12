@@ -68,7 +68,7 @@ public class MoreUsersActivity extends AppCompatActivity {
                 userAdapter.setFirst(user);
             });
         }else{
-            Toast.makeText(this, "ERROR: Not coming from correct page (Users Page / Manage Users Page)",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "ERROR: Not coming from mem_correct page (Users Page / Manage Users Page)",Toast.LENGTH_SHORT).show();
         }
 
     }
