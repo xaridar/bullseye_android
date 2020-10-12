@@ -75,11 +75,13 @@ public class MemoryActivity extends AppCompatActivity {
     private int cardColor1;
     private int cardColor2;
 
-    // ====================================
-    // || Listener for card clicks       ||
-    // || - sets card to button clicked  ||
-    // || - sets card clicked to face up ||
-    // ====================================
+    /**
+     * =====================================
+     * || Listener for card clicks        ||
+     * ||  - sets card to button clicked  ||
+     * ||  - sets card clicked to face up ||
+     * =====================================
+     */
     private View.OnClickListener cardListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -102,9 +104,11 @@ public class MemoryActivity extends AppCompatActivity {
         }
     };
 
-    //====================================================
-    //|| Checks for Wins, and displays win screen if so ||
-    //====================================================
+    /**
+     * ====================================================
+     * || Checks for Wins, and displays win screen if so ||
+     * ====================================================
+     */
     private void checkForWin() {
         for (MemoryCard[] card : cards) {
             for (MemoryCard memoryCard : card) {
@@ -211,17 +215,23 @@ public class MemoryActivity extends AppCompatActivity {
         findViewById(R.id.backBtn).setOnClickListener(view -> finish());
     }
 
-    // ================
-    // || Sets Score ||
-    // ================
+    /**
+     * ================
+     * || Sets Score ||
+     * ================
+     */
     private void setScore() {
         String[] formattedTime = TimeFormatter.formatTime(user.getHighScores()[diffInt]);
         runOnUiThread(() -> highScore.setText(getString(R.string.high_score, formattedTime[0], formattedTime[1])));
     }
 
-    // ======================================================================
-    // || Initializes the game with parameters of X and Y board dimensions ||
-    // ======================================================================
+    /**
+     * ===========================================================
+     * || - Initializes game board with params X & Y board dims ||
+     * || - Sets colors for every card                          ||
+     * || - sets card listener                                  ||
+     * ===========================================================
+     */
     public void start(int y, int x) {
         setScore();
         tries = 0;
@@ -306,11 +316,13 @@ public class MemoryActivity extends AppCompatActivity {
         resetTimer();
     }
 
-    // =========================================
-    // || - Runs every time a card is clicked ||
-    // || - Sets mem_correct stats for every card ||
-    // || - Handles pairs on a 600ms timer    ||
-    // =========================================
+    /**
+     * =============================================
+     * || - Runs every time a card is clicked     ||
+     * || - Sets mem_correct stats for every card ||
+     * || - Handles pairs on a 600ms timer        ||
+     * =============================================
+     */
     private void showBoard() {
         // Sets state for every card
         for (int i = 0; i < buttons.length; i++) {
@@ -378,9 +390,11 @@ public class MemoryActivity extends AppCompatActivity {
         }
     }
 
-    // ========================
-    // || Inits board values ||
-    // ========================
+    /**
+     * ========================
+     * || Inits board values ||
+     * ========================
+     */
     public void setBoard(){
         List<MemoryCard> c = new ArrayList<>();
         List<String> types = new ArrayList<>();
@@ -417,7 +431,6 @@ public class MemoryActivity extends AppCompatActivity {
         }
 
     }
-
 
     @Override
     public void onBackPressed() {
@@ -510,6 +523,11 @@ public class MemoryActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * ==================================================
+     * ||  Resets onscreen timer based on current time ||
+     * ==================================================
+     */
     public void resetTimer() {
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
