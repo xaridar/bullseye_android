@@ -481,7 +481,7 @@ public class SortingCopy extends AppCompatActivity implements Game {
                     public void run() {
                         rightArrow.setAnimation(animFadeOut);
                     }
-                }, 500);
+                }, 1000);
             }
 
             public void onSwipeLeft(View view) {
@@ -495,7 +495,7 @@ public class SortingCopy extends AppCompatActivity implements Game {
                         leftArrow.setAnimation(animFadeOut);
 
                     }
-                },500);
+                },1000);
             }
 
             public void onSwipeDown(View view) {
