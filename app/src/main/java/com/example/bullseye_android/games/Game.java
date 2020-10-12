@@ -1,5 +1,7 @@
 package com.example.bullseye_android.games;
 
+import android.view.View;
+
 import androidx.fragment.app.FragmentManager;
 
 public interface Game {
@@ -8,4 +10,6 @@ public interface Game {
     FragmentManager getSupportFragmentManager();
 
     String getGame();
+
+    void pause(View view);
 }
