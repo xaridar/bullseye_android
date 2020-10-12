@@ -345,6 +345,10 @@ public class SortingCopy extends AppCompatActivity implements Game {
         return "sorting";
     }
 
+    public void back(View view) {
+        finish();
+    }
+
     class DropTask extends TimerTask {
 
         public final List<ImageButton> views;
