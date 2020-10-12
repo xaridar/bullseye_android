@@ -331,6 +331,11 @@ public class SortingCopy extends AppCompatActivity implements Game {
     }
 
     @Override
+    public void pause(View view) {
+
+    }
+
+    @Override
     public void unpause() {
 
     }

@@ -464,6 +464,7 @@ public class MemoryActivity extends AppCompatActivity implements Game {
         startActivity(intent);
     }
 
+    @Override
     public void pause(View view) {
         timer.cancel();
         cardTimer.cancel();
