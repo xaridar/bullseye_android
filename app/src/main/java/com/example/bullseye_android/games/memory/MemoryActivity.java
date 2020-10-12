@@ -121,6 +121,7 @@ public class MemoryActivity extends AppCompatActivity implements Game {
         finishedLayout.setVisibility(View.VISIBLE);
         timeTxt.setVisibility(View.INVISIBLE);
         pairTxt.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.INVISIBLE);
         finalTime.setText(getString(R.string.final_time, timeTxt.getText()));
         timer.cancel();
 
