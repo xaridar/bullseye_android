@@ -14,9 +14,10 @@
     <color name="sortingBackground">#005168</color>
     <color name="sortingLeft">#FDFDFD</color>
     <color name="sortingRight">#FF5722</color>
-    <color name="memCardColor1">#380036</color>
-    <color name="memCardColor2">#D72483</color>
-    <color name="memCardFront">#E1BBC9</color>
-    <color name="memBackground">#5460CB</color>
-    <color name="memText">#E8F0FF</color>
+    <color name="memCardColor1">#3E000C</color>
+    <color name="memCardColor2">#B26D87</color>
+    <color name="memCardFront">#EBC2C2</color>
+    <color name="memBackground">#D1BAFF</color>
+    <color name="memText">#FFFBED</color>
+    <color name="memTextDark">#9D5A5A</color>
 </resources>

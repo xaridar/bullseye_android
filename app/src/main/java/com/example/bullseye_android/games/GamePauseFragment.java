@@ -63,12 +63,14 @@ public class GamePauseFragment extends Fragment {
                 case "matching":
                     view.setBackgroundColor(getContext().getColor(R.color.memBackground));
                     button.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.memCardColor1)));
+                    finish.setTextColor(getContext().getColor(R.color.memText));
                     finish.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.memCardColor1)));
                     break;
                 case "sorting":
                     view.setBackgroundColor(getContext().getColor(R.color.sortingBackground));
                     button.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingRight)));
                     finish.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingRight)));
+                    finish.setTextColor(getContext().getColor(R.color.color1));
                     break;
             }
         }
