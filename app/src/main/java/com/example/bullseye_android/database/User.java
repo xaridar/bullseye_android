@@ -165,10 +165,16 @@ public class User {
         focusPoints[game] += points;
     }
 
+    private void addGamesPlayed(int game) {
+        gamesPlayed[game]++;
+        gamesPlayed[ALL_GAMES]++;
+    }
+
     public void addGame(int game, float acc, long time, int pointsToAdd) {
         addPlayTime(game, time);
         addAcc(game, acc);
         addPoints(game, pointsToAdd);
+        addGamesPlayed(game);
         Number[] lastGame = new Number[statsTypes];
         lastGame[POINTS] = pointsToAdd;
         lastGame[ACC] = acc;

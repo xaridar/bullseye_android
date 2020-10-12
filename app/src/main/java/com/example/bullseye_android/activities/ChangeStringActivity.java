@@ -70,7 +70,7 @@ public class ChangeStringActivity extends AppCompatActivity {
             confEditText.setVisibility(View.VISIBLE);
             confToggle.setVisibility(View.VISIBLE);
             oldPasswordLayout.setVisibility(View.VISIBLE);
-            oldPasswordEditText.setOnEditorActionListener(new ContinueFromEditTextListener(button));
+            confEditText.setOnEditorActionListener(new ContinueFromEditTextListener(button));
         } else {
             confEditText.setVisibility(View.INVISIBLE);
             confToggle.setVisibility(View.INVISIBLE);

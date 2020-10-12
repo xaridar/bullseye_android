@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
 
 import com.example.bullseye_android.R;
 
@@ -17,5 +18,11 @@ public class SortingInstructionsActivity extends AppCompatActivity {
         page.setOnClickListener(view -> {
             finish();
         });
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        finish();
+        return super.onTouchEvent(event);
     }
 }
