@@ -67,8 +67,8 @@ public class GamePauseFragment extends Fragment {
                     break;
                 case "sorting":
                     view.setBackgroundColor(getContext().getColor(R.color.sortingBackground));
-                    button.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingLeft)));
-                    finish.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingLeft)));
+                    button.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingRight)));
+                    finish.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingRight)));
                     break;
             }
         }
