@@ -29,7 +29,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/start"
             android:layout_width="0dp"
-            android:layout_height="250dp"
+            android:layout_height="300dp"
             android:layout_marginStart="64dp"
             android:layout_marginTop="64dp"
             android:layout_marginEnd="64dp"
@@ -40,13 +40,14 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintVertical_bias="0.0"
+            tools:visibility="visible">
 
             <Button
                 android:id="@+id/btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="16dp"
                 android:background="#00FFFFFF"
                 android:backgroundTint="#00FFFFFF"
                 android:paddingStart="12dp"
@@ -56,6 +57,25 @@
                 android:text="@string/start"
                 android:textAllCaps="false"
                 android:textSize="32sp"
+                app:layout_constraintBottom_toTopOf="@+id/dashBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/dashBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:background="#00FFFFFF"
+                android:backgroundTint="#00FFFFFF"
+                android:onClick="back"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="8dp"
+                android:text="@string/back_to_dashboard"
+                android:textAllCaps="false"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -181,7 +201,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="75dp"
             android:background="@drawable/ic_baseline_arrow_back_ios_24"
-            android:backgroundTint="#FFFFFF"
+            android:backgroundTint="@color/sortingLeft"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -193,8 +213,8 @@
             android:layout_marginTop="75dp"
             android:layout_marginEnd="15dp"
             android:background="@drawable/ic_baseline_arrow_forward_ios_24"
-            android:backgroundTint="#FFFFFF"
             android:scaleX="-1"
+            android:backgroundTint="@color/sortingLeft"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -208,7 +228,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
+            tools:visibility="invisible">
 
             <View
                 android:id="@+id/view"
@@ -335,7 +355,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
