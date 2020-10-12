@@ -42,6 +42,7 @@
         android:paddingEnd="20dp"
         android:paddingBottom="15dp"
         android:text="@string/back_to_dashboard"
+        android:textColor="@color/color1"
         android:textSize="18sp"
         app:cornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
