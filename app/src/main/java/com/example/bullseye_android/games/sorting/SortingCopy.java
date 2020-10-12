@@ -49,6 +49,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 public class SortingCopy extends AppCompatActivity implements Game {
 
@@ -75,6 +77,8 @@ public class SortingCopy extends AppCompatActivity implements Game {
     ImageView leftArrow;
     String colorHit;
     GestureDetector gestureDetector;
+    Animation animFadeIn;
+    Animation animFadeOut;
 
     private SharedPreferences prefs;
     private int sent;
@@ -104,6 +108,8 @@ public class SortingCopy extends AppCompatActivity implements Game {
         leftArrow = findViewById(R.id.leftArrow);
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         LiveData<User> mUser = userViewModel.getUser(id);
+        animFadeIn = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
+        animFadeOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
         mUser.observe(this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
@@ -115,8 +121,8 @@ public class SortingCopy extends AppCompatActivity implements Game {
     }
     public void run() {
 
-        rightArrow.setVisibility(View.INVISIBLE);
-        leftArrow.setVisibility(View.INVISIBLE);
+        rightArrow.startAnimation(animFadeOut);
+        leftArrow.startAnimation(animFadeOut);
         backCount = 0;
         toast = Toast.makeText(this, "Press the back button twice at any time to go back to the dashboard.", Toast.LENGTH_SHORT);
         toast.show();
@@ -368,6 +374,10 @@ public class SortingCopy extends AppCompatActivity implements Game {
         return "sorting";
     }
 
+    public void back(View view) {
+        finish();
+    }
+
     class DropTask extends TimerTask {
 
         public final List<ImageButton> views;
@@ -423,8 +433,7 @@ public class SortingCopy extends AppCompatActivity implements Game {
                 imageButton.setContentDescription(color);
                 //listenerManager.addListener(imageButton);
                 views.add(imageButton);
-                rightArrow.setVisibility(View.INVISIBLE);
-                leftArrow.setVisibility(View.INVISIBLE);
+
             });
         }
 
@@ -488,15 +497,30 @@ public class SortingCopy extends AppCompatActivity implements Game {
             }
 
             public void onSwipeRight(View view) {
+
                 colorHit = "right";
                 view.setVisibility(View.INVISIBLE);
-                rightArrow.setVisibility(View.VISIBLE);
+                rightArrow.startAnimation(animFadeIn);
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        rightArrow.setAnimation(animFadeOut);
+                    }
+                }, 1000);
             }
 
             public void onSwipeLeft(View view) {
+
                 colorHit = "left";
                 view.setVisibility(View.INVISIBLE);
-                leftArrow.setVisibility(View.VISIBLE);
+                leftArrow.startAnimation(animFadeIn);
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        leftArrow.setAnimation(animFadeOut);
+
+                    }
+                },1000);
             }
 
             public void onSwipeDown(View view) {
