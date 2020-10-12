@@ -466,6 +466,7 @@ public class MemoryActivity extends AppCompatActivity implements Game {
 
     @Override
     public void pause(View view) {
+        pauseButton.setVisibility(View.INVISIBLE);
         timer.cancel();
         cardTimer.cancel();
         for (ImageButton button : buttons) {
@@ -476,6 +477,9 @@ public class MemoryActivity extends AppCompatActivity implements Game {
 
     @Override
     public void unpause() {
+        runOnUiThread(() -> {
+            pauseButton.setVisibility(View.VISIBLE);
+        });
         resetTimer();
         if (cardTimerOn){
             cardTimer = new Timer();

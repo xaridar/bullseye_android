@@ -39,6 +39,7 @@ import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
+import com.example.bullseye_android.games.GamePauseFragment;
 import com.example.bullseye_android.util.TimeFormatter;
 
 import java.util.ArrayList;
@@ -69,6 +70,7 @@ public class SortingCopy extends AppCompatActivity implements Game {
     private Button backBtn;
     private Button playAgain;
     private TextView finalTime;
+    private ImageButton pauseButton;
     ImageView rightArrow;
     ImageView leftArrow;
     String colorHit;
@@ -78,6 +80,14 @@ public class SortingCopy extends AppCompatActivity implements Game {
     private int sent;
     private int correct;
     private int time;
+    private int[] millis = new int[1];
+    private int[] delay = new int[1];
+    private float[] dropSpeed = new float[1];
+    private int[] lives = new int[1];
+    private Timer constant;
+    private Timer timer1;
+    private boolean pause;
+
 
     private User user;
     private UserViewModel userViewModel;
@@ -123,7 +133,7 @@ public class SortingCopy extends AppCompatActivity implements Game {
         backBtn = findViewById(R.id.backBtn);
         playAgain = findViewById(R.id.playAgain);
         finalTime = findViewById(R.id.finalTime);
-
+        pauseButton = findViewById(R.id.pauseButton2);
         backBtn.setOnClickListener((view) -> finish());
 
         playAgain.setOnClickListener((view) -> {
@@ -135,6 +145,8 @@ public class SortingCopy extends AppCompatActivity implements Game {
         countdown.setVisibility(View.INVISIBLE);
         finishedLayout.setVisibility(View.INVISIBLE);
         highScore.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.INVISIBLE);
+
 
         startBtn.setOnClickListener((View.OnClickListener) view -> {
             RadioButton choice = (RadioButton) findViewById(speedChoice.getCheckedRadioButtonId());
@@ -156,6 +168,7 @@ public class SortingCopy extends AppCompatActivity implements Game {
         highScore.setVisibility(View.VISIBLE);
         start.setVisibility(View.INVISIBLE);
         countdown.setVisibility(View.VISIBLE);
+
 
         final int[] time = {3};
         time[0]++;
@@ -190,9 +203,9 @@ public class SortingCopy extends AppCompatActivity implements Game {
     List<ImageButton> views;
 
     private void startGame() {
-        final int[] delay = {choice.equals("Slow") ? 1000 : 750};
-        float[] dropSpeed = {choice.equals("Slow") ? 10 : 8};
-        final int[] lives = {3};
+        delay[0] = choice.equals("Slow") ? 1000 : 750;
+        dropSpeed[0] = choice.equals("Slow") ? 10 : 8;
+        lives[0] = 3;
         for (int i = 0; i < lives[0]; i++) {
             ImageView heart = new ImageView(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -202,58 +215,12 @@ public class SortingCopy extends AppCompatActivity implements Game {
             livesLayout.addView(heart);
         }
         views = new ArrayList<>();
-        Timer timer1 = new Timer();
+        timer1 = new Timer();
         SpawnTask task = new SpawnTask(this, views);
         timer1.schedule(task, 0);
-        final int[] millis = {0};
         views = task.views;
-        Timer constant = new Timer();
-        int[] add = {choice.equals("Slow") ? 300 : 250};
-        constant.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(() -> {
-                    millis[0]++;
-                    if (millis[0] % delay[0] == 0) {
-                        SpawnTask task = new SpawnTask(SortingCopy.this, views);
-                        timer1.schedule(task, 0);
-                        if (dropSpeed[0] > 3) {
-                            dropSpeed[0] -= 0.05;
-                        }
-                        views = task.views;
-                    }
-                    if (millis[0] % ((int) dropSpeed[0]) == 0) {
-                        DropTask task = new DropTask(views, lives[0]);
-                        timer1.schedule(task, 0);
-                        views = task.views;
-                    }
-                    if (millis[0] % 1000 == 0) {
-                        time++;
-                        String[] formattedTime = TimeFormatter.formatTime(time);
-                        timer.setText(getString(R.string.time, formattedTime[0], formattedTime[1]));
-                    }
-                    HashMap<String, Object> objs = checkForCollide(views, lives[0]);
-                    views = (List<ImageButton>) objs.get("views");
-                    lives[0] = (int) objs.get("lives");
-                    livesLayout.removeAllViews();
-                    for (int i = 0; i < lives[0]; i++) {
-                        ImageView heart = new ImageView(SortingCopy.this);
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        params.weight = 1;
-                        heart.setLayoutParams(params);
-                        heart.setImageResource(R.drawable.heart);
-                        livesLayout.addView(heart);
-                    }
-
-
-                    if (lives[0] == 0) {
-                        end();
-                        lives[0] = -10;
-                        constant.cancel();
-                    }
-                });
-            }
-        }, 1, 1);
+        resetTimer();
+        pauseButton.setVisibility(View.VISIBLE);
     }
 
     private void end() {
@@ -332,12 +299,68 @@ public class SortingCopy extends AppCompatActivity implements Game {
 
     @Override
     public void pause(View view) {
-
+        pause = true;
+        constant.cancel();
+        pauseButton.setVisibility(View.INVISIBLE);
+        getSupportFragmentManager().beginTransaction().replace(R.id.root, GamePauseFragment.newInstance()).commit();
     }
 
     @Override
     public void unpause() {
+        pause = false;
+        runOnUiThread(() -> {
+            pauseButton.setVisibility(View.VISIBLE);
+        });
+        resetTimer();
+    }
 
+    public void resetTimer() {
+        constant = new Timer();
+        constant.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> {
+                    millis[0]++;
+                    if (millis[0] % delay[0] == 0) {
+                        SpawnTask task = new SpawnTask(SortingCopy.this, views);
+                        timer1.schedule(task, 0);
+                        if (dropSpeed[0] > 3) {
+                            dropSpeed[0] -= 0.05;
+                        }
+                        views = task.views;
+                    }
+                    if (millis[0] % ((int) dropSpeed[0]) == 0) {
+                        DropTask task = new DropTask(views, lives[0]);
+                        timer1.schedule(task, 0);
+                        views = task.views;
+                    }
+                    if (millis[0] % 1000 == 0) {
+                        time++;
+                        String[] formattedTime = TimeFormatter.formatTime(time);
+                        timer.setText(getString(R.string.time, formattedTime[0], formattedTime[1]));
+                    }
+                    HashMap<String, Object> objs = checkForCollide(views, lives[0]);
+                    views = (List<ImageButton>) objs.get("views");
+                    lives[0] = (int) objs.get("lives");
+                    livesLayout.removeAllViews();
+                    for (int i = 0; i < lives[0]; i++) {
+                        ImageView heart = new ImageView(SortingCopy.this);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        params.weight = 1;
+                        heart.setLayoutParams(params);
+                        heart.setImageResource(R.drawable.heart);
+                        livesLayout.addView(heart);
+                    }
+
+
+                    if (lives[0] == 0) {
+                        end();
+                        lives[0] = -10;
+                        constant.cancel();
+                    }
+                });
+            }
+        }, 1, 1);
     }
 
     @Override
@@ -424,9 +447,11 @@ public class SortingCopy extends AppCompatActivity implements Game {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.i("dfd", event.toString());
-        return gestureDetector.onTouchEvent(event);
-
+        if(!pause){
+            return gestureDetector.onTouchEvent(event);
+        }else{
+            return super.onTouchEvent(event);
+        }
     }
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -483,7 +508,8 @@ public class SortingCopy extends AppCompatActivity implements Game {
         }
 
 
-    // thanks to AMD on stackoverflow for the solution https://stackoverflow.com/questions/17931816/how-to-tell-if-an-x-and-y-coordinate-are-inside-my-button
+
+
     private boolean inViewInBounds(View view, int x, int y) {
         Rect outRect = new Rect();
         int[] location = new int[2];

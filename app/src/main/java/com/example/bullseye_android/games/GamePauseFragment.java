@@ -75,7 +75,7 @@ public class GamePauseFragment extends Fragment {
     }
 
     public void back(View view) {
-        if (getContext() instanceof MemoryActivity){
+        if (getContext() instanceof Game){
             text.setTextSize(250);
             button.setVisibility(View.INVISIBLE);
             text.setText(String.valueOf(time));
