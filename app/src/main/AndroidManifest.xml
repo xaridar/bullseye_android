@@ -61,7 +61,7 @@
         <activity
             android:name=".activities.UserDashboardActivity"
             android:label="Dashboard"
-            android:theme="@style/MaterialThemeWithActionBar" />
+            android:theme="@style/MaterialThemeNoActionBar" />
         <activity
             android:name=".activities.StatsActivity"
             android:theme="@style/DrawerActivity" />
