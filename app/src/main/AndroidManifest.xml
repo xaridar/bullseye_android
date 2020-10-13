@@ -10,8 +10,8 @@
         android:roundIcon="@mipmap/bullseye_logo_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialThemeWithActionBar">
-        <activity android:name=".games.memory.MemoryInstructionsActivity" android:theme="@style/MaterialFullScreen"></activity>
-        <activity android:name=".games.sorting.SortingInstructionsActivity" android:theme="@style/MaterialFullScreen"></activity>
+        <activity android:name=".games.memory.MemoryInstructionsActivity" android:theme="@style/MemoryInstructions"></activity>
+        <activity android:name=".games.sorting.SortingInstructionsActivity" android:theme="@style/SortingGame"></activity>
         <activity
             android:name=".activities.AdminForgotPassword"
             android:label="Forgot Password"
@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:name=".games.memory.MemoryActivity"
-            android:theme="@style/Game" />
+            android:theme="@style/MemoryGame" />
         <activity
             android:name=".activities.MoreUsersActivity"
             android:label="All Users"
@@ -112,7 +112,7 @@
             android:theme="@style/MaterialThemeWithActionBar" />
         <activity
             android:name=".games.sorting.SortingCopy"
-            android:theme="@style/Game" />
+            android:theme="@style/SortingGame" />
     </application>
 
 </manifest>
