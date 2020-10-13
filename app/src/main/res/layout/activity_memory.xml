@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="invisible">
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/winTxt"
@@ -45,7 +45,7 @@
             android:fontFamily="@font/roboto"
             android:gravity="center"
             android:text="You won!"
-            android:textColor="@color/memText"
+            android:textColor="@color/memTextDark"
             android:textSize="27sp"
             app:layout_constraintBottom_toTopOf="@+id/finalTime"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +59,7 @@
             android:fontFamily="@font/roboto"
             android:gravity="center"
             android:text="@string/final_time"
-            android:textColor="@color/memText"
+            android:textColor="@color/memTextDark"
             android:textSize="27sp"
             app:layout_constraintBottom_toTopOf="@+id/playAgain"
             app:layout_constraintEnd_toEndOf="parent"
@@ -178,7 +178,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        tools:visibility="invisible">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/howToPlay"
