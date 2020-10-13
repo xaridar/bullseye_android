@@ -60,7 +60,7 @@ public class AdminSignUpActivity extends AppCompatActivity {
             }
             return null;
         };
-        Fetcher.runNewAdminFetcher(userViewModel, this, adminCallback);
+        Fetcher.runNewAdminFetcher(userViewModel, adminCallback);
     }
 
     public void run() {
@@ -104,7 +104,7 @@ public class AdminSignUpActivity extends AppCompatActivity {
                     }
                     btn.setEnabled(false);
                     clicked = true;
-                    userViewModel.insert(new Admin(name.getText().toString(), IDGenerator.getInstance(userViewModel, AdminSignUpActivity.this).getId(), email.getText().toString(), pass.getText().toString()));
+                    userViewModel.insert(new Admin(name.getText().toString(), email.getText().toString(), pass.getText().toString()));
                     Toast.makeText(AdminSignUpActivity.this, "Admin account created", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(AdminSignUpActivity.this, TransitionActivity.class);
                     intent.putExtra("sender", "adminSignUp");

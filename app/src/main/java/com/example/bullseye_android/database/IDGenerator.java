@@ -1,6 +1,7 @@
 package com.example.bullseye_android.database;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleOwner;
@@ -49,6 +50,7 @@ public class IDGenerator {
                 id = randLong;
             }
         } while (id == 0);
+        ids.add(id);
         return id;
     }
 }

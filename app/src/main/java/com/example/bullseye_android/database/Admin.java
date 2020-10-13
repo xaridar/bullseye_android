@@ -2,8 +2,8 @@ package com.example.bullseye_android.database;
 
 public class Admin extends User {
 
-    public Admin(String name, long id, String email, String password) {
-        super(name, id, null);
+    public Admin(String name, String email, String password) {
+        super(name, null);
         super.setAdmin(true);
         super.setEmail(email);
         super.setPassword(password);

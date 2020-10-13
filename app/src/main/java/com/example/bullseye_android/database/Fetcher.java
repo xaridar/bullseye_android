@@ -10,7 +10,11 @@ public class Fetcher {
         new UserFetcher(userViewModel, owner, id, userCallback).run();
     }
 
-    public static void runNewAdminFetcher(UserViewModel userViewModel, LifecycleOwner owner, Function<User, Void> adminCallback) {
-        new AdminFetcher(userViewModel, owner, adminCallback).run();
+    public static void runNewAdminFetcher(UserViewModel userViewModel, Function<User, Void> adminCallback) {
+        new AdminFetcher(userViewModel, adminCallback).run();
+    }
+
+    public static void getIDFromInsert(UserViewModel userViewModel, Function<Long, Void> callback, User user) {
+        new IDFromInsertFetcher(userViewModel, callback, user).run();
     }
 }

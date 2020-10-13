@@ -23,7 +23,7 @@ public class AdminForgotPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        Fetcher.runNewAdminFetcher(userViewModel, this, user -> {
+        Fetcher.runNewAdminFetcher(userViewModel, user -> {
             if(user != null){
                 admin = user;
                 run();

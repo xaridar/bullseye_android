@@ -8,13 +8,11 @@ import java.util.function.Function;
 public class AdminFetcher implements Runnable{
 
     UserViewModel userViewModel;
-    LifecycleOwner owner;
     Function<User, Void> function;
 
-    public AdminFetcher(UserViewModel userViewModel, LifecycleOwner owner, Function<User, Void> function) {
+    public AdminFetcher(UserViewModel userViewModel, Function<User, Void> function) {
         super();
         this.userViewModel = userViewModel;
-        this.owner = owner;
         this.function = function;
     }
 

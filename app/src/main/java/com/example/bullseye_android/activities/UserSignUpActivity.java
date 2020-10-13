@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.IDGenerator;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserSerializable;
@@ -65,12 +66,16 @@ public class UserSignUpActivity extends AppCompatActivity {
                 clicked = true;
                 Intent intent = new Intent(UserSignUpActivity.this, TransitionActivity.class);
                 intent.putExtra("sender", "userSignUp");
-                long id = IDGenerator.getInstance(userViewModel, this).getId();
-                userViewModel.insert(new User(name.getText().toString(), id, avatar));
-                getSharedPreferences("userID", 0).edit().putLong("id", id).apply();
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(UserSignUpActivity.this, btn, "bigButton");
-                startActivity(intent, options.toBundle());
-                finish();
+                User u = new User(name.getText().toString(), avatar);
+                Fetcher.getIDFromInsert(userViewModel, id -> {
+                    if (id != -1) {
+                        getSharedPreferences("userID", 0).edit().putLong("id", id).apply();
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(UserSignUpActivity.this, btn, "bigButton");
+                        startActivity(intent, options.toBundle());
+                        finish();
+                    }
+                    return null;
+                }, u);
             }
         });
 

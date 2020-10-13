@@ -26,7 +26,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UserViewModel mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        Fetcher.runNewAdminFetcher(mUserViewModel, this, user -> {
+        Fetcher.runNewAdminFetcher(mUserViewModel, user -> {
             if (user != null) {
                 admin = user;
                 run();

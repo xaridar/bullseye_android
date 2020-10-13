@@ -56,7 +56,7 @@ public class AdminSignInActivity extends AppCompatActivity {
             }
             return null;
         };
-        Fetcher.runNewAdminFetcher(mUserViewModel, this, adminCallback);
+        Fetcher.runNewAdminFetcher(mUserViewModel, adminCallback);
     }
     public void run(){
         togglePass = findViewById(R.id.togglePass);

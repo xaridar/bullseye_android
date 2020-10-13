@@ -38,8 +38,14 @@ public class UserRepository {
         return users;
     }
 
-    public void insert(User user) {
-        service.submit(new insertAsyncTask(userDao, user));
+    public long insert(User user) {
+        Future<Long> id = service.submit(new insertAsyncTask(userDao, user));
+        try {
+            return id.get();
+        } catch (ExecutionException | InterruptedException exc) {
+            exc.printStackTrace();
+            return -1;
+        }
     }
 
     public void remove(User user) {
@@ -74,7 +80,7 @@ public class UserRepository {
         }
     }
 
-    public static class insertAsyncTask implements Callable<Void> {
+    public static class insertAsyncTask implements Callable<Long> {
 
         private UserDao mAsyncTaskDao;
         private User user;
@@ -85,9 +91,8 @@ public class UserRepository {
         }
 
         @Override
-        public Void call() {
-            mAsyncTaskDao.insert(user);
-            return null;
+        public Long call() {
+            return mAsyncTaskDao.insert(user);
         }
     }
 

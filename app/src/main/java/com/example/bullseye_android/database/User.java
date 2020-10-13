@@ -34,7 +34,7 @@ public class User {
     @ColumnInfo(name = "admin")
     private boolean admin;
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private long id;
 
     @NonNull
@@ -78,10 +78,9 @@ public class User {
     private long[] highScores;
 
 
-    public User(@NonNull String name, long id, @Nullable String avatar) {
+    public User(@NonNull String name, @Nullable String avatar) {
         this.name = name;
         this.admin = false;
-        this.id = id;
         email = null;
         password = null;
         playTime = new long[] {0, 0, 0, 0, 0, 0};

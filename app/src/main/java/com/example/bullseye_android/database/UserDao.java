@@ -16,7 +16,7 @@ import io.reactivex.Maybe;
 @Dao
 public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(User user);
+    long insert(User user);
 
     @Delete
     void delete(User user);

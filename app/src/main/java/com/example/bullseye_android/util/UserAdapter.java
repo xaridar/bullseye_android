@@ -94,9 +94,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         this.first = first;
         if (users.getValue() != null) {
             List<User> remove = new ArrayList<>();
-            for (User user : users.getValue()) {
-                if (user.isAdmin() || user.getId() == this.first.getId()) {
-                    remove.add(user);
+            if (users.getValue() != null) {
+                for (User user : users.getValue()) {
+                    if (user != null) {
+                        if (user.isAdmin() || user.getId() == this.first.getId()){
+                            remove.add(user);
+                        }
+                    }
                 }
             }
             users.getValue().removeAll(remove);

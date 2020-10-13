@@ -65,7 +65,9 @@ public class MoreUsersActivity extends AppCompatActivity {
             first = userViewModel.getUser(getSharedPreferences("userID", 0).getLong("id", 0));
 
             first.observe(this, user -> {
-                userAdapter.setFirst(user);
+                if (user != null) {
+                    userAdapter.setFirst(user);
+                }
             });
         }else{
             Toast.makeText(this, "ERROR: Not coming from mem_correct page (Users Page / Manage Users Page)",Toast.LENGTH_SHORT).show();

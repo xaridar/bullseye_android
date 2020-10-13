@@ -72,7 +72,7 @@ public class UsersActivity extends AppCompatActivity {
 
         c = 0;
 
-        Fetcher.runNewAdminFetcher(mUserViewModel, this, user -> {
+        Fetcher.runNewAdminFetcher(mUserViewModel, user -> {
             if (user == null) {
                 Toast.makeText(this, "No admin account found. Please make one.", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(UsersActivity.this, AdminSignUpActivity.class));
