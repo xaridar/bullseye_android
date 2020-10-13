@@ -3,10 +3,12 @@ package com.example.bullseye_android.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,12 +21,17 @@ import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class UsersSettingsActivity extends AppCompatActivity {
     public static final int AVATAR_REQ_CODE = 1;
     public static final int NAME_REQ_CODE = 2;
 
     User user;
     UserViewModel mUserViewModel;
+    MediaPlayer tonePlayer;
+    Timer gameVolTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,7 @@ public class UsersSettingsActivity extends AppCompatActivity {
     }
 
     public void run() {
+        tonePlayer = MediaPlayer.create(this, R.raw.tone);
         setContentView(R.layout.activity_users_settings);
 
         Button changeAvatar = findViewById(R.id.changeProfileButton);
@@ -100,6 +108,18 @@ public class UsersSettingsActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 user.setGameVolume(i);
+                float vol = (float) user.getGameVolume() / User.MAX_VOLUME;
+                tonePlayer.setVolume(vol, vol);
+                if (gameVolTimer != null) {
+                    gameVolTimer.cancel();
+                }
+                gameVolTimer = new Timer();
+                gameVolTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        tonePlayer.start();
+                    }
+                }, 500);
             }
 
             @Override
