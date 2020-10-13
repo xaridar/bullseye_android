@@ -52,6 +52,7 @@ public class UsersActivity extends AppCompatActivity {
         sharedPreferences.edit().putLong("id", contentDescription).apply();
         Intent myIntent = new Intent(v.getContext(), UserDashboardActivity.class);
         startActivity(myIntent);
+        finish();
     };
     private User admin;
     private LiveData<User> lastUser;
