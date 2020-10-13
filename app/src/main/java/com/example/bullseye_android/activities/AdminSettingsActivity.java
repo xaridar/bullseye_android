@@ -6,7 +6,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -81,13 +83,14 @@ public class AdminSettingsActivity extends AppCompatActivity {
                         .setTitle(R.string.are_you_sure)
                         .setMessage(R.string.warning_message)
                         .setNegativeButton(R.string.cancel, null)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mUserViewModel.deleteAll();
-                                PendingIntent intent = PendingIntent.getActivity(AdminSettingsActivity.this, 1000, getIntent(), PendingIntent.FLAG_CANCEL_CURRENT);
-                                System.exit(0);
-                            }
+                        .setPositiveButton(R.string.yes, (dialog, which) -> {
+                            mUserViewModel.deleteAll();
+//                            PendingIntent intent = PendingIntent.getActivity(getApplicationContext(), 1000, new Intent(new Intent(getApplicationContext(), HomeActivity.class)), PendingIntent.FLAG_CANCEL_CURRENT);
+//                            AlarmManager mgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//                            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, intent);
+                            startActivity(new Intent(AdminSettingsActivity.this, HomeActivity.class));
+                            finishAffinity();
+                            System.exit(0);
                         });
                 warning.show();
             }
