@@ -103,6 +103,7 @@ public class AdminSignInActivity extends AppCompatActivity {
                 return;
             }
             startActivity(new Intent(AdminSignInActivity.this, AdminDashboardActivity.class));
+            finish();
         });
 
     }
