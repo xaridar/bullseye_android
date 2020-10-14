@@ -10,23 +10,29 @@
         android:roundIcon="@mipmap/bullseye_logo_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialThemeWithActionBar">
-        <activity android:name=".games.memory.MemoryInstructionsActivity" android:theme="@style/MemoryInstructions"></activity>
-        <activity android:name=".games.sorting.SortingInstructionsActivity" android:theme="@style/SortingGame"></activity>
+        <activity android:name=".games.memory.MemoryInstructionsActivity" android:theme="@style/MemoryInstructions"
+            android:screenOrientation = "portrait"></activity>
+        <activity android:name=".games.sorting.SortingInstructionsActivity" android:theme="@style/SortingGame"
+            android:screenOrientation = "portrait"></activity>
         <activity
             android:name=".activities.AdminForgotPassword"
             android:label="Forgot Password"
-            android:theme="@style/MaterialThemeWithActionBar">
+            android:theme="@style/MaterialThemeWithActionBar"
+            android:screenOrientation = "portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.AdminSignInActivity" />
+                android:value=".activities.AdminSignInActivity"
+                android:screenOrientation = "portrait"/>
         </activity>
         <activity
             android:name=".games.memory.MemoryActivity"
-            android:theme="@style/MemoryGame" />
+            android:theme="@style/MemoryGame"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".activities.MoreUsersActivity"
             android:label="All Users"
-            android:theme="@style/MaterialThemeWithActionBar">
+            android:theme="@style/MaterialThemeWithActionBar"
+            android:screenOrientation = "portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.UsersActivity" />
@@ -34,7 +40,8 @@
         <activity
             android:name=".activities.ChangeStringActivity"
             android:label="@string/change_string"
-            android:theme="@style/MaterialThemeWithActionBar">
+            android:theme="@style/MaterialThemeWithActionBar"
+            android:screenOrientation = "portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.UsersSettingsActivity" />
@@ -42,7 +49,8 @@
         <activity
             android:name=".activities.AvatarChooserActivity"
             android:label="Choose an Avatar"
-            android:theme="@style/MaterialThemeWithActionBar">
+            android:theme="@style/MaterialThemeWithActionBar"
+            android:screenOrientation = "portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.UserSignUpActivity" />
@@ -57,18 +65,22 @@
         </activity>
         <activity
             android:name=".activities.TransitionActivity"
-            android:theme="@style/Transition" />
+            android:theme="@style/Transition"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".activities.UserDashboardActivity"
             android:label="Dashboard"
-            android:theme="@style/MaterialThemeNoActionBar" />
+            android:theme="@style/MaterialThemeNoActionBar"
+            android:screenOrientation = "portrait" />
         <activity
             android:name=".activities.StatsActivity"
-            android:theme="@style/DrawerActivity" />
+            android:theme="@style/DrawerActivity"
+            android:screenOrientation = "portrait" />
         <activity
             android:name=".activities.UserSignUpActivity"
             android:label="User Sign Up"
-            android:theme="@style/MaterialThemeWithActionBar">
+            android:theme="@style/MaterialThemeWithActionBar"
+            android:screenOrientation = "portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.UsersActivity" />
@@ -76,7 +88,8 @@
         <activity
             android:name=".activities.AdminSettingsActivity"
             android:label="Admin Settings"
-            android:theme="@style/MaterialThemeWithActionBar">
+            android:theme="@style/MaterialThemeWithActionBar"
+            android:screenOrientation = "portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.AdminDashboardActivity" />
@@ -84,10 +97,12 @@
         <activity
             android:name=".activities.AdminDashboardActivity"
             android:label="Admin Dashboard"
-            android:theme="@style/MaterialThemeWithActionBar" />
+            android:theme="@style/MaterialThemeWithActionBar"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".activities.HomeActivity"
-            android:theme="@style/Transition">
+            android:theme="@style/Transition"
+            android:screenOrientation = "portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -97,11 +112,13 @@
         <activity
             android:name=".activities.AdminSignUpActivity"
             android:label="Admin Sign Up"
-            android:theme="@style/MaterialThemeWithActionBar" />
+            android:theme="@style/MaterialThemeWithActionBar"
+            android:screenOrientation = "portrait" />
         <activity
             android:name=".activities.AdminSignInActivity"
             android:label="Admin Sign In"
-            android:theme="@style/MaterialThemeWithActionBar">
+            android:theme="@style/MaterialThemeWithActionBar"
+            android:screenOrientation = "portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.UsersActivity" />
@@ -109,10 +126,12 @@
         <activity
             android:name=".activities.UsersActivity"
             android:label="Users"
-            android:theme="@style/MaterialThemeWithActionBar" />
+            android:theme="@style/MaterialThemeWithActionBar"
+            android:screenOrientation = "portrait"/>
         <activity
             android:name=".games.sorting.SortingCopy"
-            android:theme="@style/SortingGame" />
+            android:theme="@style/SortingGame"
+            android:screenOrientation = "portrait" />
     </application>
 
 </manifest>
