@@ -493,7 +493,7 @@ public class MemoryActivity extends AppCompatActivity implements Game {
                     cardTimerOn = false;
                     runOnUiThread(() -> {
                         if (shownCards.get(0).getType().equals(shownCards.get(1).getType())) { // Both cards shown up are of the same type
-//                            tonePlayer.start();
+                            correctTone.start();
                             for (int i = 0; i < shownCards.size(); i++) {
                                 for (int x = 0; x < cards.length; x++) {
                                     for (int y = 0; y < cards[x].length; y++) {
