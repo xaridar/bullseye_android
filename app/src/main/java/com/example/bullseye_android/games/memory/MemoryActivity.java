@@ -6,6 +6,8 @@ import android.content.res.ColorStateList;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -46,6 +49,7 @@ public class MemoryActivity extends AppCompatActivity implements Game {
     private ConstraintLayout diff;
     private Button playBtn;
     private RadioGroup diffChoice;
+
     private ConstraintLayout finishedLayout;
     private TextView timeTxt;
     private TextView finalTime;
@@ -540,7 +544,6 @@ public class MemoryActivity extends AppCompatActivity implements Game {
         return "matching";
     }
 
-
     public void back(View view) {
         finish();
     }
@@ -557,5 +560,19 @@ public class MemoryActivity extends AppCompatActivity implements Game {
                 });
             }
         }, 1000, 1000);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        if (timer != null) {
+            pause(null);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        userViewModel.update(user);
     }
 }
