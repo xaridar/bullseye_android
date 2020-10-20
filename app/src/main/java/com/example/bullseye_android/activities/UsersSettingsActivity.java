@@ -3,8 +3,6 @@ package com.example.bullseye_android.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -13,7 +11,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -22,11 +19,13 @@ import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.music.MusicActivity;
+import com.example.bullseye_android.music.MusicManager;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class UsersSettingsActivity extends AppCompatActivity {
+public class UsersSettingsActivity extends MusicActivity {
     public static final int AVATAR_REQ_CODE = 1;
     public static final int NAME_REQ_CODE = 2;
 
@@ -93,6 +92,8 @@ public class UsersSettingsActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 user.setMusicVolume(i);
+                float vol = (float) user.getMusicVolume() / User.MAX_VOLUME;
+                MusicManager.getInstance().setVolume(vol);
             }
 
             @Override

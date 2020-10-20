@@ -1,11 +1,7 @@
 package com.example.bullseye_android.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,12 +12,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.bullseye_android.R;
-import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.util.UserAdapter;
 
-public class MoreUsersActivity extends AppCompatActivity {
+public class MoreUsersActivity extends MusicActivity {
 
     private UserViewModel userViewModel;
     private LiveData<User> first;

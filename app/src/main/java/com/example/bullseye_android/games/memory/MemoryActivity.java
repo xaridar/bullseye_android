@@ -6,8 +6,6 @@ import android.content.res.ColorStateList;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -18,8 +16,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
@@ -27,10 +23,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.GamePauseFragment;
+import com.example.bullseye_android.music.MusicManager;
 import com.example.bullseye_android.util.TimeFormatter;
 
 import java.util.ArrayList;
@@ -40,7 +38,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class MemoryActivity extends AppCompatActivity implements Game {
+public class MemoryActivity extends MusicActivity implements Game {
 
     private ImageButton[] buttons;
     private MemoryCard[][] cards;
@@ -78,6 +76,8 @@ public class MemoryActivity extends AppCompatActivity implements Game {
     private int backCount;
     private int cardColor1;
     private int cardColor2;
+
+    boolean paused;
 
     /**
      * =====================================
@@ -145,6 +145,7 @@ public class MemoryActivity extends AppCompatActivity implements Game {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory);
+        paused = false;
 
 
         prefs = getSharedPreferences("userID", MODE_PRIVATE);
@@ -477,10 +478,12 @@ public class MemoryActivity extends AppCompatActivity implements Game {
             button.setEnabled(false);
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.memory_game, GamePauseFragment.newInstance()).commit();
+        MusicManager.getInstance().setVolume((float) user.getMusicVolume() / 2);
     }
 
     @Override
     public void unpause() {
+        MusicManager.getInstance().setVolume(user.getMusicVolume());
         runOnUiThread(() -> {
             pauseButton.setVisibility(View.VISIBLE);
         });
@@ -560,14 +563,6 @@ public class MemoryActivity extends AppCompatActivity implements Game {
                 });
             }
         }, 1000, 1000);
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        if (timer != null) {
-            pause(null);
-        }
-        super.onSaveInstanceState(outState);
     }
 
     @Override

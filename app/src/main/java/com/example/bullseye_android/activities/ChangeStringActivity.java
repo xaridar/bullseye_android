@@ -1,7 +1,6 @@
 package com.example.bullseye_android.activities;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -9,22 +8,19 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.util.ContinueFromEditTextListener;
-import com.example.bullseye_android.util.EmailChecker;
 import com.example.bullseye_android.util.ShowPassListener;
 
-public class ChangeStringActivity extends AppCompatActivity {
+public class ChangeStringActivity extends MusicActivity {
 
     private EditText editText;
     private CheckBox toggle;

@@ -10,11 +10,12 @@ import android.transition.Fade;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.music.MusicActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class TransitionActivity extends AppCompatActivity {
+public class TransitionActivity extends MusicActivity {
 
     boolean shouldFinish;
     private Class<? extends AppCompatActivity> toActivity;
