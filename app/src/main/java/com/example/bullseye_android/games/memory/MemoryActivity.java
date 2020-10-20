@@ -540,7 +540,6 @@ public class MemoryActivity extends AppCompatActivity implements Game {
         return "matching";
     }
 
-
     public void back(View view) {
         finish();
     }
