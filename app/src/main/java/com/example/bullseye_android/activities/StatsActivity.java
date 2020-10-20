@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ShareCompat;
 import androidx.core.view.GravityCompat;
@@ -24,6 +23,7 @@ import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.util.NavAdapter;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class StatsActivity extends AppCompatActivity {
+public class StatsActivity extends MusicActivity {
 
     public static final int MEMORY = 0;
     public static final int SORTING = 1;

@@ -1,30 +1,30 @@
 //Dylan coded and created layout
 package com.example.bullseye_android.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.music.MusicActivity;
+import com.example.bullseye_android.music.MusicManager;
 
-import java.util.function.Function;
-
-public class AdminDashboardActivity extends AppCompatActivity {
+public class AdminDashboardActivity extends MusicActivity {
 
     private User admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MusicManager.newInstance().make(getApplicationContext(), R.raw.africa).start();
+        MusicManager.newInstance().make(getApplicationContext(), R.raw.africa).start();
         UserViewModel mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         Fetcher.runNewAdminFetcher(mUserViewModel, user -> {
             if (user != null) {

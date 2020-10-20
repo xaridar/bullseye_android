@@ -1,19 +1,13 @@
 package com.example.bullseye_android.games.sorting;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.gesture.GestureLibraries;
-import android.gesture.GestureUtils;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,8 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.GestureDetector;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
@@ -36,6 +29,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
@@ -45,14 +39,13 @@ import com.example.bullseye_android.util.TimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-public class SortingCopy extends AppCompatActivity implements Game {
+public class SortingCopy extends MusicActivity implements Game {
 
     private ConstraintLayout layout;
 
@@ -563,5 +556,11 @@ public class SortingCopy extends AppCompatActivity implements Game {
     public void finish() {
         userViewModel.update(user);
         super.finish();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        userViewModel.update(user);
     }
 }

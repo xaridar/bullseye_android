@@ -16,7 +16,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
@@ -24,10 +23,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.GamePauseFragment;
+import com.example.bullseye_android.music.MusicManager;
 import com.example.bullseye_android.util.TimeFormatter;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class MemoryActivity extends AppCompatActivity implements Game {
+public class MemoryActivity extends MusicActivity implements Game {
 
     private ImageButton[] buttons;
     private MemoryCard[][] cards;
@@ -46,6 +47,7 @@ public class MemoryActivity extends AppCompatActivity implements Game {
     private ConstraintLayout diff;
     private Button playBtn;
     private RadioGroup diffChoice;
+
     private ConstraintLayout finishedLayout;
     private TextView timeTxt;
     private TextView finalTime;
@@ -74,6 +76,8 @@ public class MemoryActivity extends AppCompatActivity implements Game {
     private int backCount;
     private int cardColor1;
     private int cardColor2;
+
+    boolean paused;
 
     /**
      * =====================================
@@ -141,6 +145,7 @@ public class MemoryActivity extends AppCompatActivity implements Game {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory);
+        paused = false;
 
 
         prefs = getSharedPreferences("userID", MODE_PRIVATE);
@@ -473,10 +478,12 @@ public class MemoryActivity extends AppCompatActivity implements Game {
             button.setEnabled(false);
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.memory_game, GamePauseFragment.newInstance()).commit();
+        MusicManager.getInstance().setVolume((float) user.getMusicVolume() / 2);
     }
 
     @Override
     public void unpause() {
+        MusicManager.getInstance().setVolume(user.getMusicVolume());
         runOnUiThread(() -> {
             pauseButton.setVisibility(View.VISIBLE);
         });
@@ -489,7 +496,7 @@ public class MemoryActivity extends AppCompatActivity implements Game {
                     cardTimerOn = false;
                     runOnUiThread(() -> {
                         if (shownCards.get(0).getType().equals(shownCards.get(1).getType())) { // Both cards shown up are of the same type
-//                            tonePlayer.start();
+                            correctTone.start();
                             for (int i = 0; i < shownCards.size(); i++) {
                                 for (int x = 0; x < cards.length; x++) {
                                     for (int y = 0; y < cards[x].length; y++) {
@@ -556,5 +563,11 @@ public class MemoryActivity extends AppCompatActivity implements Game {
                 });
             }
         }, 1000, 1000);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        userViewModel.update(user);
     }
 }

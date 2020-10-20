@@ -3,27 +3,20 @@ package com.example.bullseye_android.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
-import com.example.bullseye_android.util.ShowPassListener;
+import com.example.bullseye_android.music.MusicActivity;
 
-public class AdminSettingsActivity extends AppCompatActivity {
+public class AdminSettingsActivity extends MusicActivity {
 
     public static final int CHANGE_PASSWORD_REQ_CODE = 20;
     private UserViewModel mUserViewModel;
