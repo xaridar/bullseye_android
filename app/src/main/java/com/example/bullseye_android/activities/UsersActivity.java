@@ -29,6 +29,7 @@ import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.music.MusicManager;
+import com.example.bullseye_android.util.Notifications;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -50,10 +51,13 @@ public class UsersActivity extends AppCompatActivity {
     private LinearLayout userLayout;
     private int c;
     private Button button;
+    private Notifications notifications;
+
     private MaterialButton adminBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        notifications = new Notifications(this);
         super.onCreate(savedInstanceState);
         try {
             MusicManager.getInstance().stop();
@@ -115,6 +119,7 @@ public class UsersActivity extends AppCompatActivity {
 
         adminBtn.setText(getString(R.string.admin_btn, admin.getName()));
         adminBtn.setOnClickListener(v -> {
+            notifications.createNotification(this,"Log In", "Good Job u log in", null);
             Intent myIntent = new Intent(v.getContext(), AdminSignInActivity.class);
             startActivity(myIntent);
         });
