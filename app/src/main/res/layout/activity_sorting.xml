@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/sortingBackground"
-        tools:context=".games.sorting.SortingCopy">
+        tools:context=".games.sorting.SortingActivity">
 
         <ImageButton
             android:id="@+id/pauseButton2"

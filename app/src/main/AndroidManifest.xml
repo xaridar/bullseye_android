@@ -130,7 +130,7 @@
             android:theme="@style/MaterialThemeWithActionBar"
             android:screenOrientation = "portrait"/>
         <activity
-            android:name=".games.sorting.SortingCopy"
+            android:name=".games.sorting.SortingActivity"
             android:theme="@style/SortingGame"
             android:screenOrientation = "portrait" />
     </application>

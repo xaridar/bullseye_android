@@ -1,3 +1,4 @@
+// Elliot coded App and Lifecycle Callbacks for music and pausing
 package com.example.bullseye_android;
 
 import android.app.Application;

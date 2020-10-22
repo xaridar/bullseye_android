@@ -1,4 +1,4 @@
-// all Stats activity design was done by Elliot
+// Stats activity design was done by Elliot
 package com.example.bullseye_android.activities;
 
 import android.os.Bundle;
