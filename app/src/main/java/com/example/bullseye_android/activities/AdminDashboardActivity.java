@@ -24,7 +24,6 @@ public class AdminDashboardActivity extends MusicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MusicManager.newInstance().make(getApplicationContext(), R.raw.africa).start();
-        MusicManager.newInstance().make(getApplicationContext(), R.raw.africa).start();
         UserViewModel mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         Fetcher.runNewAdminFetcher(mUserViewModel, user -> {
             if (user != null) {
