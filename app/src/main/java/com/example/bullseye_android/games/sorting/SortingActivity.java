@@ -1,3 +1,4 @@
+// Elliot coded basic game, Aakash changed and polished, Aakash designed
 package com.example.bullseye_android.games.sorting;
 
 import android.content.Context;
@@ -45,7 +46,7 @@ import java.util.TimerTask;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-public class SortingCopy extends MusicActivity implements Game {
+public class SortingActivity extends MusicActivity implements Game {
 
     private ConstraintLayout layout;
 
@@ -93,7 +94,7 @@ public class SortingCopy extends MusicActivity implements Game {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.copy_sorting);
+        setContentView(R.layout.activity_sorting);
         prefs = getSharedPreferences("userID", MODE_PRIVATE);
         gestureDetector = new GestureDetector(this, new GestureListener());
         long id = prefs.getLong("id", 0);
@@ -106,7 +107,7 @@ public class SortingCopy extends MusicActivity implements Game {
         mUser.observe(this, new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                SortingCopy.this.user = user;
+                SortingActivity.this.user = user;
                 mUser.removeObserver(this);
                 run();
             }
@@ -191,7 +192,7 @@ public class SortingCopy extends MusicActivity implements Game {
                                     countdown.setVisibility(View.INVISIBLE);
                                     countdown.setText("");
                                 });
-                                runOnUiThread(SortingCopy.this::startGame);
+                                runOnUiThread(SortingActivity.this::startGame);
                             }
                         }, 1000);
                     }
@@ -321,7 +322,7 @@ public class SortingCopy extends MusicActivity implements Game {
                 runOnUiThread(() -> {
                     millis[0]++;
                     if (millis[0] % delay[0] == 0) {
-                        SpawnTask task = new SpawnTask(SortingCopy.this, views);
+                        SpawnTask task = new SpawnTask(SortingActivity.this, views);
                         timer1.schedule(task, 0);
                         if (dropSpeed[0] > 3) {
                             dropSpeed[0] -= 0.05;
@@ -343,7 +344,7 @@ public class SortingCopy extends MusicActivity implements Game {
                     lives[0] = (int) objs.get("lives");
                     livesLayout.removeAllViews();
                     for (int i = 0; i < lives[0]; i++) {
-                        ImageView heart = new ImageView(SortingCopy.this);
+                        ImageView heart = new ImageView(SortingActivity.this);
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         params.weight = 1;
                         heart.setLayoutParams(params);
@@ -415,7 +416,7 @@ public class SortingCopy extends MusicActivity implements Game {
                 ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(size, size);
                 String color = colors[random.nextInt(colors.length)];
                 imageButton.setBackgroundTintList(ColorStateList.valueOf(color.equals("left") ? getColor(R.color.sortingLeft) : color.equals("right") ? getColor(R.color.sortingRight): getColor(android.R.color.black)));
-                imageButton.setBackground(ContextCompat.getDrawable(SortingCopy.this, R.drawable.ic_circle));
+                imageButton.setBackground(ContextCompat.getDrawable(SortingActivity.this, R.drawable.ic_circle));
                 imageButton.setId(View.generateViewId());
                 layout.addView(imageButton);
                 params.endToEnd = ConstraintSet.PARENT_ID;

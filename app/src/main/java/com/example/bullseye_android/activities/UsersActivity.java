@@ -1,4 +1,4 @@
-// Aakash coded and created layout
+// Aakash coded and created layout, Elliot coded filling with users
 package com.example.bullseye_android.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
