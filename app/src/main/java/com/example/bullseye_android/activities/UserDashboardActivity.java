@@ -1,12 +1,14 @@
 //Dylan coded and created layout
 package com.example.bullseye_android.activities;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,10 +20,8 @@ import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.memory.MemoryActivity;
 import com.example.bullseye_android.games.sorting.SortingCopy;
-import com.example.bullseye_android.music.MusicActivity;
-import com.example.bullseye_android.music.MusicManager;
 
-public class UserDashboardActivity extends MusicActivity {
+public class UserDashboardActivity extends AppCompatActivity {
     public static final int SETTINGS_REQ = 100;
 
     LiveData<User> user;
@@ -47,16 +47,10 @@ public class UserDashboardActivity extends MusicActivity {
 
     public void run() {
         setContentView(R.layout.activity_user_dashboard);
-        //music
-        MusicManager.newInstance()
-                .make(getApplicationContext(), R.raw.africa)
-                .start();
 
         TextView welcomeTxt = findViewById(R.id.userWelcomeText);
         ImageView avatarImg = findViewById(R.id.avatar);
         user.observe(this, user -> {
-            float vol = (float) user.getMusicVolume() / User.MAX_VOLUME;
-            MusicManager.getInstance().setVolume(vol);
             welcomeTxt.setText(getString(R.string.welcome, user.getName()));
             avatarImg.setImageResource(getResources().getIdentifier("pfp_" + user.getAvatar(), "drawable", "com.example.bullseye_android"));
         });
