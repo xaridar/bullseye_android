@@ -15,7 +15,7 @@ public class App extends Application {
 
     public App() {
         super();
-
+        new Notifications(this);
         registerActivityLifecycleCallbacks(new MusicCallbacks());
         registerActivityLifecycleCallbacks(new GameCallbacks());
     }

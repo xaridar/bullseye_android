@@ -12,6 +12,7 @@ import android.os.Build;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.bullseye_android.App;
 import com.example.bullseye_android.R;
@@ -27,51 +28,51 @@ public class Notifications extends ContextWrapper {
     public static final String channel_name = "bullseye_channel";
     public static final String channel_description = "Notification channel for bullseye app";
     boolean channelExists;
+    String name;
+    String description;
+    public NotificationCompat.Builder builder;
+    public int notificationId = 101;
 
     public Notifications(Context base) {
         super(base);
         this.createNotificationChannel();
     }
 
-    public void createNotification(Context context, String title, String text, Class activity){
+    public void createNotification(Context context, String title, String text, AppCompatActivity activity){
 
         if (activity != null) {
-            Intent intent = new Intent(this, activity);
+            Intent intent = new Intent(this, activity.getClass());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         }
 
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
+        builder = new NotificationCompat.Builder(context, CHANNEL_ID);
         builder
             .setSmallIcon(R.drawable.ic_bullseye_logo)
             .setContentTitle(title)
             .setContentText(text)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(notificationId, builder.build());
     }
     public void createNotificationChannel(){
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String name = channel_name;
-            String description = channel_description;
+            name = channel_name;
+            description = channel_description;
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
-            getManager().createNotificationChannel(channel);
+            NotificationManager nManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            nManager.createNotificationChannel(channel);
         }
     }
-    private NotificationManager getManager() {
-        if (nManager == null) {
-            nManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        }
-        return nManager;
-    }
+    public void backgroundNotifcations(){}
 
-    public void notifyBullseye(){
-
-    }
 }

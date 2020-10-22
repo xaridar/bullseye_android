@@ -58,6 +58,7 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         notifications = new Notifications(this);
+        notifications.createNotification(this,"User", "Good Job u in users screen", null);
         super.onCreate(savedInstanceState);
         try {
             MusicManager.getInstance().stop();
@@ -119,7 +120,7 @@ public class UsersActivity extends AppCompatActivity {
 
         adminBtn.setText(getString(R.string.admin_btn, admin.getName()));
         adminBtn.setOnClickListener(v -> {
-            notifications.createNotification(this,"Log In", "Good Job u log in", null);
+
             Intent myIntent = new Intent(v.getContext(), AdminSignInActivity.class);
             startActivity(myIntent);
         });
