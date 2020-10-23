@@ -66,6 +66,6 @@ public class MemoryInstructionsActivity extends AppCompatActivity implements Mus
 
     @Override
     public int getMusicId() {
-        return R.raw.africa;
+        return R.raw.memsong;
     }
 }

@@ -145,7 +145,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
 
     @Override
     public int getMusicId() {
-        return R.raw.africa;
+        return R.raw.memsong;
     }
 
     @Override
