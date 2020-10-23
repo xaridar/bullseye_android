@@ -15,7 +15,7 @@ import com.example.bullseye_android.music.MusicActivity;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class TransitionActivity extends MusicActivity {
+public class TransitionActivity extends AppCompatActivity implements MusicActivity {
 
     boolean shouldFinish;
     private Class<? extends AppCompatActivity> toActivity;

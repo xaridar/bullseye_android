@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ShareCompat;
 import androidx.core.view.GravityCompat;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class StatsActivity extends MusicActivity {
+public class StatsActivity extends AppCompatActivity implements MusicActivity {
 
     public static final int MEMORY = 0;
     public static final int SORTING = 1;

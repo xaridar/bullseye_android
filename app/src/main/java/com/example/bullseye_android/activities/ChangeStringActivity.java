@@ -2,6 +2,7 @@
 package com.example.bullseye_android.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -21,7 +22,7 @@ import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.util.ContinueFromEditTextListener;
 import com.example.bullseye_android.util.ShowPassListener;
 
-public class ChangeStringActivity extends MusicActivity {
+public class ChangeStringActivity extends AppCompatActivity implements MusicActivity {
 
     private EditText editText;
     private CheckBox toggle;

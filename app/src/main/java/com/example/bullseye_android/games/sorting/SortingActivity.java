@@ -22,6 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
@@ -46,7 +47,7 @@ import java.util.TimerTask;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-public class SortingActivity extends MusicActivity implements Game {
+public class SortingActivity extends AppCompatActivity implements Game, MusicActivity {
 
     private ConstraintLayout layout;
 

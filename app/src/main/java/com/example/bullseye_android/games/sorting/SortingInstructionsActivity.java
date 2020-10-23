@@ -1,15 +1,17 @@
 // Aakash designed
 package com.example.bullseye_android.games.sorting;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.view.MotionEvent;
 
+import com.example.bullseye_android.App;
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.music.MusicActivity;
 
-public class SortingInstructionsActivity extends MusicActivity {
+public class SortingInstructionsActivity extends AppCompatActivity implements MusicActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

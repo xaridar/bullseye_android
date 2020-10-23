@@ -3,6 +3,7 @@ package com.example.bullseye_android.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -16,7 +17,7 @@ import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.music.MusicActivity;
 
-public class AdminSettingsActivity extends MusicActivity {
+public class AdminSettingsActivity extends AppCompatActivity implements MusicActivity {
 
     public static final int CHANGE_PASSWORD_REQ_CODE = 20;
     private UserViewModel mUserViewModel;

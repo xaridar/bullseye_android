@@ -7,10 +7,16 @@ public class MusicManager {
 
     public static MusicManager INSTANCE;
     private MediaPlayer player;
+    private int resId;
+    private static float v;
+
+    private MusicManager() {
+        setVolume(v);
+    }
 
     public static MusicManager getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new MusicManager();
+            INSTANCE = newInstance();
         }
         return INSTANCE;
     }
@@ -25,6 +31,8 @@ public class MusicManager {
 
     public MusicManager make(Context context, int resId) {
         player = MediaPlayer.create(context, resId);
+        player.setVolume(v, v);
+        this.resId = resId;
         player.setOnCompletionListener(mediaPlayer -> {
             mediaPlayer.pause();
             mediaPlayer.seekTo(0);
@@ -34,7 +42,10 @@ public class MusicManager {
     }
 
     public void setVolume(float vol) {
-        player.setVolume(vol, vol);
+        v = vol;
+        if (player != null) {
+            player.setVolume(vol, vol);
+        }
     }
 
     public void start() {
@@ -51,6 +62,18 @@ public class MusicManager {
     }
 
     public boolean isPlaying() {
-        return player.isPlaying();
+        if (player == null) {
+            return false;
+        } else {
+            try {
+                return player.isPlaying();
+            } catch (IllegalStateException exc) {
+                return false;
+            }
+        }
+    }
+
+    public int getResId() {
+        return resId;
     }
 }

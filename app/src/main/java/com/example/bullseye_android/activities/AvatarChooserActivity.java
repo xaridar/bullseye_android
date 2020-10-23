@@ -3,18 +3,20 @@ package com.example.bullseye_android.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.music.MusicActivity;
 
 import java.util.HashMap;
 
-public class AvatarChooserActivity extends MusicActivity {
+public class AvatarChooserActivity extends AppCompatActivity implements MusicActivity {
 
     String currentAva;
 
@@ -56,6 +58,14 @@ public class AvatarChooserActivity extends MusicActivity {
         findViewById(R.id.backToUserSignUp).setOnClickListener(view -> {
             finish();
         });
+    }
+
+    @Override
+    public int getMusicId() {
+        if (getCallingActivity().getShortClassName().equals(".activities.UserSignUpActivity")) {
+            return 0;
+        }
+        return R.raw.bg;
     }
 
     private View.OnClickListener avatarListener = new View.OnClickListener() {
