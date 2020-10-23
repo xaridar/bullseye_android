@@ -1,6 +1,8 @@
+// coded by Dylan and Elliot, laid ut by Elliot
 package com.example.bullseye_android.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,7 +19,7 @@ import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.util.UserAdapter;
 
-public class MoreUsersActivity extends MusicActivity {
+public class MoreUsersActivity extends AppCompatActivity implements MusicActivity {
 
     private UserViewModel userViewModel;
     private LiveData<User> first;
@@ -84,5 +86,13 @@ public class MoreUsersActivity extends MusicActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public int getMusicId() {
+        if (getCallingActivity().getShortClassName().equals(".activities.UsersActivity")) {
+            return 0;
+        }
+        return R.raw.bg;
     }
 }

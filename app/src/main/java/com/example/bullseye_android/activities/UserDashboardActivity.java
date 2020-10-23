@@ -1,9 +1,11 @@
 //Dylan coded and created layout
 package com.example.bullseye_android.activities;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,12 +18,15 @@ import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.memory.MemoryActivity;
-import com.example.bullseye_android.games.sorting.SortingCopy;
+import com.example.bullseye_android.games.sorting.SortingActivity;
+import com.example.bullseye_android.games.sorting.SortingActivity;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.music.MusicManager;
+import com.example.bullseye_android.util.Notifications;
 
-public class UserDashboardActivity extends MusicActivity {
+public class UserDashboardActivity extends AppCompatActivity implements MusicActivity {
     public static final int SETTINGS_REQ = 100;
 
     LiveData<User> user;
@@ -47,10 +52,6 @@ public class UserDashboardActivity extends MusicActivity {
 
     public void run() {
         setContentView(R.layout.activity_user_dashboard);
-        //music
-        MusicManager.newInstance()
-                .make(getApplicationContext(), R.raw.africa)
-                .start();
 
         TextView welcomeTxt = findViewById(R.id.userWelcomeText);
         ImageView avatarImg = findViewById(R.id.avatar);
@@ -75,7 +76,7 @@ public class UserDashboardActivity extends MusicActivity {
         sortingGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UserDashboardActivity.this, SortingCopy.class));
+                startActivity(new Intent(UserDashboardActivity.this, SortingActivity.class));
             }
         });
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -86,20 +87,14 @@ public class UserDashboardActivity extends MusicActivity {
             }
         });
         logOutButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
+
             public void onClick(View v) {
+
                 finish();
             }
+
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
     }
 }

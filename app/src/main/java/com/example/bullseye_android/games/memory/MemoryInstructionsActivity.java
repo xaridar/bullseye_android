@@ -1,3 +1,4 @@
+//designed and coded by Dylan
 package com.example.bullseye_android.games.memory;
 
 import android.content.res.ColorStateList;
@@ -6,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.bullseye_android.R;
@@ -14,7 +16,7 @@ import com.example.bullseye_android.music.MusicActivity;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MemoryInstructionsActivity extends MusicActivity {
+public class MemoryInstructionsActivity extends AppCompatActivity implements MusicActivity {
 
     ImageButton[] cards = new ImageButton[2];
     int[] resIds;
@@ -60,5 +62,10 @@ public class MemoryInstructionsActivity extends MusicActivity {
                 });
             }
         }, 600);
+    }
+
+    @Override
+    public int getMusicId() {
+        return R.raw.memsong;
     }
 }

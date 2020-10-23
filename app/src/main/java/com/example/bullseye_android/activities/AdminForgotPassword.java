@@ -1,5 +1,7 @@
+//dylan coded and designed
 package com.example.bullseye_android.activities;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -13,8 +15,9 @@ import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.music.MusicActivity;
+import com.example.bullseye_android.music.MusicManager;
 
-public class AdminForgotPassword extends MusicActivity {
+public class AdminForgotPassword extends AppCompatActivity {
 
     User admin;
     UserViewModel userViewModel;

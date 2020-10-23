@@ -1,3 +1,4 @@
+// Elliot coded App and Lifecycle Callbacks for music and pausing
 package com.example.bullseye_android;
 
 import android.app.Application;
@@ -16,5 +17,12 @@ public class App extends Application {
         super();
         registerActivityLifecycleCallbacks(new MusicCallbacks());
         registerActivityLifecycleCallbacks(new GameCallbacks());
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        new Notifications(this);
     }
 }

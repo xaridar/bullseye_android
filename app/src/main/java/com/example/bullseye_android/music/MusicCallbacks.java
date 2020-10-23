@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bullseye_android.R;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.music.MusicManager;
 
@@ -17,7 +18,20 @@ public class MusicCallbacks implements Application.ActivityLifecycleCallbacks {
     private AppCompatActivity activity;
 
     @Override
-    public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {}
+    public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
+        int id;
+        if (activity instanceof MusicActivity) {
+            id = ((MusicActivity) activity).getMusicId();
+            if (!MusicManager.getInstance().isPlaying() || MusicManager.getInstance().getResId() != id) {
+                try {
+                    if (id != 0) {
+                        MusicManager.newInstance().make(activity.getApplicationContext(), ((MusicActivity) activity).getMusicId()).start();
+                    }
+                } catch (NullPointerException | IllegalStateException ignored) {
+                }
+            }
+        }
+    }
 
     @Override
     public void onActivityStarted(@NonNull Activity activity) {
@@ -34,7 +48,20 @@ public class MusicCallbacks implements Application.ActivityLifecycleCallbacks {
     }
 
     @Override
-    public void onActivityResumed(@NonNull Activity activity) {}
+    public void onActivityResumed(@NonNull Activity activity) {
+        int id;
+        if (activity instanceof MusicActivity) {
+            id = ((MusicActivity) activity).getMusicId();
+            if (!MusicManager.getInstance().isPlaying() || MusicManager.getInstance().getResId() != id) {
+                try {
+                    if (id != 0) {
+                        MusicManager.newInstance().make(activity.getApplicationContext(), ((MusicActivity) activity).getMusicId()).start();
+                    }
+                } catch (NullPointerException | IllegalStateException ignored) {
+                }
+            }
+        }
+    }
 
     @Override
     public void onActivityPaused(@NonNull Activity activity) {}
@@ -42,7 +69,6 @@ public class MusicCallbacks implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityStopped(@NonNull Activity activity) {
         if (activity == this.activity) {
-            Log.i("HH1", "true");
             try {
                 MusicManager.getInstance().pause();
             } catch (NullPointerException | IllegalStateException ignored) {}

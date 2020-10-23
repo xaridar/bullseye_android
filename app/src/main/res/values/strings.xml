@@ -75,4 +75,6 @@
     <string name="how_to_play">How To Play</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="channel_name">bullseye_channel</string>
+    <string name="channel_description">Bullseye App Notifications</string>
 </resources>

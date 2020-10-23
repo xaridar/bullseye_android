@@ -3,6 +3,7 @@ package com.example.bullseye_android.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -25,7 +26,7 @@ import com.example.bullseye_android.music.MusicManager;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class UsersSettingsActivity extends MusicActivity {
+public class UsersSettingsActivity extends AppCompatActivity implements MusicActivity {
     public static final int AVATAR_REQ_CODE = 1;
     public static final int NAME_REQ_CODE = 2;
 

@@ -12,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialThemeWithActionBar">
         <activity android:name=".games.turn_based.TurnBasedActivity"></activity>
-        <activity android:name=".games.turn_based.turn_based" />
         <activity
             android:name=".games.memory.MemoryInstructionsActivity"
             android:screenOrientation="portrait"
@@ -136,9 +135,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/MaterialThemeWithActionBar" />
         <activity
-            android:name=".games.sorting.SortingCopy"
-            android:screenOrientation="portrait"
-            android:theme="@style/SortingGame" />
+            android:name=".games.sorting.SortingActivity"
+            android:theme="@style/SortingGame"
+            android:screenOrientation = "portrait" />
     </application>
 
 </manifest>

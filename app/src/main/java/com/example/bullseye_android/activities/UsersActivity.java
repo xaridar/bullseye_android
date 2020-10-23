@@ -1,4 +1,4 @@
-// Aakash coded and created layout
+// Aakash coded and created layout, Elliot coded filling with users
 package com.example.bullseye_android.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +29,7 @@ import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.music.MusicManager;
+import com.example.bullseye_android.util.Notifications;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
@@ -50,14 +51,15 @@ public class UsersActivity extends AppCompatActivity {
     private LinearLayout userLayout;
     private int c;
     private Button button;
+    private Notifications notifications;
+
     private MaterialButton adminBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        notifications = new Notifications(this);
+        notifications.createNotification(this,"User", "Good Job u in users screen", null);
         super.onCreate(savedInstanceState);
-        try {
-            MusicManager.getInstance().stop();
-        } catch (NullPointerException ignored) {}
         setContentView(R.layout.activity_users);
 
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
@@ -115,6 +117,7 @@ public class UsersActivity extends AppCompatActivity {
 
         adminBtn.setText(getString(R.string.admin_btn, admin.getName()));
         adminBtn.setOnClickListener(v -> {
+
             Intent myIntent = new Intent(v.getContext(), AdminSignInActivity.class);
             startActivity(myIntent);
         });

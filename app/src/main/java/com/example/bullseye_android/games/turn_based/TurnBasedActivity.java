@@ -17,7 +17,7 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 
-public class TurnBasedActivity extends MusicActivity implements Game {
+public class TurnBasedActivity extends AppCompatActivity implements Game, MusicActivity {
 
     private int mapSizeX;
     private int mapSizeY;

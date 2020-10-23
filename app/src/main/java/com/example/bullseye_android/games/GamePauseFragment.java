@@ -1,3 +1,4 @@
+// Elliot coded, Dylan designed
 package com.example.bullseye_android.games;
 
 import android.content.res.ColorStateList;
@@ -7,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.bullseye_android.R;
-import com.example.bullseye_android.games.memory.MemoryActivity;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.Timer;
@@ -45,7 +44,7 @@ public class GamePauseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_memory_pause, container, false);
+        return inflater.inflate(R.layout.fragment_game_pause, container, false);
     }
 
     @Override

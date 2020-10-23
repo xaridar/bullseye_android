@@ -1,3 +1,4 @@
+//Elliot nd Dylan coded memory game, Dylan designed
 package com.example.bullseye_android.games.memory;
 
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
@@ -38,7 +40,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class MemoryActivity extends MusicActivity implements Game {
+public class MemoryActivity extends AppCompatActivity implements Game, MusicActivity {
 
     private ImageButton[] buttons;
     private MemoryCard[][] cards;
@@ -139,6 +141,11 @@ public class MemoryActivity extends MusicActivity implements Game {
             diff.setVisibility(View.VISIBLE);
             highScore.setVisibility(View.INVISIBLE);
         });
+    }
+
+    @Override
+    public int getMusicId() {
+        return R.raw.memsong;
     }
 
     @Override
