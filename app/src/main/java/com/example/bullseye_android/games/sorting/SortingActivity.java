@@ -565,4 +565,9 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         super.onStop();
         userViewModel.update(user);
     }
+
+    @Override
+    public int getMusicId() {
+        return R.raw.sortingsong;
+    }
 }

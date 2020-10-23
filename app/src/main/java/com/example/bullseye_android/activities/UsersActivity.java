@@ -60,9 +60,6 @@ public class UsersActivity extends AppCompatActivity {
         notifications = new Notifications(this);
         notifications.createNotification(this,"User", "Good Job u in users screen", null);
         super.onCreate(savedInstanceState);
-        try {
-            MusicManager.getInstance().stop();
-        } catch (NullPointerException ignored) {}
         setContentView(R.layout.activity_users);
 
         mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);

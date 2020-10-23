@@ -28,4 +28,9 @@ public class SortingInstructionsActivity extends AppCompatActivity implements Mu
         finish();
         return super.onTouchEvent(event);
     }
+
+    @Override
+    public int getMusicId() {
+        return R.raw.sortingsong;
+    }
 }
