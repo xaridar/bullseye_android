@@ -20,6 +20,7 @@ import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.music.MusicManager;
 
@@ -81,6 +82,10 @@ public class UsersSettingsActivity extends AppCompatActivity implements MusicAct
         backToDashboard.setOnClickListener(v -> {
             finish();
         });
+
+        if (getIntent().getStringExtra("game") != null) {
+            backToDashboard.setText(getString(R.string.back_to_game, getIntent().getStringExtra("game")));
+        }
 
         changeName.setOnClickListener(view -> {
             Intent intent = new Intent(UsersSettingsActivity.this, ChangeStringActivity.class);

@@ -303,7 +303,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         pause = true;
         constant.cancel();
         pauseButton.setVisibility(View.INVISIBLE);
-        getSupportFragmentManager().beginTransaction().replace(R.id.root, GamePauseFragment.newInstance()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.root, GamePauseFragment.newInstance(user)).commit();
     }
 
     @Override
