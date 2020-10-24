@@ -69,10 +69,12 @@ public class Notifications extends ContextWrapper {
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
-            NotificationManager nManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            nManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             nManager.createNotificationChannel(channel);
         }
     }
-    public void backgroundNotifcations(){}
+    public void backgroundNotifcations(){
+
+    }
 
 }

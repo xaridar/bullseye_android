@@ -15,14 +15,8 @@ public class App extends Application {
 
     public App() {
         super();
+        new Notifications(this);
         registerActivityLifecycleCallbacks(new MusicCallbacks());
         registerActivityLifecycleCallbacks(new GameCallbacks());
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-        new Notifications(this);
     }
 }
