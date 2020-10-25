@@ -11,7 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.database.User;
+import com.example.bullseye_android.database.UserSerializable;
 import com.example.bullseye_android.music.MusicActivity;
+import com.example.bullseye_android.util.SfxManager;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,11 +25,13 @@ public class MemoryInstructionsActivity extends AppCompatActivity implements Mus
     int[] resIds;
     int[] colors;
     public MediaPlayer cardTone;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        cardTone = MediaPlayer.create(this, R.raw.card_flip);
+        user = ((UserSerializable) getIntent().getSerializableExtra("user")).getUser();
+        cardTone = SfxManager.createSfx(this, R.raw.card_flip, (float) user.getGameVolume() / User.MAX_VOLUME);
         setContentView(R.layout.activity_memory_instructions);
         cards[0] = findViewById(R.id.imageButton2);
         cards[1] = findViewById(R.id.imageButton);

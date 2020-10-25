@@ -73,8 +73,11 @@
     <string name="send_support_email">Send Support Email</string>
     <string name="back_to_login">Back to Login</string>
     <string name="how_to_play">How To Play</string>
+    <string name="back_to_game">Back to %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="channel_name">bullseye_channel</string>
     <string name="channel_description">Bullseye App Notifications</string>
+    <string name="music">Music</string>
+    <string name="sounds">Sounds</string>
 </resources>

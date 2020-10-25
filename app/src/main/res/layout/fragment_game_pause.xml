@@ -48,4 +48,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/unpauseButton" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/settingsfab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:foregroundTint="@color/memCardColor1"
+        android:src="@drawable/ic_baseline_settings_24"
+        app:backgroundTint="@color/memCardColor1"
+        app:fabCustomSize="75dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:maxImageSize="50dp"
+        app:rippleColor="@color/memCardColor1"
+        app:tint="@color/memCardColor1" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

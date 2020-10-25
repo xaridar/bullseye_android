@@ -1,7 +1,9 @@
 // Elliot coded, Dylan designed
 package com.example.bullseye_android.games;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,30 +17,46 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.activities.UsersSettingsActivity;
+import com.example.bullseye_android.database.User;
+import com.example.bullseye_android.database.UserSerializable;
+import com.example.bullseye_android.music.MusicManager;
+import com.example.bullseye_android.util.SfxManager;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class GamePauseFragment extends Fragment {
 
+    private static final String ARG_USER = "user";
+
+    User user;
     ImageButton button;
     TextView text;
     MaterialButton finish;
     int time;
     Timer timer;
     Game ctx;
+    FloatingActionButton settings;
 
     public GamePauseFragment() { }
 
-    public static GamePauseFragment newInstance() {
-        return new GamePauseFragment();
+    public static GamePauseFragment newInstance(User user) {
+        GamePauseFragment fragment = new GamePauseFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_USER, new UserSerializable(user));
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getArguments() != null) {
+            user = ((UserSerializable) getArguments().getSerializable(ARG_USER)).getUser();
+        }
     }
 
     @Override
@@ -58,20 +76,38 @@ public class GamePauseFragment extends Fragment {
             button.setOnClickListener(this::back);
             finish = view.findViewById(R.id.finish);
             finish.setOnClickListener(this::finish);
+            settings = view.findViewById(R.id.settingsfab);
             switch (ctx.getGame()) {
                 case "matching":
+                    settings.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.memCardColor2)));
+                    settings.setImageTintList(ColorStateList.valueOf(getContext().getColor(R.color.memCardColor1)));
+                    settings.setRippleColor(getContext().getColor(R.color.memCardColor1));
                     view.setBackgroundColor(getContext().getColor(R.color.memBackground));
                     button.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.memCardColor1)));
                     finish.setTextColor(getContext().getColor(R.color.memText));
                     finish.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.memCardColor1)));
                     break;
                 case "sorting":
+                    settings.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingRight)));
+                    settings.setImageTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingLeft)));
+                    settings.setRippleColor(getContext().getColor(R.color.sortingLeft));
                     view.setBackgroundColor(getContext().getColor(R.color.sortingBackground));
                     button.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingRight)));
                     finish.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingRight)));
                     finish.setTextColor(getContext().getColor(R.color.color1));
                     break;
             }
+            settings.setOnClickListener(v -> {
+                Intent intent = new Intent(getContext(), UsersSettingsActivity.class);
+                StringBuilder name = new StringBuilder();
+                String game = ((Game) ctx).getGame();
+                name.append(Character.toUpperCase(game.charAt(0)));
+                game = game.substring(1);
+                name.append(game);
+                name.append(" Game");
+                intent.putExtra("game", name.toString());
+                startActivity(intent);
+            });
         }
     }
 
