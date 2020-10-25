@@ -104,4 +104,9 @@ public class AdminSettingsActivity extends AppCompatActivity implements MusicAct
             }
         }
     }
+
+    @Override
+    public int getMusicId() {
+        return R.raw.adminsong;
+    }
 }
