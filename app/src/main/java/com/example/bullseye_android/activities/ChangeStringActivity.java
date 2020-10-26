@@ -156,4 +156,14 @@ public class ChangeStringActivity extends AppCompatActivity implements MusicActi
             button.performClick();
         }
     }
+
+    @Override
+    public int getMusicId() {
+        if (getCallingActivity().getShortClassName().equals(".activities.UsersSettingsActivity")) {
+            return R.raw.bg;
+        } else if (getCallingActivity().getShortClassName().equals(".activities.AdminSettingsActivity")) {
+            return R.raw.adminsong;
+        }
+        return 0;
+    }
 }

@@ -68,4 +68,8 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
         });
     }
 
+    @Override
+    public int getMusicId() {
+        return R.raw.adminsong;
+    }
 }

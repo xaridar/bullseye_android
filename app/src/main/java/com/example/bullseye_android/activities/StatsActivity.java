@@ -199,4 +199,9 @@ public class StatsActivity extends AppCompatActivity implements MusicActivity {
                     .setSubject(name + "'s stats from Bullseye app")
                     .startChooser();
     }
+
+    @Override
+    public int getMusicId() {
+        return R.raw.adminsong;
+    }
 }
