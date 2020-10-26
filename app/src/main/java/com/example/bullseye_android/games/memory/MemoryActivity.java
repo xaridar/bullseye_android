@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -130,6 +131,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
                 }
             }
         }
+        confetti(konfettiView, this.getApplicationContext());
         board.setVisibility(View.INVISIBLE);
         finishedLayout.setVisibility(View.VISIBLE);
         timeTxt.setVisibility(View.INVISIBLE);
@@ -475,16 +477,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     @Override
     public void finish() {
         userViewModel.update(user);
-        konfettiView.build()
-                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
-                .setDirection(0.0, 359.0)
-                .setSpeed(1f, 5f)
-                .setFadeOutEnabled(true)
-                .setTimeToLive(2000L)
-                .addShapes(Shape.Square.INSTANCE, Shape.Circle.INSTANCE)
-                .addSizes(new Size(12, 5f))
-                .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
-                .streamFor(300, 5000L);
+
         super.finish();
     }
 
@@ -501,6 +494,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         for (ImageButton button : buttons) {
             button.setEnabled(false);
         }
+
         getSupportFragmentManager().beginTransaction().replace(R.id.memory_game, GamePauseFragment.newInstance(user)).commit();
         MusicManager.getInstance().setVolume((float) user.getMusicVolume() / 2);
     }
@@ -594,4 +588,5 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         super.onStop();
         userViewModel.update(user);
     }
+
 }
