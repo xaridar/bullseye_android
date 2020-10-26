@@ -76,8 +76,8 @@ public class Notifications extends ContextWrapper {
         }
     }
     public void backgroundNotifications(){
-        service = new NotificationsService();
-        startService(service.getIntent());
+        Intent intent = new Intent(this, NotificationsService.class);
+        startService(intent);
     }
 
 }

@@ -14,7 +14,8 @@
         <service
             android:name=".util.NotificationsService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"/>
+        <receiver android:process=":remote" android:name=".util.NotificationReceiver"/>
 
         <activity android:name=".activities.Survey" />
         <activity
