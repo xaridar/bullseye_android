@@ -169,7 +169,7 @@ public class User {
         gamesPlayed[ALL_GAMES]++;
     }
 
-    public void addGame(int game, float acc, long time, int pointsToAdd) {
+    public boolean addGame(int game, float acc, long time, int pointsToAdd) {
         addPlayTime(game, time);
         addAcc(game, acc);
         addPoints(game, pointsToAdd);
@@ -193,12 +193,15 @@ public class User {
         if (game >= 1 && game <= 3) {
             if (time < highScores[game]) {
                 highScores[game] = time;
+                return true;
             }
         } else if (game >= 4 && game <= 5) {
             if (time > highScores[game]) {
                 highScores[game] = time;
+                return true;
             }
         }
+        return false;
     }
 
     public boolean isAdmin() {

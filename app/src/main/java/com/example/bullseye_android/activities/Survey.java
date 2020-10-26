@@ -1,7 +1,10 @@
 package com.example.bullseye_android.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
+import com.example.bullseye_android.R;
 
 public class Survey extends AppCompatActivity {
 

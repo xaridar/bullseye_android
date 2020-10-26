@@ -3,37 +3,47 @@
     package="com.example.bullseye_android">
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/bullseye_logo_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/bullseye_logo_launcher_round"
         android:supportsRtl="true"
-        android:name=".App"
         android:theme="@style/MaterialThemeWithActionBar">
-        <activity android:name=".games.memory.MemoryInstructionsActivity" android:theme="@style/MemoryInstructions"
-            android:screenOrientation = "portrait"/>
-        <activity android:name=".games.sorting.SortingInstructionsActivity" android:theme="@style/SortingGame"
-            android:screenOrientation = "portrait"/>
+        <service
+            android:name=".util.NotificationsService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".activities.Survey" />
+        <activity
+            android:name=".games.memory.MemoryInstructionsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MemoryInstructions" />
+        <activity
+            android:name=".games.sorting.SortingInstructionsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SortingGame" />
         <activity
             android:name=".activities.AdminForgotPassword"
             android:label="Forgot Password"
-            android:theme="@style/MaterialThemeWithActionBar"
-            android:screenOrientation = "portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialThemeWithActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.AdminSignInActivity"
-                android:screenOrientation = "portrait"/>
+                android:screenOrientation="portrait"
+                android:value=".activities.AdminSignInActivity" />
         </activity>
         <activity
             android:name=".games.memory.MemoryActivity"
-            android:theme="@style/MemoryGame"
-            android:screenOrientation = "portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/MemoryGame" />
         <activity
             android:name=".activities.MoreUsersActivity"
             android:label="All Users"
-            android:theme="@style/MaterialThemeWithActionBar"
-            android:screenOrientation = "portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialThemeWithActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.UsersActivity" />
@@ -41,8 +51,8 @@
         <activity
             android:name=".activities.ChangeStringActivity"
             android:label="@string/change_string"
-            android:theme="@style/MaterialThemeWithActionBar"
-            android:screenOrientation = "portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialThemeWithActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.UsersSettingsActivity" />
@@ -50,8 +60,8 @@
         <activity
             android:name=".activities.AvatarChooserActivity"
             android:label="Choose an Avatar"
-            android:theme="@style/MaterialThemeWithActionBar"
-            android:screenOrientation = "portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialThemeWithActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.UserSignUpActivity" />
@@ -66,22 +76,22 @@
         </activity>
         <activity
             android:name=".activities.TransitionActivity"
-            android:theme="@style/Transition"
-            android:screenOrientation = "portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Transition" />
         <activity
             android:name=".activities.UserDashboardActivity"
             android:label="Dashboard"
-            android:theme="@style/MaterialThemeNoActionBar"
-            android:screenOrientation = "portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialThemeNoActionBar" />
         <activity
             android:name=".activities.StatsActivity"
-            android:theme="@style/DrawerActivity"
-            android:screenOrientation = "portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/DrawerActivity" />
         <activity
             android:name=".activities.UserSignUpActivity"
             android:label="User Sign Up"
-            android:theme="@style/MaterialThemeWithActionBar"
-            android:screenOrientation = "portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialThemeWithActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.UsersActivity" />
@@ -89,8 +99,8 @@
         <activity
             android:name=".activities.AdminSettingsActivity"
             android:label="Admin Settings"
-            android:theme="@style/MaterialThemeWithActionBar"
-            android:screenOrientation = "portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialThemeWithActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.AdminDashboardActivity" />
@@ -98,12 +108,12 @@
         <activity
             android:name=".activities.AdminDashboardActivity"
             android:label="Admin Dashboard"
-            android:theme="@style/MaterialThemeWithActionBar"
-            android:screenOrientation = "portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialThemeWithActionBar" />
         <activity
             android:name=".activities.HomeActivity"
-            android:theme="@style/Transition"
-            android:screenOrientation = "portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Transition">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -113,13 +123,13 @@
         <activity
             android:name=".activities.AdminSignUpActivity"
             android:label="Admin Sign Up"
-            android:theme="@style/MaterialThemeWithActionBar"
-            android:screenOrientation = "portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialThemeWithActionBar" />
         <activity
             android:name=".activities.AdminSignInActivity"
             android:label="Admin Sign In"
-            android:theme="@style/MaterialThemeWithActionBar"
-            android:screenOrientation = "portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialThemeWithActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.UsersActivity" />
@@ -127,12 +137,12 @@
         <activity
             android:name=".activities.UsersActivity"
             android:label="Users"
-            android:theme="@style/MaterialThemeWithActionBar"
-            android:screenOrientation = "portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialThemeWithActionBar" />
         <activity
             android:name=".games.sorting.SortingActivity"
-            android:theme="@style/SortingGame"
-            android:screenOrientation = "portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/SortingGame" />
     </application>
 
 </manifest>

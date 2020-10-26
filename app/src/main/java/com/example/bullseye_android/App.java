@@ -10,13 +10,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.bullseye_android.games.GameCallbacks;
 import com.example.bullseye_android.music.MusicCallbacks;
 import com.example.bullseye_android.util.Notifications;
+import com.example.bullseye_android.util.NotificationsService;
 
 public class App extends Application {
 
     public App() {
         super();
-        new Notifications(this);
+
         registerActivityLifecycleCallbacks(new MusicCallbacks());
         registerActivityLifecycleCallbacks(new GameCallbacks());
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        new Notifications(this);
     }
 }

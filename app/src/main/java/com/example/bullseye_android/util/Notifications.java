@@ -32,10 +32,12 @@ public class Notifications extends ContextWrapper {
     String description;
     public NotificationCompat.Builder builder;
     public int notificationId = 101;
+    public NotificationsService service;
 
     public Notifications(Context base) {
         super(base);
         this.createNotificationChannel();
+        this.backgroundNotifications();
     }
 
     public void createNotification(Context context, String title, String text, AppCompatActivity activity){
@@ -73,8 +75,9 @@ public class Notifications extends ContextWrapper {
             nManager.createNotificationChannel(channel);
         }
     }
-    public void backgroundNotifcations(){
-
+    public void backgroundNotifications(){
+        service = new NotificationsService();
+        startService(service.getIntent());
     }
 
 }
