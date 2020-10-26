@@ -5,7 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.bullseye_android.App;
+import com.example.bullseye_android.activities.UsersActivity;
 
 public class NotificationReceiver extends BroadcastReceiver {
     Notifications notif;
@@ -19,7 +22,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     public void sendNotifications(){
         notif = new Notifications(ctx);
-        notif.createNotification(ctx, "Test", "Does this work?", null);
+        notif.createNotification(ctx, "How have you been?", "We haven't seen you in a while. Why don't you hop back on.", UsersActivity.class);
     }
 }
 

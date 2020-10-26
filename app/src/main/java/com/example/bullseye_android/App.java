@@ -15,7 +15,7 @@ import com.example.bullseye_android.util.Notifications;
 import com.example.bullseye_android.util.NotificationsService;
 
 public class App extends Application {
-
+    public Notifications notifications;
     public App() {
         super();
 
@@ -23,10 +23,13 @@ public class App extends Application {
         registerActivityLifecycleCallbacks(new GameCallbacks());
     }
 
+
     @Override
     public void onCreate() {
         super.onCreate();
-        new Notifications(this);
+        notifications = new Notifications(this);
+
+
 
     }
 }

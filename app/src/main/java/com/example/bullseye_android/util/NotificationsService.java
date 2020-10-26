@@ -1,6 +1,7 @@
 package com.example.bullseye_android.util;
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -16,33 +17,43 @@ public class NotificationsService extends Service {
     private static Long MILLISECS_PER_MIN = 60000L;
     Notifications notif;
     public static int eventID = 0;
-
     private static long delay = MILLISECS_PER_MIN;
-    private static long dayDelay = MILLISECS_PER_DAY * 3;
+    //private static long delay = MILLISECS_PER_DAY * 3;
+    AlarmManager am;
+    Intent i;
+    PendingIntent pi;
+    static Service service;
 
     public NotificationsService() {
+    }
+
+    public static Service getService() {
+        return service;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        service = NotificationsService.this;
         notif = new Notifications(this);
+        service.startForeground(101, notif.getNotification());
         sendNotification();
         setAlarm();
     }
 
     public void setAlarm(){
         Intent alarmIntent = new Intent(this, NotificationReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(
+        pi = PendingIntent.getBroadcast(
                 this, eventID, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         eventID+=1;
-        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent i = new Intent(this, NotificationsService.class);
+        am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        i = new Intent(this, NotificationsService.class);
         //PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + delay, pi);
     }
 
-    public void sendNotificaton(){
+    public void stopAlarm(){
+        am.cancel(pi);
 
     }
 
@@ -57,9 +68,6 @@ public class NotificationsService extends Service {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    public Notifications getNotificationsClass(){
-        return notif;
-    }
 
     public void sendNotification(){
 

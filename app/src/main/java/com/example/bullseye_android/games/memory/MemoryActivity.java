@@ -4,6 +4,7 @@ package com.example.bullseye_android.games.memory;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +39,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 
 public class MemoryActivity extends AppCompatActivity implements Game, MusicActivity {
@@ -78,6 +83,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     private int backCount;
     private int cardColor1;
     private int cardColor2;
+    private KonfettiView konfettiView;
 
     boolean paused;
 
@@ -153,7 +159,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory);
         paused = false;
-
+        konfettiView = findViewById(R.id.viewKonfetti);
 
         prefs = getSharedPreferences("userID", MODE_PRIVATE);
         long id = (prefs.getLong("id", 0));
@@ -468,6 +474,16 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     @Override
     public void finish() {
         userViewModel.update(user);
+        konfettiView.build()
+                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(2000L)
+                .addShapes(Shape.Square.INSTANCE, Shape.Circle.INSTANCE)
+                .addSizes(new Size(12, 5f))
+                .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
+                .streamFor(300, 5000L);
         super.finish();
     }
 
