@@ -31,6 +31,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.database.Fetcher;
+import com.example.bullseye_android.games.memory.MemoryActivity;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
@@ -569,5 +571,20 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     @Override
     public int getMusicId() {
         return R.raw.sortingsong;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Fetcher.runNewUserFetcher(userViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), u -> {
+            runOnUiThread(() -> u.observe(this, new Observer<User>() {
+                @Override
+                public void onChanged(User user) {
+                    SortingActivity.this.user = user;
+                    u.removeObserver(this);
+                }
+            }));
+            return null;
+        });
     }
 }

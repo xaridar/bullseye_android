@@ -25,6 +25,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.UserSerializable;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.database.User;
@@ -486,12 +487,14 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
             button.setEnabled(false);
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.memory_game, GamePauseFragment.newInstance(user)).commit();
-        MusicManager.getInstance().setVolume((float) user.getMusicVolume() / 2);
     }
 
     @Override
     public void unpause() {
-        MusicManager.getInstance().setVolume(user.getMusicVolume());
+        unpauseActions();
+    }
+
+    void unpauseActions() {
         runOnUiThread(() -> {
             pauseButton.setVisibility(View.VISIBLE);
         });
@@ -542,7 +545,6 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
                 button.setEnabled(true);
             }
         });
-
     }
 
     /**
@@ -577,5 +579,20 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     protected void onStop() {
         super.onStop();
         userViewModel.update(user);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Fetcher.runNewUserFetcher(userViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), u -> {
+            runOnUiThread(() -> u.observe(this, new Observer<User>() {
+                @Override
+                public void onChanged(User user) {
+                    MemoryActivity.this.user = user;
+                    u.removeObserver(this);
+                }
+            }));
+            return null;
+        });
     }
 }

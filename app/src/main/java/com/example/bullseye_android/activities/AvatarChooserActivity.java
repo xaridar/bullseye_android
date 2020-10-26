@@ -62,10 +62,7 @@ public class AvatarChooserActivity extends AppCompatActivity implements MusicAct
 
     @Override
     public int getMusicId() {
-        if (getCallingActivity().getShortClassName().equals(".activities.UserSignUpActivity")) {
-            return 0;
-        }
-        return R.raw.bg;
+        return 0;
     }
 
     private View.OnClickListener avatarListener = new View.OnClickListener() {

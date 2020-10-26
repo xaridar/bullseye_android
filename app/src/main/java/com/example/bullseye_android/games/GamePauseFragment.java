@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +20,11 @@ import android.widget.TextView;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.activities.UsersSettingsActivity;
+import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserSerializable;
+import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.games.memory.MemoryActivity;
 import com.example.bullseye_android.music.MusicManager;
 import com.example.bullseye_android.util.SfxManager;
 import com.google.android.material.button.MaterialButton;
@@ -77,6 +82,7 @@ public class GamePauseFragment extends Fragment {
             finish = view.findViewById(R.id.finish);
             finish.setOnClickListener(this::finish);
             settings = view.findViewById(R.id.settingsfab);
+            reset();
             switch (ctx.getGame()) {
                 case "matching":
                     settings.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.memCardColor2)));
@@ -111,10 +117,16 @@ public class GamePauseFragment extends Fragment {
         }
     }
 
+    void reset() {
+        button.setVisibility(View.VISIBLE);
+        text.setVisibility(View.INVISIBLE);
+    }
+
     public void back(View view) {
         if (getContext() instanceof Game){
             text.setTextSize(250);
             button.setVisibility(View.INVISIBLE);
+            text.setVisibility(View.VISIBLE);
             text.setText(String.valueOf(time));
             timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
@@ -154,10 +166,15 @@ public class GamePauseFragment extends Fragment {
         if (timer != null){
             timer.cancel();
         }
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
         if (timer != null) {
             timer.cancel();
         }
+        reset();
     }
 
     public void exitPauseMenu(){
@@ -168,4 +185,5 @@ public class GamePauseFragment extends Fragment {
     public void finish(View view) {
         getActivity().finish();
     }
+
 }

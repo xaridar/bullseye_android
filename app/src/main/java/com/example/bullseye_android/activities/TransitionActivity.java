@@ -67,9 +67,6 @@ public class TransitionActivity extends AppCompatActivity implements MusicActivi
 
     @Override
     public int getMusicId() {
-        if (getCallingActivity().getShortClassName().equals(".activities.UserSignUpActivity")) {
-            return R.raw.bg;
-        }
         return 0;
     }
 }

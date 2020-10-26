@@ -50,6 +50,11 @@ public class UserDashboardActivity extends AppCompatActivity implements MusicAct
         });
     }
 
+    @Override
+    public boolean startImmediately() {
+        return false;
+    }
+
     public void run() {
         setContentView(R.layout.activity_user_dashboard);
 
@@ -58,6 +63,7 @@ public class UserDashboardActivity extends AppCompatActivity implements MusicAct
         user.observe(this, user -> {
             float vol = (float) user.getMusicVolume() / User.MAX_VOLUME;
             MusicManager.getInstance().setVolume(vol);
+            startMusic();
             welcomeTxt.setText(getString(R.string.welcome, user.getName()));
             avatarImg.setImageResource(getResources().getIdentifier("pfp_" + user.getAvatar(), "drawable", "com.example.bullseye_android"));
         });
