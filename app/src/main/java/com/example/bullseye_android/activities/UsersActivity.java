@@ -28,8 +28,7 @@ import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
-import com.example.bullseye_android.music.MusicManager;
-import com.example.bullseye_android.util.Notifications;
+import com.example.bullseye_android.notifs.Notifications;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;

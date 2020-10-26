@@ -4,6 +4,8 @@ package com.example.bullseye_android.games.memory;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,6 +42,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 
 public class MemoryActivity extends AppCompatActivity implements Game, MusicActivity {
@@ -80,6 +86,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     private int backCount;
     private int cardColor1;
     private int cardColor2;
+    private KonfettiView konfettiView;
 
     boolean paused;
 
@@ -125,6 +132,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
                 }
             }
         }
+        confetti(konfettiView, this.getApplicationContext());
         board.setVisibility(View.INVISIBLE);
         finishedLayout.setVisibility(View.VISIBLE);
         timeTxt.setVisibility(View.INVISIBLE);
@@ -155,7 +163,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory);
         paused = false;
-
+        konfettiView = findViewById(R.id.viewKonfetti);
 
         prefs = getSharedPreferences("userID", MODE_PRIVATE);
         long id = (prefs.getLong("id", 0));
@@ -470,6 +478,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     @Override
     public void finish() {
         userViewModel.update(user);
+
         super.finish();
     }
 
@@ -486,6 +495,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         for (ImageButton button : buttons) {
             button.setEnabled(false);
         }
+
         getSupportFragmentManager().beginTransaction().replace(R.id.memory_game, GamePauseFragment.newInstance(user)).commit();
     }
 

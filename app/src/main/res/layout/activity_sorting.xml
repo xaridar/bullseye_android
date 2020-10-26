@@ -26,6 +26,15 @@
             app:layout_constraintStart_toEndOf="@+id/highScore"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <nl.dionsegijn.konfetti.KonfettiView
+            android:id="@+id/viewKonfetti"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/start"
             android:layout_width="0dp"
@@ -41,7 +50,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            tools:visibility="visible">
+            tools:visibility="invisible">
 
             <Button
                 android:id="@+id/btn"
@@ -230,8 +239,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="invisible">
-
+            tools:visibility="visible">
+            <nl.dionsegijn.konfetti.KonfettiView
+                android:id="@+id/viewKonfetti"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
             <View
                 android:id="@+id/view"
                 android:layout_width="wrap_content"

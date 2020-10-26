@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bullseye_android">
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialThemeWithActionBar">
         <service
-            android:name=".util.NotificationsService"
+            android:name=".notifs.NotificationsService"
             android:enabled="true"
             android:exported="true"/>
-        <receiver android:process=":remote" android:name=".util.NotificationReceiver"/>
+        <receiver android:process=":remote" android:name=".notifs.NotificationReceiver"/>
 
         <activity android:name=".activities.Survey" />
         <activity

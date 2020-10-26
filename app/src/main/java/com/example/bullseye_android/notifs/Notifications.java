@@ -1,10 +1,11 @@
 // Coded by Aakash Sell
-package com.example.bullseye_android.util;
+package com.example.bullseye_android.notifs;
 
-import android.app.Application;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -14,15 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.bullseye_android.App;
 import com.example.bullseye_android.R;
-import com.example.bullseye_android.activities.UsersActivity;
-import com.example.bullseye_android.database.User;
-
-import static android.provider.Settings.System.getString;
 
 public class Notifications extends ContextWrapper {
-
+    Notification notification;
     private NotificationManager nManager;
     private static final String CHANNEL_ID = "bullseye_channel_id";
     public static final String channel_name = "bullseye_channel";
@@ -36,14 +32,16 @@ public class Notifications extends ContextWrapper {
 
     public Notifications(Context base) {
         super(base);
+        this.createNotification(this, null, null, null);
         this.createNotificationChannel();
         this.backgroundNotifications();
+        this.cancelAlarm();
     }
 
-    public void createNotification(Context context, String title, String text, AppCompatActivity activity){
+    public void createNotification(Context context, String title, String text, Class<? extends AppCompatActivity> activity){
 
         if (activity != null) {
-            Intent intent = new Intent(this, activity.getClass());
+            Intent intent = new Intent(this, activity);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         }
@@ -58,7 +56,8 @@ public class Notifications extends ContextWrapper {
             .setAutoCancel(true);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(notificationId, builder.build());
+        notification = builder.build();
+        notificationManager.notify(notificationId, notification);
     }
     public void createNotificationChannel(){
         // Create the NotificationChannel, but only on API 26+ because
@@ -78,6 +77,23 @@ public class Notifications extends ContextWrapper {
     public void backgroundNotifications(){
 //        Intent intent = new Intent(this, NotificationsService.class);
 //        startService(intent);
+        Intent intent = new Intent(this, NotificationsService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Service service = NotificationsService.getService();
+            this.startForegroundService(intent);
+        } else {
+            this.startService(intent);
+        }
+
     }
 
+    public void cancelAlarm() {
+        if (service != null) {
+            service.stopAlarm();
+        }
+    }
+
+    public Notification getNotification(){
+        return notification;
+    }
 }

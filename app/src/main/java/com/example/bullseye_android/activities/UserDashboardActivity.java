@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,13 +17,10 @@ import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
-import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.memory.MemoryActivity;
-import com.example.bullseye_android.games.sorting.SortingActivity;
 import com.example.bullseye_android.games.sorting.SortingActivity;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.music.MusicManager;
-import com.example.bullseye_android.util.Notifications;
 
 public class UserDashboardActivity extends AppCompatActivity implements MusicActivity {
     public static final int SETTINGS_REQ = 100;
