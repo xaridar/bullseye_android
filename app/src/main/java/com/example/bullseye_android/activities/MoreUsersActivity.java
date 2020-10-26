@@ -1,4 +1,4 @@
-// coded by Dylan and Elliot, laid ut by Elliot
+// coded by Dylan and Elliot, laid out by Elliot
 package com.example.bullseye_android.activities;
 
 import androidx.annotation.NonNull;

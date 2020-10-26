@@ -1,4 +1,4 @@
-//Elliot nd Dylan coded memory game, Dylan designed
+//Elliot and Dylan coded memory game, Dylan designed
 package com.example.bullseye_android.games.memory;
 
 import android.content.Intent;

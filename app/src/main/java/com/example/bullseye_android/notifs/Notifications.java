@@ -1,4 +1,4 @@
-// Coded by Aakash Sell
+// All notification code Coded by Aakash Sell
 package com.example.bullseye_android.notifs;
 
 import android.app.Notification;
