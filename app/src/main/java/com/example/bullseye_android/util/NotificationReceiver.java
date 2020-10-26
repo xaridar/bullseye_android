@@ -9,16 +9,17 @@ import com.example.bullseye_android.App;
 
 public class NotificationReceiver extends BroadcastReceiver {
     Notifications notif;
+    Context ctx;
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        ctx = context;
         sendNotifications();
     }
 
     public void sendNotifications(){
-        Context appContext = App.getContext();
-        notif = new Notifications(appContext);
-        notif.createNotification(appContext, "Test", "Does this work?", null);
+        notif = new Notifications(ctx);
+        notif.createNotification(ctx, "Test", "Does this work?", null);
     }
 }
 
