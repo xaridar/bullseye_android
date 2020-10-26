@@ -25,6 +25,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.database.UserSerializable;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
