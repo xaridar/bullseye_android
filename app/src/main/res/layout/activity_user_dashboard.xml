@@ -22,13 +22,14 @@
         android:id="@+id/userWelcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/roboto"
         android:paddingStart="32dp"
         android:paddingEnd="32dp"
         android:textColor="@color/color4"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:text="WOW" />
@@ -37,7 +38,7 @@
         android:id="@+id/matchingGameButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="8dp"
         android:backgroundTint="@color/memCardColor2"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
@@ -50,6 +51,7 @@
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toTopOf="@+id/sortingGameButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/color5" />
 
@@ -57,7 +59,6 @@
         android:id="@+id/sortingGameButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
         android:backgroundTint="@color/sortingBackground"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
@@ -65,7 +66,7 @@
         android:paddingBottom="30dp"
         android:text="@string/sorting_game"
         android:textAllCaps="false"
-        android:textColor="@color/color1"
+        android:textColor="@color/sortingLeft"
         android:textSize="27sp"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toTopOf="@+id/turnBasedGameButton"
@@ -78,28 +79,28 @@
         android:id="@+id/turnBasedGameButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/tbBackground"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="@color/sortingBackground"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
         android:paddingTop="30dp"
         android:paddingBottom="30dp"
         android:text="Turn Based"
         android:textAllCaps="false"
-        android:textColor="@color/color1"
+        android:textColor="@color/sortingLeft"
         android:textSize="27sp"
         app:cornerRadius="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/settingsButton"
+        app:layout_constraintBottom_toTopOf="@+id/surveyButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.552"
         app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/tbSecondary" />
+        app:rippleColor="@color/sortingRight" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/settingsButton"
         android:layout_width="146dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="4dp"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
         android:paddingTop="10dp"
@@ -111,6 +112,7 @@
         app:cornerRadius="11dp"
         app:layout_constraintBottom_toTopOf="@+id/logOutButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/color5" />
 
@@ -118,7 +120,7 @@
         android:id="@+id/logOutButton"
         android:layout_width="196dp"
         android:layout_height="80dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="4dp"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
         android:paddingTop="10dp"
@@ -130,6 +132,7 @@
         app:cornerRadius="11dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/color5" />
 
@@ -145,5 +148,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/pfp_default" />
+
+    <Button
+        android:id="@+id/surveyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Survey"
+        app:layout_constraintBottom_toTopOf="@+id/settingsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.458"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
