@@ -431,7 +431,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
      * Returns current game
      * (Used by pause fragment to get colors, set text, and to send after un-pausing)
      */
-    public String getGame(){ return "turn_based"; }
+    public String getGame(){ return "strategy"; }
 
     @Override
     protected void onResume() {
@@ -453,5 +453,10 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     public void finish() {
         userViewModel.update(user);
         super.finish();
+    }
+
+    @Override
+    public int getMusicId() {
+        return R.raw.strategysong;
     }
 }
