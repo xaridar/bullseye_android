@@ -33,6 +33,8 @@ import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import nl.dionsegijn.konfetti.KonfettiView;
+
 public class TurnBasedActivity extends AppCompatActivity implements Game, MusicActivity {
 
     private View diff;
@@ -64,6 +66,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     private Timer updateTimer;
     private ArrayList<Unit> playerUnits = new ArrayList<Unit>();
     private ArrayList<Unit> computerUnits = new ArrayList<Unit>();
+    KonfettiView konfetti;
 
     /**
      *  0 - Can click on their own units, selects them and lets them move
@@ -77,7 +80,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_turn_based);
-
+        konfetti = findViewById(R.id.viewKonfetti2);
         prefs = getSharedPreferences("userID", MODE_PRIVATE);
         long id = (prefs.getLong("id", 0));
 
@@ -328,6 +331,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
             case "player":
                 //player wins
                 text = "You Win!";
+                confetti(konfetti, this.getApplicationContext());
                 endText.setText(text);
                 break;
             case "computer":

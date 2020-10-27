@@ -7,6 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".games.turn_based.TurnBasedActivity">
 
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/viewKonfetti2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
     <LinearLayout
         android:id="@+id/grid"
         android:layout_width="match_parent"
