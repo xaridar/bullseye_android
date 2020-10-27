@@ -11,6 +11,10 @@
         android:roundIcon="@mipmap/bullseye_logo_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialThemeWithActionBar">
+        <activity
+            android:name=".games.turn_based.TurnBasedActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/TurnBasedGame"/>
         <service
             android:name=".notifs.NotificationsService"
             android:enabled="true"/>

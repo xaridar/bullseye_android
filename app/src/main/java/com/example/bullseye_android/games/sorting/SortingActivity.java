@@ -139,7 +139,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         livesLayout = findViewById(R.id.livesLayout);
         layout = findViewById(R.id.layout);
         timer = findViewById(R.id.time);
-        finishedLayout = findViewById(R.id.finishedLayout);
+        finishedLayout = findViewById(R.id.settingsLayout);
         highScore = findViewById(R.id.highScore);
         backBtn = findViewById(R.id.backBtn);
         playAgain = findViewById(R.id.playAgain);
