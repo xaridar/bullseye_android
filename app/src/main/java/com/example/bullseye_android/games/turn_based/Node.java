@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Node {
     private ArrayList<Node> neighbours;
-    private int x;
-    private int y;
+    public int x;
+    public int y;
 
     public Node(){
         neighbours = new ArrayList<Node>();

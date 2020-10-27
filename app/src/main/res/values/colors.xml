@@ -20,4 +20,8 @@
     <color name="memBackground">#D1BAFF</color>
     <color name="memText">#FFFBED</color>
     <color name="memTextDark">#9D5A5A</color>
+    <color name="tbPrimary">#9CC5A1</color>
+    <color name="tbSecondary">#49A078</color>
+    <color name="tbBackground">#216869</color>
+    <color name="tbText">#DCE1DE</color>
 </resources>

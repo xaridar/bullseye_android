@@ -1,212 +1,457 @@
 package com.example.bullseye_android.games.turn_based;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Pair;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.database.User;
+import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
+import com.example.bullseye_android.games.GamePauseFragment;
+import com.example.bullseye_android.games.turn_based.units.EasyPatroller;
+import com.example.bullseye_android.games.turn_based.units.Unit;
 import com.example.bullseye_android.music.MusicActivity;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class TurnBasedActivity extends AppCompatActivity implements Game, MusicActivity {
 
-    private int mapSizeX;
-    private int mapSizeY;
+    private View diff;
+    private Button playButton;
+    private ImageButton pauseButton;
+    private RadioGroup diffChoice;
+    private LinearLayout grid;
+    private Button endTurn;
+    private ConstraintLayout finishedLayout;
+    private TextView endText;
+    private TextView pointsText;
+    private Button playAgain;
+    private Button backBtn;
+
+    private UserViewModel userViewModel;
+    private SharedPreferences prefs;
+    private User user;
+
+    private int points;
+    private int startingAmount;
+    private int endingAmount;
+    private int diffInt;
+    private String difficulty;
+    private int mapSizeX = 5;
+    private int mapSizeY = 7;
     private Tile[][] board;
     private Node[][] graph;
+    private ImageButton[][] buttons = new ImageButton[mapSizeX][mapSizeY];
+    private Timer updateTimer;
+    private ArrayList<Unit> playerUnits = new ArrayList<Unit>();
+    private ArrayList<Unit> computerUnits = new ArrayList<Unit>();
+
+    /**
+     *  0 - Can click on their own units, selects them and lets them move
+     *  1 - Can click on a tile, moves unit after turn ends
+     *  2 - Can click on an enemy unit if in range
+     */
+    private int state;
+    private Unit selectedUnit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_turn_based);
+
+        prefs = getSharedPreferences("userID", MODE_PRIVATE);
+        long id = (prefs.getLong("id", 0));
+
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+
+        LiveData<User> mUser = userViewModel.getUser(id);
+        mUser.observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                TurnBasedActivity.this.user = user;
+                mUser.removeObserver(this);
+                pregame();
+            }
+        });
     }
 
+
+    private View.OnClickListener tileListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            Pair<Integer, Integer> location = null;
+            for(int x=0;x<buttons.length;x++){
+                for(int y=0;y<buttons[x].length;y++){
+                    if(v==buttons[x][y]){
+                        location = new Pair<>(x, y);
+                    }
+                }
+            }
+
+            switch(state){
+                case 0:
+
+                    if(location==null){
+                        return;
+                    }
+                    if((board[location.first][location.second].getUnit()!=null) && (board[location.first][location.second].getUnit().getOwner() == Owners.PLAYER) && (!board[location.first][location.second].getUnit().isMoved())){
+                        selectedUnit = board[location.first][location.second].getUnit();
+                        setState(1);
+                    }
+
+                    break;
+
+                case 1:
+
+                    if(location==null){
+                        return;
+                    }
+                    if(selectedUnit!=null) {
+                        ArrayList<Node> path = Pathfinder.generatePathTo(selectedUnit.x, selectedUnit.y, location.first, location.second, graph, board, selectedUnit);
+                        Log.i("tbdubug",path.toString());
+                        if(path.size() > 0) {
+                            selectedUnit.setMoved(true);
+                            selectedUnit.setCurrentPath(path);
+                        }
+                    }
+                    selectedUnit = null;
+
+                    boolean allUnitsMoved = false;
+                    for(Unit unit: playerUnits){
+                        if(!unit.isMoved()){
+                            allUnitsMoved = false;
+                            break;
+                        }
+                        allUnitsMoved = true;
+                    }
+
+                    if(allUnitsMoved){
+                        endTurn();
+                    }else{
+                        setState(0);
+                    }
+
+                    break;
+
+                case 2:
+                    break;
+            }
+        }
+    };
+
+    private void pregame(){
+        grid = findViewById(R.id.grid);
+        diff = findViewById(R.id.settingsLayout);
+        playButton = findViewById(R.id.playBtn);
+        pauseButton = findViewById(R.id.pauseButton);
+        diffChoice = findViewById(R.id.diffButtons);
+        endTurn = findViewById(R.id.endTurnButton);
+        finishedLayout = findViewById(R.id.finishedLayout);
+        endText = findViewById(R.id.endText);
+        pointsText = findViewById(R.id.pointCount);
+        playAgain = findViewById(R.id.playAgain);
+        backBtn = findViewById(R.id.backToDashboard);
+
+        grid.setVisibility(View.VISIBLE);
+        finishedLayout.setVisibility(View.INVISIBLE);
+        diff.setVisibility(View.VISIBLE);
+        pauseButton.setVisibility(View.INVISIBLE);
+        endTurn.setVisibility(View.INVISIBLE);
+
+        Button dashBtn = findViewById(R.id.dashBtn);
+        dashBtn.setOnClickListener(view -> finish());
+
+        playButton.setOnClickListener(view -> {
+            difficulty = ((RadioButton) findViewById(diffChoice.getCheckedRadioButtonId())).getText() + "";
+//            switch (difficulty){
+//                case "Easy":
+//
+//                    break;
+//                case "Medium":
+//
+//                    break;
+//                case "Hard":
+//
+//                    break;
+//            }
+            diff.setVisibility(View.INVISIBLE);
+            start();
+        });
+    }
+
+    private void start(){
+
+        pauseButton.setVisibility(View.VISIBLE);
+        endTurn.setVisibility(View.VISIBLE);
+        endTurn.setOnClickListener(view -> {
+
+            endTurn();
+        });
+
+        setBoard();
+
+        setState(0);
+
+        updateTimer = new Timer();
+        updateTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> {
+                    updateBoard();
+                });
+            }
+        }, 100,100);
+
+    }
+
+    private void endTurn(){
+        for(Unit playerUnit : playerUnits){
+            if(playerUnit.getCurrentPath() != null && playerUnit.getCurrentPath().size() > 0){
+                playerUnit.movement(board, graph);
+            }
+
+        }
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                for(Unit computerUnit : computerUnits){
+                    if(!computerUnit.isDead()) {
+                        computerUnit.movement(board, graph);
+                    }
+                }
+            }
+        }, 600);
+        setState(0);
+        for(Unit unit : playerUnits){
+            unit.setMoved(false);
+        }
+    }
+
+    /**
+     * Sets board variable, sets node graph, and shows tiles on screen
+     * Runs once at beginning
+     */
+    private void setBoard(){
+        board = new Tile[mapSizeX][mapSizeY];
+
+        for(int x=0;x<board.length;x++){
+            for(int y=0;y<board[x].length;y++){
+                board[x][y] = new Tile("grass", x, y,null,"ic_grean",1,true,null);
+            }
+        }
+
+        for(int x=0;x<grid.getChildCount();x++){
+            for(int y=0;y<((LinearLayout)grid.getChildAt(x)).getChildCount();y++){
+                buttons[x][y] = (ImageButton) ((LinearLayout)grid.getChildAt(x)).getChildAt(y);
+
+                String img = board[x][y].getIcon();
+                int res = getResources().getIdentifier(img, "drawable", "com.example.bullseye_android");
+                buttons[x][y].setOnClickListener(tileListener);
+            }
+        }
+
+        graph = Pathfinder.generatePathfindingGraph(graph, mapSizeX, mapSizeY);
+
+        for(int i=1;i<=3;i++){
+            Unit playerUnit = new Unit("example", i, 6, null, "ic_mem_img_cat", 2, Owners.PLAYER);
+            playerUnits.add(playerUnit);
+            board[i][6].setUnit(playerUnit);
+        }
+
+        EasyPatroller easyPatroller = new EasyPatroller("patroller", 0,0,null,"ic_mem_img_cow",1,new ArrayList<>(Arrays.asList(new Pair<>(4,0))),graph, board);
+        computerUnits.add(easyPatroller);
+        board[0][0].setUnit(easyPatroller);
+        startingAmount = computerUnits.size();
+
+    }
+
+    private void updateBoard(){
+        int totalUnits = 0;
+        for(int x=0;x<buttons.length;x++){
+            for(int y=0;y<buttons[x].length;y++){
+                ImageButton button = buttons[x][y];
+                Tile tile = board[x][y];
+                if(tile.getUnit()!=null) {
+                    totalUnits++;
+                    button.setImageResource(getResources().getIdentifier(tile.getUnit().getIcon(), "drawable", "com.example.bullseye_android"));
+                }else {
+                    button.setImageResource(0);
+                }
+            }
+        }
+        for(Unit playerUnit : playerUnits){
+            if(playerUnit.isDead()){
+                playerUnits.remove(playerUnit);
+                break;
+            }
+        }
+        for(Unit computerUnit : computerUnits){
+            if(computerUnit.isDead()){
+                computerUnits.remove(computerUnit);
+                break;
+            }
+        }
+        checkWin();
+    }
+
+    private void checkWin(){
+        String winner = "";
+        String text = "";
+        if(computerUnits.isEmpty()){
+            winner = "player";
+        }else if(playerUnits.isEmpty()){
+            winner = "computer";
+        }else{
+            return;
+        }
+        switch(winner){
+            case "player":
+                //player wins
+                text = "You Win!";
+                endText.setText(text);
+                break;
+            case "computer":
+                //player loses
+                text = "You Lost . . .";
+                endText.setText(text);
+                break;
+            default:
+                break;
+        }
+        updateTimer.cancel();
+
+        endingAmount = computerUnits.size();
+        points = startingAmount - endingAmount;
+        pointsText.setText(getString(R.string.tb_points, points));
+        finishedLayout.setVisibility(View.VISIBLE);
+        endTurn.setVisibility(View.INVISIBLE);
+        pauseButton.setVisibility(View.INVISIBLE);
+
+        playAgain.setOnClickListener(view -> pregame());
+        backBtn.setOnClickListener(view -> finish());
+    }
+
+    private void setState(int state){
+        String text = "";
+        switch(state){
+            case 0:
+                text = "click on one of your units";
+                break;
+            case 1:
+                text = "click on a tile to move there";
+                break;
+            case 2:
+                text = "click on an enemy to move there";
+        }
+        Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        toast.show();
+        this.state = state;
+    }
+
+    /**
+     * Brings user to tutorial screen
+     */
+    public void howToPlay(View view){
+
+    }
+
+    /**
+     * Brings user to dashboard screen
+     */
+    public void back(View view){
+
+    }
+
+    /**
+     * Stops all timers and brings user to pause fragment
+     */
     public void pause(View view){
-
+//        pauseButton.setVisibility(View.INVISIBLE);
+        endTurn.setVisibility(View.INVISIBLE);
+        updateTimer.cancel();
+        for(ImageButton[] buttonList : buttons){
+            for(ImageButton button : buttonList){
+                button.setEnabled(false);
+            }
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.turn_based_game, GamePauseFragment.newInstance(user)).commit();
+//        MusicManager.getInstance().setVolume((float) user.getMusicVolume() / 2);
     }
 
+    /**
+     * Continues all timers and brings user back to game
+     * (Accessed and used by pause fragment)
+     */
     public void unpause(){
+//        MusicManager.getInstance().setVolume(user.getMusicVolume());
+        runOnUiThread(() -> {
+            pauseButton.setVisibility(View.VISIBLE);
+            endTurn.setVisibility(View.VISIBLE);
+        });
+        updateTimer = new Timer();
+        updateTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> {
+                    updateBoard();
+                });
+            }
+        }, 100,100);
+        runOnUiThread(()-> {
+            for (ImageButton[] buttonList : buttons) {
+                for(ImageButton button : buttonList) {
+                    button.setEnabled(true);
+                }
+            }
+        });
 
     }
 
+    /**
+     * Returns current game
+     * (Used by pause fragment to get colors, set text, and to send after un-pausing)
+     */
     public String getGame(){ return "turn_based"; }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        prefs = getSharedPreferences("userID", MODE_PRIVATE);
+        long id = (prefs.getLong("id", 0));
 
-    /**
-     * Gets cost of specified tile.
-     *
-     * The path-finding algorithm finds the path of least cost to arrive to a destination.
-     *
-     * @param targetX   X position of tile to get cost from
-     * @param targetY   Y position of tile to get cost from
-     * @return          Returns path-finding cost of tile
-     */
-    public float CostToEnterTile(int targetX, int targetY) {
-
-        Tile tile = board[ targetX ][ targetY ];
-
-        if(!UnitCanEnterTile(targetX, targetY))
-            return Float.POSITIVE_INFINITY;
-
-        return (float) tile.getCost();
-
+        LiveData<User> mUser = userViewModel.getUser(id);
+        mUser.observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                TurnBasedActivity.this.user = user;
+                mUser.removeObserver(this);
+            }
+        });
     }
 
-
-    /**
-     * Determines if a unit can enter a tile.
-     *
-     * @param targetX   X position of tile to check
-     * @param targetY   Y position of tile to check
-     * @return          returns whether or not the unit can enter the tile
-     */
-    private boolean UnitCanEnterTile(int targetX, int targetY) {
-        return board[targetX][targetY].isWalkable();
+    @Override
+    public void finish() {
+        userViewModel.update(user);
+        super.finish();
     }
-
-
-    /**
-     * Creates the node graph and sets node neighbors, so that the path-finding algorithm can make a path
-     */
-    void GeneratePathfindingGraph() {
-        // Initialize the array
-        graph = new Node[mapSizeX][mapSizeY];
-
-        // Initialize a Node for each spot in the array
-        for(int x=0; x < mapSizeX; x++) {
-            for(int y=0; y < mapSizeX; y++) {
-                graph[x][y] = new Node();
-                graph[x][y].setX(x);
-                graph[x][y].setY(y);
-            }
-        }
-
-        // Now that all the nodes exist, calculate their neighbours
-        for(int x=0; x < mapSizeX; x++) {
-            for(int y=0; y < mapSizeX; y++) {
-
-                // This is the 4-way connection version:
-				if(x > 0)
-					graph[x][y].addNeighbour( graph[x-1][y] );
-				if(x < mapSizeX-1)
-					graph[x][y].addNeighbour( graph[x+1][y] );
-				if(y > 0)
-					graph[x][y].addNeighbour( graph[x][y-1] );
-				if(y < mapSizeY-1)
-					graph[x][y].addNeighbour( graph[x][y+1] );
-
-
-                // This also works with 6-way hexes and n-way variable areas (like EU4)
-            }
-        }
-    }
-
-    /**
-     * Takes the unit that is moving, the target x position, and the target y position,
-     * and generates a path using cost of tiles, and impassable tiles using the Dijkstra
-     * Path-finding Algorithm.
-     * {Credit to quill18creates on YouTube for the tutorial}
-     *
-     * @param x      X position of target tile
-     * @param y      Y position of target tile
-     * @param unit   Unit that is moving to tile
-     */
-    public void GeneratePathTo(int x, int y, Unit unit) {
-        // Clear unit's old path.
-        unit.setCurrentPath(null);
-
-        if(!UnitCanEnterTile(x, y)) {
-            // Clicked on tile that unit cannot walk on
-            return;
-        }
-
-        HashMap<Node, Float> dist = new HashMap<Node, Float>();
-        HashMap<Node, Node> prev = new HashMap<Node, Node>();
-
-        // Setup the list of nodes we haven't checked yet.
-        ArrayList<Node> unvisited = new ArrayList<Node>();
-
-        Node source = graph[unit.getX()][unit.getY()];
-
-        Node target = graph[x][y];
-
-        dist.replace(source, (float) 0);
-        prev.replace(source, null);
-
-        // Initialize everything to have INFINITY distance, since
-        // we don't know any better right now. Also, it's possible
-        // that some nodes CAN'T be reached from the source,
-        // which would make INFINITY a reasonable value
-        for (Node[] v : graph){
-            for (Node b : v) {
-                if(b != source) {
-                    dist.replace(b, Float.POSITIVE_INFINITY);
-                    prev.replace(b, null);
-                }
-
-                unvisited.add(b);
-
-            }
-        }
-
-        while(unvisited.size() > 0) {
-            // "u" is going to be the unvisited node with the smallest distance.
-            Node u = null;
-
-            for (Node possibleU : unvisited) {
-                if(u == null || dist.get(possibleU) < dist.get(u)) {
-                    u = possibleU;
-                }
-            }
-
-            if(u == target) {
-                break;	// Exit the while loop!
-            }
-
-            unvisited.remove(u);
-
-            for (Node v : u.getNeighbours()) {
-                //float alt = dist[u] + u.DistanceTo(v);
-                float alt = dist.get(u) + CostToEnterTile(v.getX(), v.getY());
-                if( alt < dist.get(v) ) {
-                    dist.replace(v, alt);
-                    prev.replace(v, u);
-                }
-            }
-        }
-
-        // If we get there, the either we found the shortest route
-        // to our target, or there is no route at ALL to our target.
-
-        if(prev.get(target) == null) {
-            // No route between our target and the source
-            return;
-        }
-
-        ArrayList<Node> currentPath = new ArrayList<Node>();
-
-        Node curr = target;
-
-        // Step through the "prev" chain and add it to our path
-        while(curr != null) {
-            currentPath.add(curr);
-            curr = prev.get(curr);
-        }
-
-        // Right now, currentPath describes a route from out target to our source
-        // So we need to invert it!
-        Collections.reverse(currentPath);
-
-        unit.setCurrentPath(currentPath);
-    }
-
 }

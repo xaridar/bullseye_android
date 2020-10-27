@@ -7,11 +7,11 @@ import java.util.HashMap;
 public class BoardActor {
     // Anything that is able to be put on the board.
     // Has tags that allow for different actors to have different abilities/effects (Slowed, poisoned, speed, etc.)
-    private String name;
-    private int x;
-    private int y;
-    private ArrayList<Integer> tags;
-    private String icon;
+    public String name;
+    public int x;
+    public int y;
+    public ArrayList<Integer> tags;
+    public String icon;
 
     public String getName() {
         return name;
@@ -19,6 +19,26 @@ public class BoardActor {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ArrayList<Integer> getTags() {
+        return tags;
+    }
+
+    public void setTags(ArrayList<Integer> tags) {
+        this.tags = tags;
+    }
+
+    public void addTag(int tag){
+        tags.add(tag);
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public int getX() {
@@ -35,25 +55,5 @@ public class BoardActor {
 
     public void setY(int y) {
         this.y = y;
-    }
-
-    public ArrayList<Integer> getTags() {
-        return tags;
-    }
-
-    public void setTags(ArrayList<Integer> tags) {
-        this.tags = tags;
-    }
-
-    public void addTag(int tag){
-        tags.add(tag);
-    }
-
-    public String getIcon() {
-        return name;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
     }
 }

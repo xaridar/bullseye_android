@@ -22,6 +22,7 @@ import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.memory.MemoryActivity;
 import com.example.bullseye_android.games.sorting.SortingActivity;
 import com.example.bullseye_android.games.sorting.SortingActivity;
+import com.example.bullseye_android.games.turn_based.TurnBasedActivity;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.music.MusicManager;
 import com.example.bullseye_android.util.Notifications;
@@ -64,6 +65,7 @@ public class UserDashboardActivity extends AppCompatActivity implements MusicAct
 
         Button matchingGameButton = findViewById(R.id.matchingGameButton);
         Button sortingGameButton = findViewById(R.id.sortingGameButton);
+        Button turnBasedGameButton = findViewById(R.id.turnBasedGameButton);
         Button settingsButton = findViewById(R.id.settingsButton);
         Button logOutButton = findViewById(R.id.logOutButton);
 
@@ -77,6 +79,12 @@ public class UserDashboardActivity extends AppCompatActivity implements MusicAct
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(UserDashboardActivity.this, SortingActivity.class));
+            }
+        });
+        turnBasedGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserDashboardActivity.this, TurnBasedActivity.class));
             }
         });
         settingsButton.setOnClickListener(new View.OnClickListener() {

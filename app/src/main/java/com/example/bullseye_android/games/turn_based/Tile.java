@@ -1,17 +1,25 @@
 package com.example.bullseye_android.games.turn_based;
 
-public class Tile {
+import com.example.bullseye_android.games.turn_based.units.Unit;
+
+import java.util.ArrayList;
+
+public class Tile extends BoardActor{
     // Tiles that have a cost or anything else i decide to add
 
-    private String name;
     private int cost;
     private boolean isWalkable;
+    private Unit unit;
 
-    public void setName(String name){
+    public Tile(String name, int x, int y, ArrayList<Integer> tags, String icon, int cost, boolean isWalkable, Unit unit){
         this.name = name;
-    }
-    public String getName(){
-        return name;
+        this.x = x;
+        this.y = y;
+        this.tags = tags;
+        this.icon = icon;
+        this.cost = cost;
+        this.isWalkable = isWalkable;
+        this.unit = unit;
     }
 
     public int getCost() {
@@ -28,5 +36,13 @@ public class Tile {
 
     public void setWalkable(boolean walkable) {
         isWalkable = walkable;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 }

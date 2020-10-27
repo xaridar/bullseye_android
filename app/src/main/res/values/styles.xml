@@ -41,6 +41,10 @@
         <item name="android:navigationBarColor">@color/sortingBackground</item>
     </style>
 
+    <style name="TurnBasedGame" parent="Game">
+        <item name="android:navigationBarColor">@color/tbBackground</item>
+    </style>
+
     <style name="Transition" parent="MaterialFullScreen">
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:navigationBarColor">@color/colorPrimary</item>

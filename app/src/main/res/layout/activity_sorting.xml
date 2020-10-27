@@ -222,7 +222,7 @@
             app:tint="@color/sortingLeft" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/finishedLayout"
+            android:id="@+id/settingsLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="invisible"

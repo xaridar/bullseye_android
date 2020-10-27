@@ -96,6 +96,8 @@ public class GamePauseFragment extends Fragment {
                     finish.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingRight)));
                     finish.setTextColor(getContext().getColor(R.color.color1));
                     break;
+                default:
+                    break;
             }
             settings.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext(), UsersSettingsActivity.class);
