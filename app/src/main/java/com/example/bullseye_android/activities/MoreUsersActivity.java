@@ -1,4 +1,4 @@
-// coded by Dylan and Elliot, laid ut by Elliot
+// coded by Dylan and Elliot, laid out by Elliot
 package com.example.bullseye_android.activities;
 
 import androidx.annotation.NonNull;
@@ -25,6 +25,7 @@ public class MoreUsersActivity extends AppCompatActivity implements MusicActivit
     private LiveData<User> first;
     private UserAdapter userAdapter;
     private RecyclerView rv;
+    int context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,6 @@ public class MoreUsersActivity extends AppCompatActivity implements MusicActivit
         Intent intent = getIntent();
 
         //0: UsersActivity, 1: ManageUsers, 2: Bad
-        int context;
 
         if(intent != null){
             context = intent.getIntExtra("MoreUsersContext", 2);
@@ -90,9 +90,9 @@ public class MoreUsersActivity extends AppCompatActivity implements MusicActivit
 
     @Override
     public int getMusicId() {
-        if (getCallingActivity().getShortClassName().equals(".activities.UsersActivity")) {
-            return 0;
+        if (context == 1) {
+            return R.raw.adminsong;
         }
-        return R.raw.bg;
+        return 0;
     }
 }

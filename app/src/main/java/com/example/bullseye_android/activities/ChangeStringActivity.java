@@ -156,4 +156,9 @@ public class ChangeStringActivity extends AppCompatActivity implements MusicActi
             button.performClick();
         }
     }
+
+    @Override
+    public int getMusicId() {
+        return 0;
+    }
 }

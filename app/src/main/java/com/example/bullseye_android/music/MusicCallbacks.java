@@ -25,7 +25,10 @@ public class MusicCallbacks implements Application.ActivityLifecycleCallbacks {
             if (!MusicManager.getInstance().isPlaying() || MusicManager.getInstance().getResId() != id) {
                 try {
                     if (id != 0) {
-                        MusicManager.newInstance().make(activity.getApplicationContext(), ((MusicActivity) activity).getMusicId()).start();
+                        MusicManager manager = MusicManager.newInstance().make(activity.getApplicationContext(), ((MusicActivity) activity).getMusicId());
+                        if (((MusicActivity) activity).startImmediately()) {
+                            manager.start();
+                        }
                     }
                 } catch (NullPointerException | IllegalStateException ignored) {
                 }

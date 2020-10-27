@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -31,6 +33,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.database.Fetcher;
+import com.example.bullseye_android.games.memory.MemoryActivity;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
@@ -46,6 +50,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 public class SortingActivity extends AppCompatActivity implements Game, MusicActivity {
 
@@ -91,6 +99,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     private User user;
     private UserViewModel userViewModel;
     int gameInt;
+    KonfettiView konfettiView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +122,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
                 run();
             }
         });
+        konfettiView = findViewById(R.id.viewKonfetti);
     }
     public void run() {
 
@@ -228,6 +238,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         for (ImageButton view : views) {
             layout.removeView(view);
         }
+        confetti(konfettiView, this.getApplicationContext());
         views.clear();
         finishedLayout.setVisibility(View.VISIBLE);
         finalTime.setText(getString(R.string.survived_for, timer.getText().toString()));
@@ -569,5 +580,20 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     @Override
     public int getMusicId() {
         return R.raw.sortingsong;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Fetcher.runNewUserFetcher(userViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), u -> {
+            runOnUiThread(() -> u.observe(this, new Observer<User>() {
+                @Override
+                public void onChanged(User user) {
+                    SortingActivity.this.user = user;
+                    u.removeObserver(this);
+                }
+            }));
+            return null;
+        });
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bullseye_android">
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -15,6 +15,13 @@
             android:name=".games.turn_based.TurnBasedActivity"
             android:screenOrientation="portrait"
             android:theme="@style/TurnBasedGame"/>
+        <service
+            android:name=".notifs.NotificationsService"
+            android:enabled="true"
+            android:exported="true"/>
+        <receiver android:process=":remote" android:name=".notifs.NotificationReceiver"/>
+
+        <activity android:name=".activities.Survey" />
         <activity
             android:name=".games.memory.MemoryInstructionsActivity"
             android:screenOrientation="portrait"
@@ -139,8 +146,8 @@
             android:theme="@style/MaterialThemeWithActionBar" />
         <activity
             android:name=".games.sorting.SortingActivity"
-            android:theme="@style/SortingGame"
-            android:screenOrientation = "portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/SortingGame" />
     </application>
 
 </manifest>

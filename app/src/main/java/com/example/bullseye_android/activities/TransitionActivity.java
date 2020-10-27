@@ -64,4 +64,9 @@ public class TransitionActivity extends AppCompatActivity implements MusicActivi
             }, 1000);
         }
     }
+
+    @Override
+    public int getMusicId() {
+        return 0;
+    }
 }

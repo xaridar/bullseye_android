@@ -1,9 +1,11 @@
-//Elliot nd Dylan coded memory game, Dylan designed
+//Elliot and Dylan coded memory game, Dylan designed
 package com.example.bullseye_android.games.memory;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +27,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.UserSerializable;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.database.User;
@@ -32,7 +35,6 @@ import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.GamePauseFragment;
 import com.example.bullseye_android.music.MusicManager;
-import com.example.bullseye_android.util.SfxManager;
 import com.example.bullseye_android.util.TimeFormatter;
 
 import java.util.ArrayList;
@@ -40,6 +42,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 
 public class MemoryActivity extends AppCompatActivity implements Game, MusicActivity {
@@ -73,7 +79,6 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     public MediaPlayer cardTone;
     public MediaPlayer correctTone;
     public MediaPlayer wrongTone;
-    public MediaPlayer[] sounds;
     private ArrayList<MemoryCard> shownCards = new ArrayList<>();
     Toast toast;
     int tries;
@@ -81,6 +86,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     private int backCount;
     private int cardColor1;
     private int cardColor2;
+    private KonfettiView konfettiView;
 
     boolean paused;
 
@@ -126,6 +132,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
                 }
             }
         }
+        confetti(konfettiView, this.getApplicationContext());
         board.setVisibility(View.INVISIBLE);
         finishedLayout.setVisibility(View.VISIBLE);
         timeTxt.setVisibility(View.INVISIBLE);
@@ -156,7 +163,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory);
         paused = false;
-
+        konfettiView = findViewById(R.id.viewKonfetti);
 
         prefs = getSharedPreferences("userID", MODE_PRIVATE);
         long id = (prefs.getLong("id", 0));
@@ -178,13 +185,16 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
 
     private void run() {
         backCount = 0;
+
+        cardTone = MediaPlayer.create(MemoryActivity.this, R.raw.card_flip);
+        correctTone = MediaPlayer.create(this, R.raw.mem_correct);
+        wrongTone = MediaPlayer.create(this, R.raw.mem_wrong);
+
         float vol = (float) user.getGameVolume() / User.MAX_VOLUME;
 
-        cardTone = SfxManager.createSfx(MemoryActivity.this, R.raw.card_flip, vol);
-        correctTone = SfxManager.createSfx(this, R.raw.mem_correct, vol);
-        wrongTone = SfxManager.createSfx(this, R.raw.mem_wrong, vol);
-        sounds = new MediaPlayer[]{cardTone, correctTone, wrongTone};
-
+        cardTone.setVolume(vol, vol);
+        correctTone.setVolume(vol, vol);
+        wrongTone.setVolume(vol, vol);
 
         toast = Toast.makeText(this, "Press the back button twice at any time to go back to the dashboard.", Toast.LENGTH_SHORT);
         toast.show();
@@ -468,12 +478,12 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     @Override
     public void finish() {
         userViewModel.update(user);
+
         super.finish();
     }
 
     public void howToPlay(View view) {
         Intent intent = new Intent(MemoryActivity.this, MemoryInstructionsActivity.class);
-        intent.putExtra("user", new UserSerializable(user));
         startActivity(intent);
     }
 
@@ -485,13 +495,16 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         for (ImageButton button : buttons) {
             button.setEnabled(false);
         }
+
         getSupportFragmentManager().beginTransaction().replace(R.id.memory_game, GamePauseFragment.newInstance(user)).commit();
-        MusicManager.getInstance().setVolume((float) user.getMusicVolume() / 2);
     }
 
     @Override
     public void unpause() {
-        MusicManager.getInstance().setVolume(user.getMusicVolume());
+        unpauseActions();
+    }
+
+    void unpauseActions() {
         runOnUiThread(() -> {
             pauseButton.setVisibility(View.VISIBLE);
         });
@@ -542,7 +555,6 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
                 button.setEnabled(true);
             }
         });
-
     }
 
     /**
@@ -580,10 +592,17 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        for (MediaPlayer sound : sounds) {
-            sound.release();
-        }
+    public void onResume() {
+        super.onResume();
+        Fetcher.runNewUserFetcher(userViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), u -> {
+            runOnUiThread(() -> u.observe(this, new Observer<User>() {
+                @Override
+                public void onChanged(User user) {
+                    MemoryActivity.this.user = user;
+                    u.removeObserver(this);
+                }
+            }));
+            return null;
+        });
     }
 }

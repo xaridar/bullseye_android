@@ -159,7 +159,6 @@ public class UsersSettingsActivity extends AppCompatActivity implements MusicAct
             }
         } else if (requestCode == NAME_REQ_CODE) {
             if (resultCode == RESULT_OK) {
-                Log.i("HH", data.getStringExtra("value"));
                 user.setName(data.getStringExtra("value"));
             }
         }
@@ -178,5 +177,10 @@ public class UsersSettingsActivity extends AppCompatActivity implements MusicAct
     public void finish() {
         mUserViewModel.update(user);
         super.finish();
+    }
+
+    @Override
+    public int getMusicId() {
+        return 0;
     }
 }

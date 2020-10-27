@@ -1,4 +1,4 @@
-// Stats activity design was done by Elliot
+// Stats activity coding was done by Elliot, Aakash designed
 package com.example.bullseye_android.activities;
 
 import android.os.Bundle;
@@ -198,5 +198,10 @@ public class StatsActivity extends AppCompatActivity implements MusicActivity {
                     .setChooserTitle("Share " + name + "'s stats")
                     .setSubject(name + "'s stats from Bullseye app")
                     .startChooser();
+    }
+
+    @Override
+    public int getMusicId() {
+        return R.raw.adminsong;
     }
 }

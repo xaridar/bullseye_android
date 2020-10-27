@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,14 +17,12 @@ import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
-import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.memory.MemoryActivity;
 import com.example.bullseye_android.games.sorting.SortingActivity;
 import com.example.bullseye_android.games.sorting.SortingActivity;
 import com.example.bullseye_android.games.turn_based.TurnBasedActivity;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.music.MusicManager;
-import com.example.bullseye_android.util.Notifications;
 
 public class UserDashboardActivity extends AppCompatActivity implements MusicActivity {
     public static final int SETTINGS_REQ = 100;
@@ -51,6 +48,11 @@ public class UserDashboardActivity extends AppCompatActivity implements MusicAct
         });
     }
 
+    @Override
+    public boolean startImmediately() {
+        return false;
+    }
+
     public void run() {
         setContentView(R.layout.activity_user_dashboard);
 
@@ -59,6 +61,7 @@ public class UserDashboardActivity extends AppCompatActivity implements MusicAct
         user.observe(this, user -> {
             float vol = (float) user.getMusicVolume() / User.MAX_VOLUME;
             MusicManager.getInstance().setVolume(vol);
+            startMusic();
             welcomeTxt.setText(getString(R.string.welcome, user.getName()));
             avatarImg.setImageResource(getResources().getIdentifier("pfp_" + user.getAvatar(), "drawable", "com.example.bullseye_android"));
         });

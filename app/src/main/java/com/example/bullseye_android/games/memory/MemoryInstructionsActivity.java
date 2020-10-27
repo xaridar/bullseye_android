@@ -4,15 +4,20 @@ package com.example.bullseye_android.games.memory;
 import android.content.res.ColorStateList;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserSerializable;
+import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.util.SfxManager;
 
@@ -30,7 +35,20 @@ public class MemoryInstructionsActivity extends AppCompatActivity implements Mus
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        user = ((UserSerializable) getIntent().getSerializableExtra("user")).getUser();
+        UserViewModel userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        Fetcher.runNewUserFetcher(userViewModel, this, getSharedPreferences("userID", 0).getLong("id", 0), u -> {
+            u.observe(this, new Observer<User>() {
+                @Override
+                public void onChanged(User user) {
+                    MemoryInstructionsActivity.this.user = user;
+                    u.removeObserver(this);
+                    start();
+                }
+            });
+            return null;
+        });
+    }
+    void start() {
         cardTone = SfxManager.createSfx(this, R.raw.card_flip, (float) user.getGameVolume() / User.MAX_VOLUME);
         setContentView(R.layout.activity_memory_instructions);
         cards[0] = findViewById(R.id.imageButton2);

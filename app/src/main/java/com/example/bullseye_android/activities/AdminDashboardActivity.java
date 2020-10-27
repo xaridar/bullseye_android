@@ -40,6 +40,9 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
     public void run() {
         setContentView(R.layout.activity_admin_dashboard);
 
+        MusicManager.getInstance().setVolume(100);
+        startMusic();
+
         Button statsButton = findViewById(R.id.adminStatsButton);
         Button settingsButton = findViewById(R.id.adminSettingsButton);
         Button logOutButton = findViewById(R.id.adminLogOutButton);
@@ -68,4 +71,13 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
         });
     }
 
+    @Override
+    public int getMusicId() {
+        return R.raw.adminsong;
+    }
+
+    @Override
+    public boolean startImmediately() {
+        return false;
+    }
 }
