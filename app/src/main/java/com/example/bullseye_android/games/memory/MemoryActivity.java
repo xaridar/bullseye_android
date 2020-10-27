@@ -201,7 +201,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
 
 
         board = findViewById(R.id.board);
-        finishedLayout = findViewById(R.id.settingLayout);
+        finishedLayout = findViewById(R.id.finishedLayout);
         timeTxt = findViewById(R.id.time);
         finalTime = findViewById(R.id.finalTime);
         finishedLayout.setVisibility(View.INVISIBLE);
