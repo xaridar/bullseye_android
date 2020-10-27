@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -77,12 +78,13 @@ public class Notifications extends ContextWrapper {
     public void backgroundNotifications(){
 //        Intent intent = new Intent(this, NotificationsService.class);
 //        startService(intent);
+        Log.i("test", "background notifications working");
         Intent intent = new Intent(this, NotificationsService.class);
+        Service service = NotificationsService.getService();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Service service = NotificationsService.getService();
-            this.startForegroundService(intent);
+            startForegroundService(intent);
         } else {
-            this.startService(intent);
+            startService(intent);
         }
 
     }

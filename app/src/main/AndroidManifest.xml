@@ -13,8 +13,7 @@
         android:theme="@style/MaterialThemeWithActionBar">
         <service
             android:name=".notifs.NotificationsService"
-            android:enabled="true"
-            android:exported="false"/>
+            android:enabled="true"/>
         <receiver android:process=":remote" android:name=".notifs.NotificationReceiver">
             <intent-filter>
                 <action android:name="intent1" />
