@@ -58,7 +58,11 @@
         android:id="@+id/sortingGameButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_marginBottom="36dp"
+=======
+        android:layout_marginBottom="24dp"
+>>>>>>> 6a395a69e1d1792d7410878ac628ad6515544a2c
         android:backgroundTint="@color/sortingBackground"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
@@ -66,10 +70,14 @@
         android:paddingBottom="30dp"
         android:text="@string/sorting_game"
         android:textAllCaps="false"
-        android:textColor="@color/sortingLeft"
+        android:textColor="@color/color1"
         android:textSize="27sp"
         app:cornerRadius="20dp"
+<<<<<<< HEAD
         app:layout_constraintBottom_toTopOf="@+id/surveyButton"
+=======
+        app:layout_constraintBottom_toTopOf="@+id/turnBasedGameButton"
+>>>>>>> 6a395a69e1d1792d7410878ac628ad6515544a2c
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,27 +88,27 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/sortingBackground"
+        android:backgroundTint="@color/tbBackground"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
         android:paddingTop="30dp"
         android:paddingBottom="30dp"
         android:text="Turn Based"
         android:textAllCaps="false"
-        android:textColor="@color/sortingLeft"
+        android:textColor="@color/color1"
         android:textSize="27sp"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toTopOf="@+id/settingsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/sortingRight" />
+        app:rippleColor="@color/tbSecondary" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/settingsButton"
         android:layout_width="146dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
         android:paddingTop="10dp"
@@ -119,7 +127,7 @@
         android:id="@+id/logOutButton"
         android:layout_width="196dp"
         android:layout_height="80dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
         android:paddingTop="10dp"
