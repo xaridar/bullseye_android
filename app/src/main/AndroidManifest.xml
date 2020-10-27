@@ -14,8 +14,13 @@
         <service
             android:name=".notifs.NotificationsService"
             android:enabled="true"
-            android:exported="true"/>
-        <receiver android:process=":remote" android:name=".notifs.NotificationReceiver"/>
+            android:exported="false"/>
+        <receiver android:process=":remote" android:name=".notifs.NotificationReceiver">
+            <intent-filter>
+                <action android:name="intent1" />
+                <action android:name="intent2" />
+            </intent-filter>
+        </receiver>
 
         <activity android:name=".activities.Survey" />
         <activity

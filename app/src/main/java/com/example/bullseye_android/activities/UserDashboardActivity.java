@@ -68,12 +68,20 @@ public class UserDashboardActivity extends AppCompatActivity implements MusicAct
         Button sortingGameButton = findViewById(R.id.sortingGameButton);
         Button settingsButton = findViewById(R.id.settingsButton);
         Button logOutButton = findViewById(R.id.logOutButton);
+        Button surveyButton = findViewById(R.id.surveyButton);
 
         matchingGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(UserDashboardActivity.this, MemoryActivity.class));
             }
+        });
+        surveyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    startActivity(new Intent(UserDashboardActivity.this, Survey.class));
+                }
+
         });
         sortingGameButton.setOnClickListener(new View.OnClickListener() {
             @Override

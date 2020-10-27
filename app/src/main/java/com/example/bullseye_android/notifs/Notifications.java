@@ -35,7 +35,7 @@ public class Notifications extends ContextWrapper {
         this.createNotification(this, null, null, null);
         this.createNotificationChannel();
         this.backgroundNotifications();
-        this.cancelAlarm();
+        //this.cancelAlarm();
     }
 
     public void createNotification(Context context, String title, String text, Class<? extends AppCompatActivity> activity){
