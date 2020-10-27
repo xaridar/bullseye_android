@@ -102,6 +102,15 @@ public class GamePauseFragment extends Fragment {
                     finish.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.sortingRight)));
                     finish.setTextColor(getContext().getColor(R.color.color1));
                     break;
+                case "strategy":
+                    settings.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.tbSecondary)));
+                    settings.setImageTintList(ColorStateList.valueOf(getContext().getColor(R.color.tbPrimary)));
+                    settings.setRippleColor(getContext().getColor(R.color.tbBackground));
+                    view.setBackgroundColor(getContext().getColor(R.color.tbBackground));
+                    button.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.tbSecondary)));
+                    finish.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(R.color.tbSecondary)));
+                    finish.setTextColor(getContext().getColor(R.color.tbText));
+                    break;
                 default:
                     break;
             }
