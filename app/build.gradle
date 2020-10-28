@@ -55,6 +55,8 @@ dependencies {
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10'
 
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+
 
 
 }

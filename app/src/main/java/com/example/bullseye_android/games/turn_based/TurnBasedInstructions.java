@@ -1,0 +1,46 @@
+package com.example.bullseye_android.games.turn_based;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+
+import com.example.bullseye_android.R;
+
+public class TurnBasedInstructions extends AppCompatActivity {
+
+    ConstraintLayout instructions1;
+    ConstraintLayout instructions2;
+    boolean onPart2;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_turn_based_instructions);
+
+        instructions1 = findViewById(R.id.instructions1);
+        instructions2 = findViewById(R.id.instructions2);
+
+        instructions1.setVisibility(View.VISIBLE);
+        instructions2.setVisibility(View.INVISIBLE);
+
+        instructions1.setOnClickListener(view -> {
+            instructions1.setVisibility(View.INVISIBLE);
+            instructions2.setVisibility(View.VISIBLE);
+        });
+
+        instructions2.setOnClickListener(view -> {
+            finish();
+        });
+    }
+
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        if(onPart2){
+//            finish();
+//        }
+//        return super.onTouchEvent(event);
+//    }
+}

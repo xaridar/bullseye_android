@@ -1,5 +1,6 @@
 package com.example.bullseye_android.games.turn_based;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.GamePauseFragment;
+import com.example.bullseye_android.games.sorting.SortingInstructionsActivity;
 import com.example.bullseye_android.games.turn_based.units.EasyPatroller;
 import com.example.bullseye_android.games.turn_based.units.Unit;
 import com.example.bullseye_android.music.MusicActivity;
@@ -38,7 +40,6 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     private View diff;
     private Button playButton;
     private ImageButton pauseButton;
-    private RadioGroup diffChoice;
     private LinearLayout grid;
     private Button endTurn;
     private ConstraintLayout finishedLayout;
@@ -164,7 +165,6 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         diff = findViewById(R.id.settingsLayout);
         playButton = findViewById(R.id.playBtn);
         pauseButton = findViewById(R.id.pauseButton);
-        diffChoice = findViewById(R.id.diffButtons);
         endTurn = findViewById(R.id.endTurnButton);
         finishedLayout = findViewById(R.id.finishedLayout);
         endText = findViewById(R.id.endText);
@@ -182,18 +182,6 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         dashBtn.setOnClickListener(view -> finish());
 
         playButton.setOnClickListener(view -> {
-            difficulty = ((RadioButton) findViewById(diffChoice.getCheckedRadioButtonId())).getText() + "";
-//            switch (difficulty){
-//                case "Easy":
-//
-//                    break;
-//                case "Medium":
-//
-//                    break;
-//                case "Hard":
-//
-//                    break;
-//            }
             diff.setVisibility(View.INVISIBLE);
             start();
         });
@@ -272,15 +260,15 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         graph = Pathfinder.generatePathfindingGraph(graph, mapSizeX, mapSizeY);
 
-        for(int i=1;i<=3;i++){
-            Unit playerUnit = new Unit("example", i, 6, null, "ic_mem_img_cat", 2, Owners.PLAYER);
+//        for(int i=1;i<=3;i++){
+            Unit playerUnit = new Unit("example", 2, 4, null, "ic_strat_img_caracal", 1, Owners.PLAYER);
             playerUnits.add(playerUnit);
-            board[i][6].setUnit(playerUnit);
-        }
+            board[2][4].setUnit(playerUnit);
+//        }
 
-        EasyPatroller easyPatroller = new EasyPatroller("patroller", 0,0,null,"ic_mem_img_cow",1,new ArrayList<>(Arrays.asList(new Pair<>(4,0))),graph, board);
+        EasyPatroller easyPatroller = new EasyPatroller("patroller", 0,1,null,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(4,1))),graph, board);
         computerUnits.add(easyPatroller);
-        board[0][0].setUnit(easyPatroller);
+        board[0][1].setUnit(easyPatroller);
         startingAmount = computerUnits.size();
 
     }
@@ -339,16 +327,23 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                 break;
         }
         updateTimer.cancel();
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> {
+                    endingAmount = computerUnits.size();
+                    points = startingAmount - endingAmount;
+                    pointsText.setText(getString(R.string.tb_points, points));
+                    finishedLayout.setVisibility(View.VISIBLE);
+                    endTurn.setVisibility(View.INVISIBLE);
+                    pauseButton.setVisibility(View.INVISIBLE);
 
-        endingAmount = computerUnits.size();
-        points = startingAmount - endingAmount;
-        pointsText.setText(getString(R.string.tb_points, points));
-        finishedLayout.setVisibility(View.VISIBLE);
-        endTurn.setVisibility(View.INVISIBLE);
-        pauseButton.setVisibility(View.INVISIBLE);
+                    playAgain.setOnClickListener(view -> pregame());
+                    backBtn.setOnClickListener(view -> finish());
+                });
+            }
+        }, 600);
 
-        playAgain.setOnClickListener(view -> pregame());
-        backBtn.setOnClickListener(view -> finish());
     }
 
     private void setState(int state){
@@ -372,7 +367,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
      * Brings user to tutorial screen
      */
     public void howToPlay(View view){
-
+        startActivity(new Intent(this, TurnBasedInstructions.class));
     }
 
     /**
