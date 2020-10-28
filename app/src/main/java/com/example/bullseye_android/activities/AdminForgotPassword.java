@@ -2,7 +2,6 @@
 package com.example.bullseye_android.activities;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,6 +14,9 @@ import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.mailsender.SendMail;
+import com.example.bullseye_android.util.ContinueFromEditTextListener;
+
+import java.util.function.Function;
 
 public class AdminForgotPassword extends AppCompatActivity {
 
@@ -41,13 +43,25 @@ public class AdminForgotPassword extends AppCompatActivity {
         Button sendEmail = findViewById(R.id.sendEmail);
         EditText email = findViewById(R.id.forgotPasswordEmail);
 
+        sendEmail.setOnEditorActionListener(new ContinueFromEditTextListener(sendEmail));
+
         sendEmail.setOnClickListener(v -> {
             if(admin.getEmail() != null && admin.getEmail().contentEquals(email.getText())){
-                new SendMail(AdminForgotPassword.this).sendMail("bullseyeapp.no.reply@gmail.com","B7nuXx\"3}A", admin.getEmail(), "new password", "new password");
-                Toast.makeText(AdminForgotPassword.this, "Email Sent!", Toast.LENGTH_SHORT).show();
+                new SendMail(AdminForgotPassword.this).sendMail(passwordSentCallback, "bullseyeapp.no.reply@gmail.com","B7nuXx\"3}A", admin.getEmail(), "new password", "new password");
             }else{
                 Toast.makeText(AdminForgotPassword.this, "Incorrect Email Entered", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    private Function<String, Void> passwordSentCallback = body -> {
+        if (body != null) {
+            Toast.makeText(this, "Email Sent!", Toast.LENGTH_LONG).show();
+            // set password to sent password (body var)
+            // go back
+        } else {
+            Toast.makeText(this, "Email Failed", Toast.LENGTH_LONG).show();
+        }
+        return null;
+    };
 }
