@@ -41,12 +41,4 @@ public class TurnBasedInstructions extends AppCompatActivity implements MusicAct
     public int getMusicId() {
         return R.raw.strategysong;
     }
-
-    //    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        if(onPart2){
-//            finish();
-//        }
-//        return super.onTouchEvent(event);
-//    }
 }

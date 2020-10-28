@@ -4,8 +4,6 @@ package com.example.bullseye_android.games.memory;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,13 +26,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
-import com.example.bullseye_android.database.UserSerializable;
-import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.GamePauseFragment;
-import com.example.bullseye_android.music.MusicManager;
+import com.example.bullseye_android.music.MusicActivity;
+import com.example.bullseye_android.util.SfxManager;
 import com.example.bullseye_android.util.TimeFormatter;
 
 import java.util.ArrayList;
@@ -44,8 +41,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import nl.dionsegijn.konfetti.KonfettiView;
-import nl.dionsegijn.konfetti.models.Shape;
-import nl.dionsegijn.konfetti.models.Size;
 
 
 public class MemoryActivity extends AppCompatActivity implements Game, MusicActivity {
@@ -53,9 +48,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     private ImageButton[] buttons;
     private MemoryCard[][] cards;
     private LinearLayout board;
-    private LinearLayout[] columns;
     private ConstraintLayout diff;
-    private Button playBtn;
     private RadioGroup diffChoice;
 
     private ConstraintLayout finishedLayout;
@@ -72,7 +65,6 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     private int cardsUp = 0;
     private int pairs;
     private String difficulty;
-    private SharedPreferences prefs;
     private User user;
     private UserViewModel userViewModel;
     private int diffInt;
@@ -82,7 +74,6 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     private ArrayList<MemoryCard> shownCards = new ArrayList<>();
     Toast toast;
     int tries;
-    private ImageButton lastCardSelected;
     private int backCount;
     private int cardColor1;
     private int cardColor2;
@@ -165,7 +156,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         paused = false;
         konfettiView = findViewById(R.id.viewKonfetti);
 
-        prefs = getSharedPreferences("userID", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("userID", MODE_PRIVATE);
         long id = (prefs.getLong("id", 0));
 
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
@@ -186,15 +177,11 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     private void run() {
         backCount = 0;
 
-        cardTone = MediaPlayer.create(MemoryActivity.this, R.raw.card_flip);
-        correctTone = MediaPlayer.create(this, R.raw.mem_correct);
-        wrongTone = MediaPlayer.create(this, R.raw.mem_wrong);
-
         float vol = (float) user.getGameVolume() / User.MAX_VOLUME;
 
-        cardTone.setVolume(vol, vol);
-        correctTone.setVolume(vol, vol);
-        wrongTone.setVolume(vol, vol);
+        cardTone = SfxManager.createSfx(MemoryActivity.this, R.raw.card_flip, vol);
+        correctTone = SfxManager.createSfx(this, R.raw.mem_correct, vol);
+        wrongTone = SfxManager.createSfx(this, R.raw.mem_wrong, vol);
 
         toast = Toast.makeText(this, "Press the back button twice at any time to go back to the dashboard.", Toast.LENGTH_SHORT);
         toast.show();
@@ -210,7 +197,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         highScore.setVisibility(View.INVISIBLE);
         diff = findViewById(R.id.settingLayout);
         diff.setVisibility(View.VISIBLE);
-        playBtn = findViewById(R.id.playBtn);
+        Button playBtn = findViewById(R.id.playBtn);
         pauseButton = findViewById(R.id.pauseButton);
         pauseButton.setVisibility(View.INVISIBLE);
         diffChoice = findViewById(R.id.diffButtons);
@@ -269,7 +256,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         cardTimer = new Timer();
         cards = new MemoryCard[y][x];
         buttons = new ImageButton[cards.length * cards[0].length];
-        columns = new LinearLayout[cards[0].length];
+        LinearLayout[] columns = new LinearLayout[cards[0].length];
         board.setVisibility(View.VISIBLE);
         board.removeAllViews();
         pauseButton.setVisibility(View.VISIBLE);
@@ -505,9 +492,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     }
 
     void unpauseActions() {
-        runOnUiThread(() -> {
-            pauseButton.setVisibility(View.VISIBLE);
-        });
+        runOnUiThread(() -> pauseButton.setVisibility(View.VISIBLE));
         resetTimer();
         if (cardTimerOn){
             cardTimer = new Timer();

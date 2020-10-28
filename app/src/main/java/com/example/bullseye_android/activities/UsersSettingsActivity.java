@@ -23,6 +23,7 @@ import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.music.MusicManager;
+import com.example.bullseye_android.util.SfxManager;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -64,7 +65,7 @@ public class UsersSettingsActivity extends AppCompatActivity implements MusicAct
     }
 
     public void run() {
-        tonePlayer = MediaPlayer.create(this, R.raw.tone);
+        tonePlayer = SfxManager.createSfx(this, R.raw.tone, (float) user.getGameVolume() / User.MAX_VOLUME);
         setContentView(R.layout.activity_users_settings);
 
         Button changeAvatar = findViewById(R.id.changeProfileButton);
@@ -118,7 +119,7 @@ public class UsersSettingsActivity extends AppCompatActivity implements MusicAct
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 user.setGameVolume(i);
                 float vol = (float) user.getGameVolume() / User.MAX_VOLUME;
-                tonePlayer.setVolume(vol, vol);
+                SfxManager.setVol(vol);
                 if (gameVolTimer != null) {
                     gameVolTimer.cancel();
                 }

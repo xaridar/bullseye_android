@@ -30,6 +30,7 @@ import com.example.bullseye_android.games.sorting.SortingInstructionsActivity;
 import com.example.bullseye_android.games.turn_based.units.EasyPatroller;
 import com.example.bullseye_android.games.turn_based.units.Unit;
 import com.example.bullseye_android.music.MusicActivity;
+import com.example.bullseye_android.util.SfxManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -194,14 +195,11 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     }
 
     private void start(){
-
-        enemyCaptured = MediaPlayer.create(this, R.raw.enemy_captured);
-        playerCaptured = MediaPlayer.create(this, R.raw.unit_captured);
-
         float vol = (float) user.getGameVolume() / User.MAX_VOLUME;
 
-        enemyCaptured.setVolume(vol, vol);
-        playerCaptured.setVolume(vol, vol);
+        enemyCaptured = SfxManager.createSfx(this, R.raw.enemy_captured, vol);
+        playerCaptured = SfxManager.createSfx(this, R.raw.unit_captured, vol);
+
 
         pauseButton.setVisibility(View.VISIBLE);
         endTurn.setVisibility(View.VISIBLE);

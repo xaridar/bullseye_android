@@ -5,18 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -36,12 +34,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
-import com.example.bullseye_android.games.memory.MemoryActivity;
-import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.GamePauseFragment;
+import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.util.SfxManager;
 import com.example.bullseye_android.util.TimeFormatter;
 
@@ -51,18 +48,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import nl.dionsegijn.konfetti.KonfettiView;
-import nl.dionsegijn.konfetti.models.Shape;
-import nl.dionsegijn.konfetti.models.Size;
 
 public class SortingActivity extends AppCompatActivity implements Game, MusicActivity {
 
     private ConstraintLayout layout;
 
-    //final ListenerManager listenerManager = new ListenerManager(this);
     private int backCount;
     private Toast toast;
 
@@ -75,8 +67,6 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     private TextView timer;
     private ConstraintLayout finishedLayout;
     private TextView highScore;
-    private Button backBtn;
-    private Button playAgain;
     private TextView finalTime;
     private ImageButton pauseButton;
     ImageView rightArrow;
@@ -86,7 +76,6 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     Animation animFadeIn;
     Animation animFadeOut;
 
-    private SharedPreferences prefs;
     private int sent;
     private int correct;
     private int time;
@@ -112,7 +101,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sorting);
-        prefs = getSharedPreferences("userID", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("userID", MODE_PRIVATE);
         gestureDetector = new GestureDetector(this, new GestureListener());
         long id = prefs.getLong("id", 0);
         rightArrow = findViewById(R.id.rightArrow);
@@ -133,17 +122,12 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     }
     public void run() {
 
-        swipeTone = MediaPlayer.create(this, R.raw.swipe);
-        correctTone = MediaPlayer.create(this, R.raw.mem_correct);
-        incorrectTone = MediaPlayer.create(this, R.raw.mem_wrong);
-        blackBallTone = MediaPlayer.create(this, R.raw.black_ball);
-
         float vol = (float) user.getGameVolume() / User.MAX_VOLUME;
 
-        swipeTone.setVolume(vol, vol);
-        correctTone.setVolume(vol, vol);
-        incorrectTone.setVolume(vol, vol);
-        blackBallTone.setVolume(vol, vol);
+        swipeTone = SfxManager.createSfx(this, R.raw.swipe, vol);
+        correctTone = SfxManager.createSfx(this, R.raw.mem_correct, vol);
+        incorrectTone = SfxManager.createSfx(this, R.raw.mem_wrong, vol);
+        blackBallTone = SfxManager.createSfx(this, R.raw.black_ball, vol);
 
         rightArrow.startAnimation(animFadeOut);
         leftArrow.startAnimation(animFadeOut);
@@ -160,8 +144,8 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         timer = findViewById(R.id.time);
         finishedLayout = findViewById(R.id.settingsLayout);
         highScore = findViewById(R.id.highScore);
-        backBtn = findViewById(R.id.backBtn);
-        playAgain = findViewById(R.id.playAgain);
+        Button backBtn = findViewById(R.id.backBtn);
+        Button playAgain = findViewById(R.id.playAgain);
         finalTime = findViewById(R.id.finalTime);
         pauseButton = findViewById(R.id.pauseButton2);
         backBtn.setOnClickListener((view) -> finish());
@@ -178,8 +162,8 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         pauseButton.setVisibility(View.INVISIBLE);
 
 
-        startBtn.setOnClickListener((View.OnClickListener) view -> {
-            RadioButton choice = (RadioButton) findViewById(speedChoice.getCheckedRadioButtonId());
+        startBtn.setOnClickListener(view -> {
+            RadioButton choice = findViewById(speedChoice.getCheckedRadioButtonId());
             countdown(choice.getText().toString());
         });
     }
@@ -284,38 +268,27 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         String side;
         List<ImageButton> delete = new ArrayList<>();
         for (ImageButton imageButton : views) {
-           // OnSwipeTouchListen touchListen = listenerManager.map.get(imageButton);
-            //if (touchListen != null) {
                 if (imageButton.getVisibility() == View.VISIBLE && ((ConstraintLayout.LayoutParams) imageButton.getLayoutParams()).topMargin >= height - (((ConstraintLayout.LayoutParams) despawn.getLayoutParams()).bottomMargin + 225)) {
                     side = "bottom";
                     delete.add(imageButton);
                     layout.removeView(imageButton);
                     if (!side.contentEquals(imageButton.getContentDescription())) {
-                        SfxManager.createSfx(SortingActivity.this, R.raw.mem_wrong, user.getGameVolume() / User.MAX_VOLUME);
                         incorrectTone.start();
                         lives--;
                     }else{
-                        SfxManager.createSfx(SortingActivity.this, R.raw.black_ball, user.getGameVolume() / User.MAX_VOLUME);
                         blackBallTone.start();
                         correct ++;
                     }
                     sent++;
                 }
                 else if(imageButton.getVisibility() == View.INVISIBLE && !colorHit.equals("")) {
-                    //if () {
-                        side = colorHit;
-                        delete.add(imageButton);
-                        layout.removeView(imageButton);
-                //}
-                 //   else{
-                      //  lives--;
-                   // }
+                    side = colorHit;
+                    delete.add(imageButton);
+                    layout.removeView(imageButton);
                     if (!side.contentEquals(imageButton.getContentDescription())) {
-                        SfxManager.createSfx(SortingActivity.this, R.raw.mem_wrong, user.getGameVolume() / User.MAX_VOLUME);
                         incorrectTone.start();
                         lives--;
                     }else{
-                        SfxManager.createSfx(SortingActivity.this, R.raw.mem_correct, user.getGameVolume() / User.MAX_VOLUME);
                         correctTone.start();
                         correct ++;
                     }
@@ -347,9 +320,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     @Override
     public void unpause() {
         pause = false;
-        runOnUiThread(() -> {
-            pauseButton.setVisibility(View.VISIBLE);
-        });
+        runOnUiThread(() -> pauseButton.setVisibility(View.VISIBLE));
         resetTimer();
     }
 
@@ -464,28 +435,12 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
                 imageButton.setScaleType(ImageButton.ScaleType.FIT_CENTER);
                 imageButton.setLayoutParams(params);
                 imageButton.setContentDescription(color);
-                //listenerManager.addListener(imageButton);
                 views.add(imageButton);
 
             });
         }
 
     }
-
-    /*class ListenerManager {
-        Context c;
-        public Map<ImageButton, OnSwipeTouchListen> map;
-        public ListenerManager(Context c) {
-            map = new HashMap<>();
-            this.c = c;
-        }
-
-        public void addListener(ImageButton button) {
-            OnSwipeTouchListen listener = new OnSwipeTouchListen(c);
-            map.put(button, listener);
-            button.setOnTouchListener(listener);
-        }
-    }*/
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -497,85 +452,65 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     }
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
-            private static final int SWIPE_THRESHOLD = 100;
-            private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-            @Override
-            public boolean onDown(MotionEvent e) {
-                return true;
-            }
-            @Override
-            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-                try {
-                    float diffY = e2.getY() - e1.getY();
-                    float diffX = e2.getX() - e1.getX();
-                    if (Math.abs(diffX) > Math.abs(diffY)) {
-                        View view = views.get(0);
-                        if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                            if (diffX > 0) {
-                                onSwipeRight(view);
+        private static final int SWIPE_THRESHOLD = 100;
+        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            try {
+                float diffY = e2.getY() - e1.getY();
+                float diffX = e2.getX() - e1.getX();
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    View view = views.get(0);
+                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                        if (diffX > 0) {
+                            onSwipeRight(view);
 
-                            } else {
-                                onSwipeLeft(view);
-                            }
-                            SfxManager.createSfx(SortingActivity.this, R.raw.swipe, user.getGameVolume() / User.MAX_VOLUME);
-                            swipeTone.start();
-                            return true;
-
+                        } else {
+                            onSwipeLeft(view);
                         }
+                        swipeTone.start();
+                        return true;
 
                     }
 
-                } catch (Exception exception) {
-                    exception.printStackTrace();
                 }
-                return false;
+
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
-
-            public void onSwipeRight(View view) {
-
-                colorHit = "right";
-                view.setVisibility(View.INVISIBLE);
-                rightArrow.startAnimation(animFadeIn);
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        rightArrow.setAnimation(animFadeOut);
-                    }
-                }, 1000);
-            }
-
-            public void onSwipeLeft(View view) {
-
-                colorHit = "left";
-                view.setVisibility(View.INVISIBLE);
-                leftArrow.startAnimation(animFadeIn);
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        leftArrow.setAnimation(animFadeOut);
-
-                    }
-                },1000);
-            }
-
-            public void onSwipeDown(View view) {
-                colorHit = "bottom";
-                view.setVisibility(View.INVISIBLE);
-            }
-
-
+            return false;
         }
 
+        public void onSwipeRight(View view) {
 
+            colorHit = "right";
+            view.setVisibility(View.INVISIBLE);
+            rightArrow.startAnimation(animFadeIn);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    rightArrow.setAnimation(animFadeOut);
+                }
+            }, 1000);
+        }
 
+        public void onSwipeLeft(View view) {
 
-    private boolean inViewInBounds(View view, int x, int y) {
-        Rect outRect = new Rect();
-        int[] location = new int[2];
-        view.getDrawingRect(outRect);
-        view.getLocationOnScreen(location);
-        outRect.offset(location[0], location[1]);
-        return outRect.contains(x, y);
+            colorHit = "left";
+            view.setVisibility(View.INVISIBLE);
+            leftArrow.startAnimation(animFadeIn);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    leftArrow.setAnimation(animFadeOut);
+
+                }
+            },1000);
+        }
     }
 
     @Override
