@@ -29,9 +29,12 @@ public class EasyPatroller extends Unit {
             if(i==this.patrolPoints.size()-1) {
                 patrolTarget = 0;
             }
+            Log.i("EP",this.patrolPoints.get(i).toString() + ", " + this.patrolPoints.get(patrolTarget).toString());
+            Log.i("EP",Pathfinder.generatePathTo(this.patrolPoints.get(i).first, this.patrolPoints.get(i).second, this.patrolPoints.get(patrolTarget).first, this.patrolPoints.get(patrolTarget).second, graph, board, this).toString());
             currentPath.addAll(Pathfinder.generatePathTo(this.patrolPoints.get(i).first, this.patrolPoints.get(i).second, this.patrolPoints.get(patrolTarget).first, this.patrolPoints.get(patrolTarget).second, graph, board, this));
         }
         setCurrentPath(currentPath);
+//        Log.i("EP",currentPath.toString());
         board[x][y].setUnit(this);
     }
 
