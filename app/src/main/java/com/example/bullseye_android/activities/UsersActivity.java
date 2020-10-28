@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.ContextThemeWrapper;
@@ -36,7 +37,6 @@ import java.util.List;
 
 public class UsersActivity extends AppCompatActivity {
 
-    private UserViewModel mUserViewModel;
     private View.OnClickListener avatarListener = v -> {
         long contentDescription = Long.parseLong(v.getContentDescription().toString());
         SharedPreferences sharedPreferences = getSharedPreferences("userID", 0);
@@ -50,18 +50,15 @@ public class UsersActivity extends AppCompatActivity {
     private LinearLayout userLayout;
     private int c;
     private Button button;
-    private Notifications notifications;
-
-    private MaterialButton adminBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        notifications = new Notifications(this);
+        Notifications notifications = new Notifications(this);
         notifications.createNotification(this,"User", "Good Job you got into the users screen", null);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
 
-        mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        UserViewModel mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
         users = mUserViewModel.getUsers();
 
@@ -98,7 +95,7 @@ public class UsersActivity extends AppCompatActivity {
 
         userLayout = findViewById(R.id.userLayout);
 
-        adminBtn = findViewById(R.id.adminSignIn);
+        MaterialButton adminBtn = findViewById(R.id.adminSignIn);
 
         button = findViewById(R.id.addUser);
         button.setOnClickListener(v -> {
@@ -134,7 +131,7 @@ public class UsersActivity extends AppCompatActivity {
         givenUsers.removeAll(removeList);
         userLayout.removeAllViews();
         LinearLayout inner = null;
-        int viewsPerRow = 1;
+        int viewsPerRow;
         boolean greater = false;
         if (lastUser.getValue() != null) {
             User first = null;
@@ -221,7 +218,8 @@ public class UsersActivity extends AppCompatActivity {
             btnParams.weight = 1;
             btnParams.gravity = Gravity.CENTER_HORIZONTAL;
             moreBtn.setLayoutParams(btnParams);
-            moreBtn.setBackground(ContextCompat.getDrawable(this, R.drawable.ic_circle));
+            Drawable circle = ContextCompat.getDrawable(this, R.drawable.ic_circle);
+            if (circle != null) moreBtn.setBackground(circle);
             moreBtn.setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.color4)));
             moreBtn.setText(R.string.more_users);
             moreBtn.setAllCaps(false);
@@ -239,7 +237,7 @@ public class UsersActivity extends AppCompatActivity {
 
             specLayout.addView(moreBtn);
             specLayout.addView(text);
-            inner.addView(specLayout);
+            if (inner != null) inner.addView(specLayout);
         }
         ConstraintLayout.LayoutParams params = ((ConstraintLayout.LayoutParams) button.getLayoutParams());
         if (userNum == 0) {

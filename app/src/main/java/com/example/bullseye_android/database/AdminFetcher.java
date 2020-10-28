@@ -1,8 +1,5 @@
 package com.example.bullseye_android.database;
 
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-
 import java.util.function.Function;
 
 public class AdminFetcher implements Runnable{

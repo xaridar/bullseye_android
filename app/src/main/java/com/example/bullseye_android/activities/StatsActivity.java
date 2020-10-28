@@ -44,17 +44,12 @@ public class StatsActivity extends AppCompatActivity implements MusicActivity {
     private TextView memory;
     private TextView sorting;
     private List<TextView> bottomNav = new ArrayList<>();
-     private LiveData<List<User>> users;
-    private UserViewModel mUserViewModel;
-    private ExtendedFloatingActionButton exportFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
-        mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-
-        users = mUserViewModel.getUsers();
+        UserViewModel mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
         currentUser = new MutableLiveData<>();
 
@@ -80,10 +75,9 @@ public class StatsActivity extends AppCompatActivity implements MusicActivity {
         toolbar = findViewById(R.id.toolbar);
         Toolbar navtoolbar = findViewById(R.id.navtoolbar);
         drawerLayout = findViewById(R.id.drawer);
-//        CardView current = findViewById(R.id.current);
         sorting = findViewById(R.id.sorting_bottom);
         memory = findViewById(R.id.memory_bottom);
-        exportFab = findViewById(R.id.exportFab);
+        ExtendedFloatingActionButton exportFab = findViewById(R.id.exportFab);
 
         bottomNav.add(sorting);
         bottomNav.add(memory);
@@ -102,7 +96,7 @@ public class StatsActivity extends AppCompatActivity implements MusicActivity {
         navActionBarDrawerToggle.getDrawerArrowDrawable().setColor(getColor(android.R.color.white));
 
 
-        final NavAdapter adapter = new NavAdapter(this, rv);
+        final NavAdapter adapter = new NavAdapter(this);
 
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -119,9 +113,6 @@ public class StatsActivity extends AppCompatActivity implements MusicActivity {
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
         });
-//        current.setOnClickListener(view -> {
-//            drawerLayout.closeDrawer(GravityCompat.START);
-//        });
 
         currentUser.observe(this, user -> {
             if (user != null) {
@@ -160,22 +151,14 @@ public class StatsActivity extends AppCompatActivity implements MusicActivity {
             }
         });
 
-//        users.observe(this, users -> {
-//            adapter.setUsers(users);
-//        });
+        memory.setOnClickListener(view -> tab.setValue(MEMORY));
 
-        memory.setOnClickListener(view -> {
-            tab.setValue(MEMORY);
-        });
-
-        sorting.setOnClickListener(view -> {
-            tab.setValue(SORTING);
-        });
+        sorting.setOnClickListener(view -> tab.setValue(SORTING));
 
         exportFab.setOnClickListener(view -> {
             User user = currentUser.getValue();
             if (user != null) {
-                // create String with all stats
+                // pdf
                 export(user.getName(), "Total Points: " + user.getFocusPoints()[User.ALL_GAMES]);
             }
         });

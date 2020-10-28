@@ -1,7 +1,6 @@
 package com.example.bullseye_android.util;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +102,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                     }
                 }
             }
-            users.getValue().removeAll(remove);
+            if (users.getValue() != null) users.getValue().removeAll(remove);
             activeUsers.add(0, this.first);
             notifyDataSetChanged();
         }

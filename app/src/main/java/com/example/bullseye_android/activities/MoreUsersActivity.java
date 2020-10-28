@@ -21,10 +21,7 @@ import com.example.bullseye_android.util.UserAdapter;
 
 public class MoreUsersActivity extends AppCompatActivity implements MusicActivity {
 
-    private UserViewModel userViewModel;
-    private LiveData<User> first;
     private UserAdapter userAdapter;
-    private RecyclerView rv;
     int context;
 
     @Override
@@ -41,6 +38,7 @@ public class MoreUsersActivity extends AppCompatActivity implements MusicActivit
         }else{
             context = 2;
         }
+        if (getSupportActionBar() == null) finish();
         switch (context){
             case 0:
                 getSupportActionBar().setTitle("All Users");
@@ -52,15 +50,15 @@ public class MoreUsersActivity extends AppCompatActivity implements MusicActivit
                 getSupportActionBar().setTitle("ERROR, activity context empty or invalid");
                 break;
         }
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        UserViewModel userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         if(context == 0 || context ==1){
             userAdapter = new UserAdapter(this, context);
-            rv = findViewById(R.id.rv);
+            RecyclerView rv = findViewById(R.id.rv);
 
             rv.setAdapter(userAdapter);
             rv.setLayoutManager(new LinearLayoutManager(this));
 
-            first = userViewModel.getUser(getSharedPreferences("userID", 0).getLong("id", 0));
+            LiveData<User> first = userViewModel.getUser(getSharedPreferences("userID", 0).getLong("id", 0));
 
             first.observe(this, user -> {
                 if (user != null) {

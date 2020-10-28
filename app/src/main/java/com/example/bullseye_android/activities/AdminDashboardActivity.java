@@ -1,14 +1,13 @@
 //Dylan coded and created layout
 package com.example.bullseye_android.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
@@ -50,25 +49,12 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
 
         adminWelcome.setText(getString(R.string.welcome, admin.getName()));
 
-        statsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AdminDashboardActivity.this, StatsActivity.class));
-            }
+        statsButton.setOnClickListener(v -> startActivity(new Intent(AdminDashboardActivity.this, StatsActivity.class)));
+        settingsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminDashboardActivity.this, AdminSettingsActivity.class);
+            startActivity(intent);
         });
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AdminDashboardActivity.this, AdminSettingsActivity.class);
-                startActivity(intent);
-            }
-        });
-        logOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        logOutButton.setOnClickListener(v -> finish());
     }
 
     @Override

@@ -3,13 +3,13 @@ package com.example.bullseye_android.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.music.MusicActivity;
@@ -55,9 +55,7 @@ public class AvatarChooserActivity extends AppCompatActivity implements MusicAct
         logoAva.setOnClickListener(avatarListener);
         logo_altAva.setOnClickListener(avatarListener);
 
-        findViewById(R.id.backToUserSignUp).setOnClickListener(view -> {
-            finish();
-        });
+        findViewById(R.id.backToUserSignUp).setOnClickListener(view -> finish());
     }
 
     @Override
@@ -82,9 +80,10 @@ public class AvatarChooserActivity extends AppCompatActivity implements MusicAct
     }
 
     private void changeAvatar() {
-        avatars.get(currentAva).setBackground(getDrawable(R.drawable.ic_circle));
+        ImageButton av = avatars.get(currentAva);
+        if (av != null) av.setBackground(ContextCompat.getDrawable(this, R.drawable.ic_circle));
         for (ImageButton ava : avatars.values()) {
-            if (ava != avatars.get(currentAva)) {
+            if (ava != av) {
                 ava.setBackgroundColor(getColor(android.R.color.transparent));
             }
         }

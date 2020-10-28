@@ -25,15 +25,11 @@ import com.example.bullseye_android.util.ShowPassListener;
 public class ChangeStringActivity extends AppCompatActivity implements MusicActivity {
 
     private EditText editText;
-    private CheckBox toggle;
     private EditText confEditText;
-    private CheckBox confToggle;
     private EditText oldPasswordEditText;
-    private CheckBox oldPasswordToggle;
     private Button button;
     private String type;
     private String oldPassword;
-    private LinearLayout oldPasswordLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,19 +42,21 @@ public class ChangeStringActivity extends AppCompatActivity implements MusicActi
         }
 
         editText = findViewById(R.id.editText);
-        toggle = findViewById(R.id.toggle);
+        CheckBox toggle = findViewById(R.id.toggle);
         confEditText = findViewById(R.id.confEditText);
-        confToggle = findViewById(R.id.confToggle);
+        CheckBox confToggle = findViewById(R.id.confToggle);
         button = findViewById(R.id.button);
         oldPasswordEditText = findViewById(R.id.oldPasswordEditText);
-        oldPasswordToggle = findViewById(R.id.oldPasswordToggle);
-        oldPasswordLayout = findViewById(R.id.oldPasswordLayout);
+        CheckBox oldPasswordToggle = findViewById(R.id.oldPasswordToggle);
+        LinearLayout oldPasswordLayout = findViewById(R.id.oldPasswordLayout);
 
         toggle.setOnClickListener(new ShowPassListener(editText, toggle));
         confToggle.setOnClickListener(new ShowPassListener(confEditText, confToggle));
         oldPasswordToggle.setOnClickListener(new ShowPassListener(oldPasswordEditText, oldPasswordToggle));
 
         type = getIntent().getStringExtra("type");
+        if (type == null) finish();
+        if (getSupportActionBar() == null) finish();
         String capType = Character.toUpperCase(type.charAt(0)) + type.substring(1);
         getSupportActionBar().setTitle(getString(R.string.change_string, capType));
         if (type.equals("password")) {

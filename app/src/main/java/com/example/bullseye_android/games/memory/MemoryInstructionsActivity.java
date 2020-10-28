@@ -4,7 +4,6 @@ package com.example.bullseye_android.games.memory;
 import android.content.res.ColorStateList;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -16,7 +15,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
-import com.example.bullseye_android.database.UserSerializable;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.util.SfxManager;

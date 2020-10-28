@@ -8,7 +8,7 @@ public class Node {
     public int y;
 
     public Node(){
-        neighbours = new ArrayList<Node>();
+        neighbours = new ArrayList<>();
     }
 
     public ArrayList<Node> getNeighbours() {

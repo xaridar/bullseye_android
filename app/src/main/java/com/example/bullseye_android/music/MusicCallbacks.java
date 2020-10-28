@@ -3,15 +3,10 @@ package com.example.bullseye_android.music;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.bullseye_android.R;
-import com.example.bullseye_android.music.MusicActivity;
-import com.example.bullseye_android.music.MusicManager;
 
 public class MusicCallbacks implements Application.ActivityLifecycleCallbacks {
 

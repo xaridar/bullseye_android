@@ -145,7 +145,7 @@ public class UserRepository {
         }
     }
 
-    private class getUserAsyncTask implements Callable<LiveData<User>> {
+    private static class getUserAsyncTask implements Callable<LiveData<User>> {
 
         private UserDao mAsyncTaskDao;
         private long id;
@@ -163,7 +163,7 @@ public class UserRepository {
     }
 
 
-    private class getAdminAsyncTask implements Callable<User> {
+    private static class getAdminAsyncTask implements Callable<User> {
 
         private UserDao mAsyncTaskDao;
 

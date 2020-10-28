@@ -47,47 +47,33 @@ public class AdminSettingsActivity extends AppCompatActivity implements MusicAct
         Button deleteProgress = findViewById(R.id.deleteProgress);
         Button changePassword = findViewById(R.id.changePassword);
 
-        changePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AdminSettingsActivity.this, ChangeStringActivity.class);
-                intent.putExtra("type", "password");
-                intent.putExtra("oldPassword", admin.getPassword());
-                startActivityForResult(intent, CHANGE_PASSWORD_REQ_CODE);
-            }
+        changePassword.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminSettingsActivity.this, ChangeStringActivity.class);
+            intent.putExtra("type", "password");
+            intent.putExtra("oldPassword", admin.getPassword());
+            startActivityForResult(intent, CHANGE_PASSWORD_REQ_CODE);
         });
-        manageProfiles.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AdminSettingsActivity.this, MoreUsersActivity.class);
-                intent.putExtra("MoreUsersContext", 1);
-                startActivity(intent);
-            }
+        manageProfiles.setOnClickListener(v -> {
+            Intent intent = new Intent(AdminSettingsActivity.this, MoreUsersActivity.class);
+            intent.putExtra("MoreUsersContext", 1);
+            startActivity(intent);
         });
-        backToDashboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        deleteProgress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder warning = new AlertDialog.Builder(AdminSettingsActivity.this)
-                        .setTitle(R.string.are_you_sure)
-                        .setMessage(R.string.warning_message)
-                        .setNegativeButton(R.string.cancel, null)
-                        .setPositiveButton(R.string.yes, (dialog, which) -> {
-                            mUserViewModel.deleteAll();
+        backToDashboard.setOnClickListener(v -> finish());
+        deleteProgress.setOnClickListener(v -> {
+            AlertDialog.Builder warning = new AlertDialog.Builder(AdminSettingsActivity.this)
+                    .setTitle(R.string.are_you_sure)
+                    .setMessage(R.string.warning_message)
+                    .setNegativeButton(R.string.cancel, null)
+                    .setPositiveButton(R.string.yes, (dialog, which) -> {
+                        mUserViewModel.deleteAll();
 //                            PendingIntent intent = PendingIntent.getActivity(getApplicationContext(), 1000, new Intent(new Intent(getApplicationContext(), HomeActivity.class)), PendingIntent.FLAG_CANCEL_CURRENT);
 //                            AlarmManager mgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 //                            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, intent);
-                            startActivity(new Intent(AdminSettingsActivity.this, HomeActivity.class));
-                            finishAffinity();
-                            System.exit(0);
-                        });
-                warning.show();
-            }
+                        startActivity(new Intent(AdminSettingsActivity.this, HomeActivity.class));
+                        finishAffinity();
+                        System.exit(0);
+                    });
+            warning.show();
         });
     }
 

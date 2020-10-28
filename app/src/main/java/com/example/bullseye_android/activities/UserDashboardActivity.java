@@ -1,17 +1,16 @@
 //Dylan coded and created layout
 package com.example.bullseye_android.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
@@ -24,7 +23,6 @@ import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.music.MusicManager;
 
 public class UserDashboardActivity extends AppCompatActivity implements MusicActivity {
-    public static final int SETTINGS_REQ = 100;
 
     LiveData<User> user;
     UserViewModel userViewModel;
@@ -72,47 +70,14 @@ public class UserDashboardActivity extends AppCompatActivity implements MusicAct
         Button logOutButton = findViewById(R.id.logOutButton);
         Button surveyButton = findViewById(R.id.surveyButton);
 
-        matchingGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserDashboardActivity.this, MemoryActivity.class));
-            }
+        matchingGameButton.setOnClickListener(v -> startActivity(new Intent(UserDashboardActivity.this, MemoryActivity.class)));
+        surveyButton.setOnClickListener(v -> startActivity(new Intent(UserDashboardActivity.this, Survey.class)));
+        sortingGameButton.setOnClickListener(v -> startActivity(new Intent(UserDashboardActivity.this, SortingActivity.class)));
+        turnBasedGameButton.setOnClickListener(v -> startActivity(new Intent(UserDashboardActivity.this, TurnBasedActivity.class)));
+        settingsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(UserDashboardActivity.this, UsersSettingsActivity.class);
+            startActivity(intent);
         });
-        surveyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    startActivity(new Intent(UserDashboardActivity.this, Survey.class));
-                }
-
-        });
-        sortingGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserDashboardActivity.this, SortingActivity.class));
-            }
-        });
-        turnBasedGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserDashboardActivity.this, TurnBasedActivity.class));
-            }
-        });
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UserDashboardActivity.this, UsersSettingsActivity.class);
-                startActivity(intent);
-            }
-        });
-        logOutButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-
-            public void onClick(View v) {
-
-                finish();
-            }
-
-        });
+        logOutButton.setOnClickListener(v -> finish());
     }
 }

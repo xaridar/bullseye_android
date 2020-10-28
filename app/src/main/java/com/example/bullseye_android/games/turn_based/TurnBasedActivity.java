@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +24,6 @@ import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.GamePauseFragment;
-import com.example.bullseye_android.games.sorting.SortingInstructionsActivity;
 import com.example.bullseye_android.games.turn_based.units.EasyPatroller;
 import com.example.bullseye_android.games.turn_based.units.Unit;
 import com.example.bullseye_android.music.MusicActivity;
@@ -34,6 +31,7 @@ import com.example.bullseye_android.util.SfxManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -203,10 +201,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         pauseButton.setVisibility(View.VISIBLE);
         endTurn.setVisibility(View.VISIBLE);
-        endTurn.setOnClickListener(view -> {
-
-            endTurn();
-        });
+        endTurn.setOnClickListener(view -> endTurn());
 
         setBoard();
 
@@ -216,9 +211,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         updateTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                runOnUiThread(() -> {
-                    updateBoard();
-                });
+                runOnUiThread(() -> updateBoard());
             }
         }, 100,100);
 
@@ -270,18 +263,18 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
             }
         }
 
-        graph = Pathfinder.generatePathfindingGraph(graph, mapSizeX, mapSizeY);
+        graph = Pathfinder.generatePathfindingGraph(mapSizeX, mapSizeY);
 
         for(int i=1;i<=3;i++){
             Unit playerUnit = new Unit("example", i, 6, null, "ic_strat_img_caracal", 1, Owners.PLAYER, board);
             playerUnits.add(playerUnit);
         }
 
-        EasyPatroller easyPatroller1 = new EasyPatroller("patroller", 0,0,null,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(0,3))),graph, board);
-        EasyPatroller easyPatroller2 = new EasyPatroller("patroller", 1,3,null,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(1,0))),graph, board);
-        EasyPatroller easyPatroller3 = new EasyPatroller("patroller", 2,0,null,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(2,3))),graph, board);
-        EasyPatroller easyPatroller4 = new EasyPatroller("patroller", 3,3,null,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(3,0))),graph, board);
-        EasyPatroller easyPatroller5 = new EasyPatroller("patroller", 4,0,null,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(4,3))),graph, board);
+        EasyPatroller easyPatroller1 = new EasyPatroller("patroller", 0,0,null,"ic_strat_img_duck",1,new ArrayList<>(Collections.singletonList(new Pair<>(0, 3))),graph, board);
+        EasyPatroller easyPatroller2 = new EasyPatroller("patroller", 1,3,null,"ic_strat_img_duck",1,new ArrayList<>(Collections.singletonList(new Pair<>(1, 0))),graph, board);
+        EasyPatroller easyPatroller3 = new EasyPatroller("patroller", 2,0,null,"ic_strat_img_duck",1,new ArrayList<>(Collections.singletonList(new Pair<>(2, 3))),graph, board);
+        EasyPatroller easyPatroller4 = new EasyPatroller("patroller", 3,3,null,"ic_strat_img_duck",1,new ArrayList<>(Collections.singletonList(new Pair<>(3, 0))),graph, board);
+        EasyPatroller easyPatroller5 = new EasyPatroller("patroller", 4,0,null,"ic_strat_img_duck",1,new ArrayList<>(Collections.singletonList(new Pair<>(4, 3))),graph, board);
         computerUnits.add(easyPatroller1);
         computerUnits.add(easyPatroller2);
         computerUnits.add(easyPatroller3);
@@ -329,8 +322,8 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     }
 
     private void checkWin(){
-        String winner = "";
-        String text = "";
+        String winner;
+        String text;
         if(computerUnits.isEmpty()){
             winner = "player";
         }else if(playerUnits.isEmpty()){
@@ -434,9 +427,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         updateTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                runOnUiThread(() -> {
-                    updateBoard();
-                });
+                runOnUiThread(() -> updateBoard());
             }
         }, 100,100);
         runOnUiThread(()-> {

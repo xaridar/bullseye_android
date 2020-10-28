@@ -39,7 +39,10 @@ public class SortingStatsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            user = ((UserSerializable) getArguments().getSerializable(ARG_USER)).getUser();
+            UserSerializable us = (UserSerializable) getArguments().getSerializable(ARG_USER);
+            if (us != null) {
+                user = us.getUser();
+            }
         }
     }
 
@@ -59,7 +62,7 @@ public class SortingStatsFragment extends Fragment {
         TextView fast_average_time = view.findViewById(R.id.fast_average_time);
         TextView fast_accuracy = view.findViewById(R.id.fast_accuracy);
         TextView points = view.findViewById(R.id.points);
-        points.setText(user.getFocusPoints()[User.ALL_GAMES] + "");
+        points.setText(String.valueOf(user.getFocusPoints()[User.ALL_GAMES]));
         slow_games_played.setText(getString(R.string.games_played, user.getGamesPlayed()[User.GAME_SORTING_SLOW] + ""));
         slow_high_score.setText(getString(R.string.high_score_stats, TimeFormatter.autoFormatTime(user.getHighScores()[User.GAME_SORTING_SLOW])));
         slow_average_time.setText(getString(R.string.average_time, TimeFormatter.autoFormatTime(user.getPlayTime()[User.GAME_SORTING_SLOW])));

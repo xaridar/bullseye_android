@@ -28,16 +28,14 @@ import java.util.List;
 public class NavAdapter extends RecyclerView.Adapter<NavAdapter.NavViewHolder> {
 
     private LayoutInflater mInflater;
-    private UserViewModel userViewModel;
     private LiveData<List<User>> users;
     private List<User> activeUsers = new ArrayList<>();
     private Context ctx;
     private User first;
-    private RecyclerView rv;
 
-    public NavAdapter(AppCompatActivity activity, RecyclerView rv) {
+    public NavAdapter(AppCompatActivity activity) {
         mInflater = LayoutInflater.from(activity);
-        userViewModel = ViewModelProviders.of(activity).get(UserViewModel.class);
+        UserViewModel userViewModel = ViewModelProviders.of(activity).get(UserViewModel.class);
         users = userViewModel.getUsers();
         users.observe(activity, users -> {
             List<User> remove = new ArrayList<>();
@@ -60,7 +58,6 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.NavViewHolder> {
             notifyDataSetChanged();
         });
         ctx = activity;
-        this.rv = rv;
     }
 
     @NonNull
@@ -85,9 +82,7 @@ public class NavAdapter extends RecyclerView.Adapter<NavAdapter.NavViewHolder> {
         User user = activeUsers.get(position);
         holder.name.setText(user.getName());
         holder.avatar.setImageResource(ctx.getResources().getIdentifier("pfp_" + user.getAvatar(), "drawable", "com.example.bullseye_android"));
-        holder.itemView.setOnClickListener(view -> {
-            ((StatsActivity) ctx).changeFirst(user);
-        });
+        holder.itemView.setOnClickListener(view -> ((StatsActivity) ctx).changeFirst(user));
     }
 
     @Override
