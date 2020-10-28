@@ -8,8 +8,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.bullseye_android.R;
+import com.example.bullseye_android.music.MusicActivity;
 
-public class TurnBasedInstructions extends AppCompatActivity {
+public class TurnBasedInstructions extends AppCompatActivity implements MusicActivity {
 
     ConstraintLayout instructions1;
     ConstraintLayout instructions2;
@@ -36,7 +37,12 @@ public class TurnBasedInstructions extends AppCompatActivity {
         });
     }
 
-//    @Override
+    @Override
+    public int getMusicId() {
+        return R.raw.strategysong;
+    }
+
+    //    @Override
 //    public boolean onTouchEvent(MotionEvent event) {
 //        if(onPart2){
 //            finish();
