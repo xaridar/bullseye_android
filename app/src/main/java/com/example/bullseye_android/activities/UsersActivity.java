@@ -57,7 +57,7 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         notifications = new Notifications(this);
-        notifications.createNotification(this,"User", "Good Job u in users screen", null);
+        notifications.createNotification(this,"User", "Good Job you got into the users screen", null);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
 
