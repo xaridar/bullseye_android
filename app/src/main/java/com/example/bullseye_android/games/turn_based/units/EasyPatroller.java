@@ -19,7 +19,7 @@ public class EasyPatroller extends Unit {
     int movespeed;
 
     public EasyPatroller(String name, int x, int y, ArrayList<Integer> tags, String icon, int movespeed, ArrayList<Pair<Integer, Integer>> patrolPoints, Node[][] graph, Tile[][] board){
-        super(name, x, y, tags, icon, movespeed, Owners.EASY);
+        super(name, x, y, tags, icon, movespeed, Owners.EASY, board);
         this.patrolPoints.add(new Pair<>(x,y));
         this.patrolPoints.addAll(patrolPoints);
         this.movespeed = movespeed;
@@ -32,6 +32,7 @@ public class EasyPatroller extends Unit {
             currentPath.addAll(Pathfinder.generatePathTo(this.patrolPoints.get(i).first, this.patrolPoints.get(i).second, this.patrolPoints.get(patrolTarget).first, this.patrolPoints.get(patrolTarget).second, graph, board, this));
         }
         setCurrentPath(currentPath);
+        board[x][y].setUnit(this);
     }
 
     public void addPatrolPoint(Pair<Integer, Integer> point, Node[][] graph, Tile[][] board){
@@ -104,6 +105,7 @@ public class EasyPatroller extends Unit {
                         if(newTile.getUnit() != EasyPatroller.this){
                             Unit killedUnit = newTile.getUnit();
                             killedUnit.setDead(true);
+                            killedUnit.setJustDied(true);
                         }
 
                         remainingMovement[0] -= map[currentPath.get(1).x][currentPath.get(1).y].getCost();

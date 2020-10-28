@@ -1,18 +1,21 @@
 package com.example.bullseye_android.games.turn_based.units;
 
+import android.media.MediaPlayer;
 import android.util.Log;
 
+import com.example.bullseye_android.R;
 import com.example.bullseye_android.games.turn_based.BoardActor;
 import com.example.bullseye_android.games.turn_based.MoveableUnit;
 import com.example.bullseye_android.games.turn_based.Node;
 import com.example.bullseye_android.games.turn_based.Owners;
 import com.example.bullseye_android.games.turn_based.Tile;
+import com.example.bullseye_android.music.MusicActivity;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Unit extends BoardActor implements MoveableUnit {
+public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
 
     private ArrayList<Node> currentPath = null;
 
@@ -24,8 +27,9 @@ public class Unit extends BoardActor implements MoveableUnit {
 
     private boolean moved = false;
     private boolean dead = false;
+    private boolean justDied = false;
 
-    public Unit(String name, int x, int y, ArrayList<Integer> tags, String icon, int movespeed, Owners owner){
+    public Unit(String name, int x, int y, ArrayList<Integer> tags, String icon, int movespeed, Owners owner, Tile[][] board){
         this.name = name;
         this.x = x;
         this.y = y;
@@ -33,6 +37,7 @@ public class Unit extends BoardActor implements MoveableUnit {
         this.icon = icon;
         this.movespeed = movespeed;
         this.owner = owner;
+        board[x][y].setUnit(this);
     }
 
     @Override
@@ -85,6 +90,7 @@ public class Unit extends BoardActor implements MoveableUnit {
                         if(newTile.getUnit() != Unit.this){
                             Unit killedUnit = newTile.getUnit();
                             killedUnit.setDead(true);
+                            killedUnit.setJustDied(true);
                         }
                         remainingMovement[0] -= map[currentPath.get(1).x][currentPath.get(1).y].getCost();
                         oldTile.setUnit(null);
@@ -155,5 +161,13 @@ public class Unit extends BoardActor implements MoveableUnit {
 
     public void setDead(boolean dead) {
         this.dead = dead;
+    }
+
+    public boolean isJustDied() {
+        return justDied;
+    }
+
+    public void setJustDied(boolean justDied) {
+        this.justDied = justDied;
     }
 }

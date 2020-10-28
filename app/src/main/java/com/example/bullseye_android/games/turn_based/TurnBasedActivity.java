@@ -2,6 +2,7 @@ package com.example.bullseye_android.games.turn_based;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -68,6 +69,8 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     private ArrayList<Unit> playerUnits = new ArrayList<Unit>();
     private ArrayList<Unit> computerUnits = new ArrayList<Unit>();
     KonfettiView konfetti;
+    private MediaPlayer enemyCaptured;
+    private MediaPlayer playerCaptured;
 
     /**
      *  0 - Can click on their own units, selects them and lets them move
@@ -192,6 +195,14 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
     private void start(){
 
+        enemyCaptured = MediaPlayer.create(this, R.raw.enemy_captured);
+        playerCaptured = MediaPlayer.create(this, R.raw.unit_captured);
+
+        float vol = (float) user.getGameVolume() / User.MAX_VOLUME;
+
+        enemyCaptured.setVolume(vol, vol);
+        playerCaptured.setVolume(vol, vol);
+
         pauseButton.setVisibility(View.VISIBLE);
         endTurn.setVisibility(View.VISIBLE);
         endTurn.setOnClickListener(view -> {
@@ -263,15 +274,21 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         graph = Pathfinder.generatePathfindingGraph(graph, mapSizeX, mapSizeY);
 
-//        for(int i=1;i<=3;i++){
-            Unit playerUnit = new Unit("example", 2, 4, null, "ic_strat_img_caracal", 1, Owners.PLAYER);
+        for(int i=1;i<=3;i++){
+            Unit playerUnit = new Unit("example", i, 6, null, "ic_strat_img_caracal", 1, Owners.PLAYER, board);
             playerUnits.add(playerUnit);
-            board[2][4].setUnit(playerUnit);
-//        }
+        }
 
-        EasyPatroller easyPatroller = new EasyPatroller("patroller", 0,1,null,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(4,1))),graph, board);
-        computerUnits.add(easyPatroller);
-        board[0][1].setUnit(easyPatroller);
+        EasyPatroller easyPatroller1 = new EasyPatroller("patroller", 0,0,null,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(0,3))),graph, board);
+        EasyPatroller easyPatroller2 = new EasyPatroller("patroller", 1,3,null,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(1,0))),graph, board);
+        EasyPatroller easyPatroller3 = new EasyPatroller("patroller", 2,0,null,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(2,3))),graph, board);
+        EasyPatroller easyPatroller4 = new EasyPatroller("patroller", 3,3,null,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(3,0))),graph, board);
+        EasyPatroller easyPatroller5 = new EasyPatroller("patroller", 4,0,null,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(4,3))),graph, board);
+        computerUnits.add(easyPatroller1);
+        computerUnits.add(easyPatroller2);
+        computerUnits.add(easyPatroller3);
+        computerUnits.add(easyPatroller4);
+        computerUnits.add(easyPatroller5);
         startingAmount = computerUnits.size();
 
     }
@@ -291,12 +308,20 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
             }
         }
         for(Unit playerUnit : playerUnits){
+            if(playerUnit.isJustDied()){
+                playerCaptured.start();
+                playerUnit.setJustDied(false);
+            }
             if(playerUnit.isDead()){
                 playerUnits.remove(playerUnit);
                 break;
             }
         }
         for(Unit computerUnit : computerUnits){
+            if(computerUnit.isJustDied()){
+                enemyCaptured.start();
+                computerUnit.setJustDied(false);
+            }
             if(computerUnit.isDead()){
                 computerUnits.remove(computerUnit);
                 break;

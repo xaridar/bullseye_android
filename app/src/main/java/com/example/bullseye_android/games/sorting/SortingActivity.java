@@ -8,8 +8,10 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -40,6 +42,7 @@ import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.GamePauseFragment;
+import com.example.bullseye_android.util.SfxManager;
 import com.example.bullseye_android.util.TimeFormatter;
 
 import java.util.ArrayList;
@@ -95,6 +98,10 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     private Timer timer1;
     private boolean pause;
 
+    private MediaPlayer swipeTone;
+    private MediaPlayer correctTone;
+    private MediaPlayer incorrectTone;
+    private MediaPlayer blackBallTone;
 
     private User user;
     private UserViewModel userViewModel;
@@ -125,6 +132,18 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         konfettiView = findViewById(R.id.viewKonfetti);
     }
     public void run() {
+
+        swipeTone = MediaPlayer.create(this, R.raw.swipe);
+        correctTone = MediaPlayer.create(this, R.raw.mem_correct);
+        incorrectTone = MediaPlayer.create(this, R.raw.mem_wrong);
+        blackBallTone = MediaPlayer.create(this, R.raw.black_ball);
+
+        float vol = (float) user.getGameVolume() / User.MAX_VOLUME;
+
+        swipeTone.setVolume(vol, vol);
+        correctTone.setVolume(vol, vol);
+        incorrectTone.setVolume(vol, vol);
+        blackBallTone.setVolume(vol, vol);
 
         rightArrow.startAnimation(animFadeOut);
         leftArrow.startAnimation(animFadeOut);
@@ -272,8 +291,12 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
                     delete.add(imageButton);
                     layout.removeView(imageButton);
                     if (!side.contentEquals(imageButton.getContentDescription())) {
+                        SfxManager.createSfx(SortingActivity.this, R.raw.mem_wrong, user.getGameVolume() / User.MAX_VOLUME);
+                        incorrectTone.start();
                         lives--;
                     }else{
+                        SfxManager.createSfx(SortingActivity.this, R.raw.black_ball, user.getGameVolume() / User.MAX_VOLUME);
+                        blackBallTone.start();
                         correct ++;
                     }
                     sent++;
@@ -288,8 +311,12 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
                       //  lives--;
                    // }
                     if (!side.contentEquals(imageButton.getContentDescription())) {
+                        SfxManager.createSfx(SortingActivity.this, R.raw.mem_wrong, user.getGameVolume() / User.MAX_VOLUME);
+                        incorrectTone.start();
                         lives--;
                     }else{
+                        SfxManager.createSfx(SortingActivity.this, R.raw.mem_correct, user.getGameVolume() / User.MAX_VOLUME);
+                        correctTone.start();
                         correct ++;
                     }
                     sent++;
@@ -490,6 +517,8 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
                             } else {
                                 onSwipeLeft(view);
                             }
+                            SfxManager.createSfx(SortingActivity.this, R.raw.swipe, user.getGameVolume() / User.MAX_VOLUME);
+                            swipeTone.start();
                             return true;
 
                         }
