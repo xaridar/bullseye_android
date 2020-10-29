@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
@@ -28,9 +29,9 @@ import com.example.bullseye_android.games.turn_based.units.EasyPatroller;
 import com.example.bullseye_android.games.turn_based.units.Unit;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.util.SfxManager;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -38,6 +39,9 @@ import java.util.TimerTask;
 import nl.dionsegijn.konfetti.KonfettiView;
 
 public class TurnBasedActivity extends AppCompatActivity implements Game, MusicActivity {
+
+    private int backCount;
+    private Toast toast;
 
     private View diff;
     private Button playButton;
@@ -88,6 +92,8 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         long id = (prefs.getLong("id", 0));
 
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        toast = Toast.makeText(this, "Press the back button twice at any time to go back to the dashboard.", Toast.LENGTH_SHORT);
+        toast.show();
 
         LiveData<User> mUser = userViewModel.getUser(id);
         mUser.observe(this, new Observer<User>() {
@@ -370,15 +376,18 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         String text = "";
         switch(state){
             case 0:
-                text = "click on one of your units";
+                text = "Click on one of your units";
                 break;
             case 1:
-                text = "click on a tile to move there";
+                text = "Click on a tile to move there";
                 break;
             case 2:
-                text = "click on an enemy to move there";
+                text = "Click on an enemy to move there";
         }
-        Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        if (toast != null) {
+            toast.cancel();
+        }
+        toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
         toast.show();
         this.state = state;
     }
@@ -469,7 +478,29 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        userViewModel.update(user);
+    }
+
+    @Override
     public int getMusicId() {
         return R.raw.strategysong;
+    }
+
+    @Override
+    public void onBackPressed() {
+        backCount++;
+        if (backCount >= 2) {
+            super.onBackPressed();
+            toast.cancel();
+            return;
+        }
+        if (toast != null) {
+            toast.cancel();
+        }
+        toast = Toast.makeText(this, "Press back again to go to the dashboard", Toast.LENGTH_SHORT);
+        toast.show();
+        new Handler().postDelayed(() -> backCount = 0, 2000);
     }
 }
