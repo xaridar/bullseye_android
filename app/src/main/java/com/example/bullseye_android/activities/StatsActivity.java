@@ -36,6 +36,7 @@ public class StatsActivity extends AppCompatActivity implements MusicActivity {
 
     public static final int MEMORY = 0;
     public static final int SORTING = 1;
+    public static final int STRATEGY = 2;
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -43,6 +44,7 @@ public class StatsActivity extends AppCompatActivity implements MusicActivity {
     private MutableLiveData<Integer> tab;
     private TextView memory;
     private TextView sorting;
+    private TextView strategy;
     private List<TextView> bottomNav = new ArrayList<>();
 
     @Override
@@ -77,10 +79,12 @@ public class StatsActivity extends AppCompatActivity implements MusicActivity {
         drawerLayout = findViewById(R.id.drawer);
         sorting = findViewById(R.id.sorting_bottom);
         memory = findViewById(R.id.memory_bottom);
+        strategy = findViewById(R.id.strategy_bottom);
         ExtendedFloatingActionButton exportFab = findViewById(R.id.exportFab);
 
         bottomNav.add(sorting);
         bottomNav.add(memory);
+        bottomNav.add(strategy);
 
         setSupportActionBar(toolbar);
 
@@ -139,6 +143,11 @@ public class StatsActivity extends AppCompatActivity implements MusicActivity {
                 if (currentUser.getValue() != null) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.content, SortingStatsFragment.newInstance(currentUser.getValue())).commit();
                 }
+            } else if (integer == STRATEGY) {
+                tv = strategy;
+                if (currentUser.getValue() != null) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content, StrategyStatsFragment.newInstance(currentUser.getValue())).commit();
+                }
             }
             for (TextView textView : bottomNav) {
                 if (textView == tv) {
@@ -154,6 +163,8 @@ public class StatsActivity extends AppCompatActivity implements MusicActivity {
         memory.setOnClickListener(view -> tab.setValue(MEMORY));
 
         sorting.setOnClickListener(view -> tab.setValue(SORTING));
+
+        strategy.setOnClickListener(view -> tab.setValue(STRATEGY));
 
         exportFab.setOnClickListener(view -> {
             User user = currentUser.getValue();
