@@ -29,11 +29,9 @@ import com.example.bullseye_android.games.turn_based.units.EasyPatroller;
 import com.example.bullseye_android.games.turn_based.units.Unit;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.util.SfxManager;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -75,6 +73,9 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     KonfettiView konfetti;
     private MediaPlayer enemyCaptured;
     private MediaPlayer playerCaptured;
+    private long startMillis;
+    private int moves;
+    private int gameNum;
 
     /**
      *  0 - Can click on their own units, selects them and lets them move
@@ -196,10 +197,12 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         playButton.setOnClickListener(view -> {
             diff.setVisibility(View.INVISIBLE);
             start();
+            gameNum = User.GAME_STRATEGY_EASY;
         });
     }
 
     private void start(){
+        moves = 0;
         float vol = (float) user.getGameVolume() / User.MAX_VOLUME;
 
         enemyCaptured = SfxManager.createSfx(this, R.raw.enemy_captured, vol);
@@ -214,6 +217,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         setState(0);
 
+        startMillis = System.currentTimeMillis();
         updateTimer = new Timer();
         updateTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -245,6 +249,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         for(Unit unit : playerUnits){
             unit.setMoved(false);
         }
+        moves++;
     }
 
     /**
@@ -272,7 +277,8 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         graph = Pathfinder.generatePathfindingGraph(mapSizeX, mapSizeY);
 
-        for(int i=1;i<=3;i++){
+        int playerUnitNum = 3;
+        for(int i = 0; i< playerUnitNum; i++){
             Unit playerUnit = new Unit("example", i, 6,"ic_strat_img_caracal", 1, Owners.PLAYER, board);
             playerUnits.add(playerUnit);
         }
@@ -355,6 +361,9 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
             default:
                 break;
         }
+        long elapsedSeconds = (System.currentTimeMillis() - startMillis) / 1000;
+        int remaining = playerUnits.size();
+        user.addStratGame(gameNum, calcPoints(moves, remaining), moves, remaining, elapsedSeconds);
         updateTimer.cancel();
         new Timer().schedule(new TimerTask() {
             @Override
@@ -373,6 +382,11 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
             }
         }, 600);
 
+    }
+
+    private int calcPoints(int moves, int remaining) {
+        // determine a good points algorithm
+        return 100 * (remaining / moves) * (startingAmount * 3);
     }
 
     private void setState(int state){

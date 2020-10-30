@@ -257,7 +257,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
 
     private int calcPoints(float acc, long time) {
         // determine a good points algorithm
-        return (int) (10000 * acc / time * (choice.equals("Fast") ? 2 : 1));
+        return (int) (acc * time * (choice.equals("Fast") ? 10 : 7.5));
     }
 
     public HashMap<String, Object> checkForCollide(List<ImageButton> views, int lives) {
