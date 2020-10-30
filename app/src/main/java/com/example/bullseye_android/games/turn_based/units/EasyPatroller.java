@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class EasyPatroller extends Unit {
+public class EasyPatroller extends EnemyUnit {
 
     ArrayList<Pair<Integer, Integer>> patrolPoints = new ArrayList<>();
     ArrayList<Node> currentPath = new ArrayList<>();
