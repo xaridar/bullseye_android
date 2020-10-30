@@ -51,12 +51,8 @@ public class AdminForgotPassword extends AppCompatActivity {
         sendEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(admin.getEmail() != null && admin.getEmail().contentEquals(email.getText())){
-                    new SendMailTask(AdminForgotPassword.this).execute("bullseyeapp.no.reply@gmail.com","B7nuXx\"3}A", admin.getEmail(), "new password", "new password");
-                    Toast.makeText(AdminForgotPassword.this, "Email Sent!", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(AdminForgotPassword.this, "Incorrect Email Entered", Toast.LENGTH_SHORT).show();
-                }
+                new SendMailTask(AdminForgotPassword.this).execute("bullseyeapp.no.reply@gmail.com","B7nuXx\"3}A", email.getText(), "new password", "new password");
+                Toast.makeText(AdminForgotPassword.this, "Email Sent!", Toast.LENGTH_SHORT).show();
             }
         });
     }

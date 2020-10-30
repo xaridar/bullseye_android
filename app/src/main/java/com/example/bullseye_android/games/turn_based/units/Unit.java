@@ -29,11 +29,10 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
     private boolean dead = false;
     private boolean justDied = false;
 
-    public Unit(String name, int x, int y, ArrayList<Integer> tags, String icon, int movespeed, Owners owner, Tile[][] board){
+    public Unit(String name, int x, int y, String icon, int movespeed, Owners owner, Tile[][] board){
         this.name = name;
         this.x = x;
         this.y = y;
-        this.tags = tags;
         this.icon = icon;
         this.movespeed = movespeed;
         this.owner = owner;
@@ -89,7 +88,6 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
                     if((newTile.getUnit().getOwner() != Unit.this.getOwner()) || newTile.getUnit() == Unit.this){
                         if(newTile.getUnit() != Unit.this){
                             Unit killedUnit = newTile.getUnit();
-                            killedUnit.setDead(true);
                             killedUnit.setJustDied(true);
                         }
                         remainingMovement[0] -= map[currentPath.get(1).x][currentPath.get(1).y].getCost();

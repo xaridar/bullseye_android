@@ -11,11 +11,10 @@ public class Tile extends BoardActor{
     private boolean isWalkable;
     private Unit unit;
 
-    public Tile(String name, int x, int y, ArrayList<Integer> tags, String icon, int cost, boolean isWalkable, Unit unit){
+    public Tile(String name, int x, int y, String icon, int cost, boolean isWalkable, Unit unit){
         this.name = name;
         this.x = x;
         this.y = y;
-        this.tags = tags;
         this.icon = icon;
         this.cost = cost;
         this.isWalkable = isWalkable;
