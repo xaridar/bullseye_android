@@ -22,10 +22,17 @@ public class User {
     public static final int GAME_SORTING_SLOW = 4;
     public static final int GAME_SORTING_FAST = 5;
 
+    public static final int GAME_STRATEGY_EASY = 6;
+    public static final int GAME_STRATEGY_HARD = 7;
+
     public static final int POINTS = 0;
     public static final int ACC = 1;
     public static final int TIME = 2;
     public int statsTypes = 3;
+
+    public static final int STRAT_POINTS = 0;
+    public static final int STRAT_MOVES = 1;
+    public static final int STRAT_PIECES_LEFT = 2;
 
     public static final int MAX_VOLUME = 200;
 
@@ -49,6 +56,9 @@ public class User {
 
     @ColumnInfo(name = "accuracy")
     private float[] accuracy;
+
+    @ColumnInfo(name = "stratPointsPerGame")
+    private int[] stratPointsPerGame;
 
     @Nullable
     @ColumnInfo(name="email")
@@ -83,12 +93,13 @@ public class User {
         this.admin = false;
         email = null;
         password = null;
-        playTime = new long[] {0, 0, 0, 0, 0, 0};
+        playTime = new long[] {0, 0, 0, 0, 0, 0, 0, 0};
         accuracy = new float[]{0, 0, 0, 0, 0, 0};
-        focusPoints = new int[] {0, 0, 0, 0, 0, 0};
-        gamesPlayed = new int[] {0, 0, 0, 0, 0, 0};
+        focusPoints = new int[] {0, 0, 0, 0, 0, 0, 0, 0};
+        gamesPlayed = new int[] {0, 0, 0, 0, 0, 0, 0, 0};
         highScores = new long[] {0, 5999, 5999, 5999, 0, 0};
-        lastGames = new ArrayList[]{new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(), new ArrayList<>()};
+        stratPointsPerGame = new int[]{0, 0};
+        lastGames = new ArrayList[]{new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()};
         this.avatar = avatar;
         if (avatar == null) {
             this.avatar = "default";
@@ -162,6 +173,13 @@ public class User {
     private void addPoints(int game, int points) {
         focusPoints[ALL_GAMES] += points;
         focusPoints[game] += points;
+        if (game == 6 || game == 7) {
+            int oldPoints = stratPointsPerGame[game - 6];
+            oldPoints *= gamesPlayed[game];
+            oldPoints += points;
+            oldPoints /= gamesPlayed[game] + 1;
+            stratPointsPerGame[game - 6] = oldPoints;
+        }
     }
 
     private void addGamesPlayed(int game) {
@@ -178,7 +196,6 @@ public class User {
         lastGame[POINTS] = pointsToAdd;
         lastGame[ACC] = acc;
         lastGame[TIME] = time;
-        Log.i("HH", lastGames[game].size()+"");
         if (lastGames[game].size() < 5) {
             lastGames[game].add(lastGame);
         } else {
@@ -187,8 +204,12 @@ public class User {
             lastG.set(1, lastG.get(2));
             lastG.set(2, lastG.get(3));
             lastG.set(3, lastG.get(4));
-            lastG.set(0, lastGame);
+            lastG.set(4, lastGame);
             lastGames[game] = lastG;
+        }
+        Log.i("datadatadata", lastGames[game].size() + "");
+        for (int i = 0; i < lastGames[game].size(); i++) {
+            Log.i("datadatadata", Arrays.toString(lastGames[game].get(i)));
         }
         if (game >= 1 && game <= 3) {
             if (time < highScores[game]) {
@@ -202,6 +223,27 @@ public class User {
             }
         }
         return false;
+    }
+
+    public void addStratGame(int game, int points, int moves, int piecesLeft, long time) {
+        addPlayTime(game, time);
+        addPoints(game, points);
+        addGamesPlayed(game);
+        Number[] lastGame = new Number[statsTypes];
+        lastGame[STRAT_POINTS] = points;
+        lastGame[STRAT_MOVES] = moves;
+        lastGame[STRAT_PIECES_LEFT] = piecesLeft;
+        if (lastGames[game].size() < 5) {
+            lastGames[game].add(lastGame);
+        } else {
+            List<Number[]> lastG = lastGames[game];
+            lastG.set(0, lastG.get(1));
+            lastG.set(1, lastG.get(2));
+            lastG.set(2, lastG.get(3));
+            lastG.set(3, lastG.get(4));
+            lastG.set(4, lastGame);
+            lastGames[game] = lastG;
+        }
     }
 
     public boolean isAdmin() {
@@ -277,5 +319,13 @@ public class User {
 
     public void setHighScores(long[] highScores) {
         this.highScores = highScores;
+    }
+
+    public int[] getStratPointsPerGame() {
+        return stratPointsPerGame;
+    }
+
+    public void setStratPointsPerGame(int[] stratPointsPerGame) {
+        this.stratPointsPerGame = stratPointsPerGame;
     }
 }
