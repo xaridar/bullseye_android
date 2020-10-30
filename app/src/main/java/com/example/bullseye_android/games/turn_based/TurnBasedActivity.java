@@ -32,6 +32,7 @@ import com.example.bullseye_android.util.SfxManager;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -255,7 +256,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         for(int x=0;x<board.length;x++){
             for(int y=0;y<board[x].length;y++){
-                board[x][y] = new Tile("grass", x, y,null,"ic_grean",1,true,null);
+                board[x][y] = new Tile("grass", x, y,"ic_grean",1,true,null);
             }
         }
 
@@ -272,15 +273,15 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         graph = Pathfinder.generatePathfindingGraph(mapSizeX, mapSizeY);
 
         for(int i=1;i<=3;i++){
-            Unit playerUnit = new Unit("example", i, 6, null, "ic_strat_img_caracal", 1, Owners.PLAYER, board);
+            Unit playerUnit = new Unit("example", i, 6,"ic_strat_img_caracal", 1, Owners.PLAYER, board);
             playerUnits.add(playerUnit);
         }
 
-        EasyPatroller easyPatroller1 = new EasyPatroller("patroller", 0,0,null,"ic_strat_img_duck",1,new ArrayList<>(Collections.singletonList(new Pair<>(0, 3))),graph, board);
-        EasyPatroller easyPatroller2 = new EasyPatroller("patroller", 1,3,null,"ic_strat_img_duck",1,new ArrayList<>(Collections.singletonList(new Pair<>(1, 0))),graph, board);
-        EasyPatroller easyPatroller3 = new EasyPatroller("patroller", 2,0,null,"ic_strat_img_duck",1,new ArrayList<>(Collections.singletonList(new Pair<>(2, 3))),graph, board);
-        EasyPatroller easyPatroller4 = new EasyPatroller("patroller", 3,3,null,"ic_strat_img_duck",1,new ArrayList<>(Collections.singletonList(new Pair<>(3, 0))),graph, board);
-        EasyPatroller easyPatroller5 = new EasyPatroller("patroller", 4,0,null,"ic_strat_img_duck",1,new ArrayList<>(Collections.singletonList(new Pair<>(4, 3))),graph, board);
+        EasyPatroller easyPatroller1 = new EasyPatroller("patroller", 0,0,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(0,3))),graph, board);
+        EasyPatroller easyPatroller2 = new EasyPatroller("patroller", 1,3,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(1,0))),graph, board);
+        EasyPatroller easyPatroller3 = new EasyPatroller("patroller", 2,0,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(2,3))),graph, board);
+        EasyPatroller easyPatroller4 = new EasyPatroller("patroller", 3,3,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(3,0))),graph, board);
+        EasyPatroller easyPatroller5 = new EasyPatroller("patroller", 4,0,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(4,3))),graph, board);
         computerUnits.add(easyPatroller1);
         computerUnits.add(easyPatroller2);
         computerUnits.add(easyPatroller3);
@@ -308,21 +309,23 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
             if(playerUnit.isJustDied()){
                 playerCaptured.start();
                 playerUnit.setJustDied(false);
+                playerUnit.setDead(true);
+                playerUnits.remove(playerUnit);
             }
             if(playerUnit.isDead()){
-                playerUnits.remove(playerUnit);
+
                 break;
             }
+            playerUnit.update();
         }
         for(Unit computerUnit : computerUnits){
             if(computerUnit.isJustDied()){
                 enemyCaptured.start();
+                computerUnit.setDead(true);
+                computerUnits.remove(computerUnit);
                 computerUnit.setJustDied(false);
             }
-            if(computerUnit.isDead()){
-                computerUnits.remove(computerUnit);
-                break;
-            }
+
         }
         checkWin();
     }

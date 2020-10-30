@@ -3,6 +3,7 @@ package com.example.bullseye_android.games.turn_based.units;
 import android.util.Log;
 import android.util.Pair;
 
+import com.example.bullseye_android.games.turn_based.MoveableUnit;
 import com.example.bullseye_android.games.turn_based.Node;
 import com.example.bullseye_android.games.turn_based.Owners;
 import com.example.bullseye_android.games.turn_based.Pathfinder;
@@ -18,8 +19,8 @@ public class EasyPatroller extends Unit {
     ArrayList<Node> currentPath = new ArrayList<>();
     int movespeed;
 
-    public EasyPatroller(String name, int x, int y, ArrayList<Integer> tags, String icon, int movespeed, ArrayList<Pair<Integer, Integer>> patrolPoints, Node[][] graph, Tile[][] board){
-        super(name, x, y, tags, icon, movespeed, Owners.EASY, board);
+    public EasyPatroller(String name, int x, int y, String icon, int movespeed, ArrayList<Pair<Integer, Integer>> patrolPoints, Node[][] graph, Tile[][] board){
+        super(name, x, y, icon, movespeed, Owners.EASY, board);
         this.patrolPoints.add(new Pair<>(x,y));
         this.patrolPoints.addAll(patrolPoints);
         this.movespeed = movespeed;
@@ -107,7 +108,6 @@ public class EasyPatroller extends Unit {
                         Log.i("tbdubug",currentPath.toString() + ", unit isnt same owner");
                         if(newTile.getUnit() != EasyPatroller.this){
                             Unit killedUnit = newTile.getUnit();
-                            killedUnit.setDead(true);
                             killedUnit.setJustDied(true);
                         }
 
@@ -135,4 +135,5 @@ public class EasyPatroller extends Unit {
             }
         }, moveTime, moveTime);
     }
+
 }

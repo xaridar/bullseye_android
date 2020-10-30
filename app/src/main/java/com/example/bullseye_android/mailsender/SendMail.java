@@ -5,8 +5,6 @@ import android.app.ProgressDialog;
 import android.os.Message;
 import android.util.Log;
 
-import java.util.function.Function;
-
 import io.github.mthli.sugartask.SugarTask;
 
 public class SendMail {
@@ -18,7 +16,7 @@ public class SendMail {
         this.activity = activity;
     }
 
-    public void sendMail(Function<String, Void> fxn, String sendingEmail, String password, String receivingEmail, String subject, String body) {
+    public void sendMail(Object... args) {
         statusDialog = new ProgressDialog(activity);
         statusDialog.setMessage("Getting ready...");
         statusDialog.setIndeterminate(false);
@@ -31,7 +29,9 @@ public class SendMail {
                         Message message = Message.obtain();
                         message.obj = ("Processing input....");
                         SugarTask.post(message);
-                        GMail androidEmail = new GMail(sendingEmail, password, receivingEmail, subject, body);
+                        GMail androidEmail = new GMail(args[0].toString(),
+                                args[1].toString(), args[2].toString(), args[3].toString(),
+                                args[4].toString());
                         Message message2 = Message.obtain();
                         message2.obj = ("Preparing mail message....");
                         SugarTask.post(message2);
@@ -44,7 +44,6 @@ public class SendMail {
                         message4.obj = ("Email Sent.");
                         SugarTask.post(message4);
                         Log.i("SendMailTask", "Mail Sent.");
-                        Thread.sleep(2000);
                     } catch (Exception e) {
                         Message message5 = Message.obtain();
                         message5.obj = (e.getMessage());
@@ -57,14 +56,11 @@ public class SendMail {
                     statusDialog.setMessage(message.obj.toString());
                     Log.i("SendMail", message.toString());
                 })
-                .finish(result -> {
-                    statusDialog.dismiss();
-                    fxn.apply(body);
-                })
+                .finish(result -> statusDialog.dismiss())
                 .broken(e -> {
                     Log.e("SendMailTask", e.getMessage(), e);
                     statusDialog.dismiss();
-                    fxn.apply(null);
-                }).execute();
+                })
+                .execute();
     }
 }
