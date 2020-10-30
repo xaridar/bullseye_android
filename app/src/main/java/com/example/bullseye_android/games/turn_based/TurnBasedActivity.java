@@ -297,7 +297,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
             for(int y=0;y<buttons[x].length;y++){
                 ImageButton button = buttons[x][y];
                 Tile tile = board[x][y];
-                if(tile.getUnit()!=null) {
+                if(tile.getUnit()!=null && !tile.getUnit().isDead()) {
                     totalUnits++;
                     button.setImageResource(getResources().getIdentifier(tile.getUnit().getIcon(), "drawable", "com.example.bullseye_android"));
                 }else {
