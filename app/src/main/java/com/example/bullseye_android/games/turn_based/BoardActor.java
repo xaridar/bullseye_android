@@ -2,7 +2,6 @@ package com.example.bullseye_android.games.turn_based;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class BoardActor {
     // Anything that is able to be put on the board.

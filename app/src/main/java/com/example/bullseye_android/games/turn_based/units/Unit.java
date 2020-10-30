@@ -1,9 +1,5 @@
 package com.example.bullseye_android.games.turn_based.units;
 
-import android.media.MediaPlayer;
-import android.util.Log;
-
-import com.example.bullseye_android.R;
 import com.example.bullseye_android.games.turn_based.BoardActor;
 import com.example.bullseye_android.games.turn_based.MoveableUnit;
 import com.example.bullseye_android.games.turn_based.Node;
@@ -19,7 +15,7 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
 
     private ArrayList<Node> currentPath = null;
 
-    private int movespeed = 1;
+    private int movespeed;
 
     private Owners owner;
 

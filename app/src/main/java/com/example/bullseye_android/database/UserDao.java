@@ -10,9 +10,6 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
-import io.reactivex.Maybe;
-
 @Dao
 public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)

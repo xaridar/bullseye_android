@@ -1,26 +1,24 @@
 //Dylan coded and created layout
 package com.example.bullseye_android.activities;
 
+import android.content.Intent;
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Intent;
-import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.SeekBar;
-import android.widget.TextView;
-
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
-import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.music.MusicManager;
 import com.example.bullseye_android.util.SfxManager;
@@ -70,9 +68,7 @@ public class UsersSettingsActivity extends AppCompatActivity implements MusicAct
 
         Button changeAvatar = findViewById(R.id.changeProfileButton);
         Button changeName = findViewById(R.id.changeNameButton);
-        TextView musicVolume = findViewById(R.id.musicVolumeText);
         SeekBar musicVolumeBar = findViewById(R.id.musicVolumeBar);
-        TextView gameVolume = findViewById(R.id.gameVolumeText);
         SeekBar gameVolumeBar = findViewById(R.id.gameVolumeBar);
         Button backToDashboard = findViewById(R.id.backToDashboardButton);
 
@@ -80,9 +76,7 @@ public class UsersSettingsActivity extends AppCompatActivity implements MusicAct
 
         gameVolumeBar.setProgress(user.getGameVolume());
 
-        backToDashboard.setOnClickListener(v -> {
-            finish();
-        });
+        backToDashboard.setOnClickListener(v -> finish());
 
         if (getIntent().getStringExtra("game") != null) {
             backToDashboard.setText(getString(R.string.back_to_game, getIntent().getStringExtra("game")));
@@ -156,11 +150,14 @@ public class UsersSettingsActivity extends AppCompatActivity implements MusicAct
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AVATAR_REQ_CODE) {
             if (resultCode == RESULT_OK) {
-                user.setAvatar(data.getStringExtra("avatar"));
+                if (data != null) user.setAvatar(data.getStringExtra("avatar"));
             }
         } else if (requestCode == NAME_REQ_CODE) {
             if (resultCode == RESULT_OK) {
-                user.setName(data.getStringExtra("value"));
+                if (data != null) {
+                    String val = data.getStringExtra("value");
+                    if (val != null) user.setName(val);
+                }
             }
         }
     }

@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,20 +25,24 @@ import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.GamePauseFragment;
-import com.example.bullseye_android.games.sorting.SortingInstructionsActivity;
 import com.example.bullseye_android.games.turn_based.units.EasyPatroller;
 import com.example.bullseye_android.games.turn_based.units.Unit;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.util.SfxManager;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import nl.dionsegijn.konfetti.KonfettiView;
 
 public class TurnBasedActivity extends AppCompatActivity implements Game, MusicActivity {
+
+    private int backCount;
+    private Toast toast;
 
     private View diff;
     private Button playButton;
@@ -90,6 +93,8 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         long id = (prefs.getLong("id", 0));
 
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        toast = Toast.makeText(this, "Press the back button twice at any time to go back to the dashboard.", Toast.LENGTH_SHORT);
+        toast.show();
 
         LiveData<User> mUser = userViewModel.getUser(id);
         mUser.observe(this, new Observer<User>() {
@@ -203,10 +208,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         pauseButton.setVisibility(View.VISIBLE);
         endTurn.setVisibility(View.VISIBLE);
-        endTurn.setOnClickListener(view -> {
-
-            endTurn();
-        });
+        endTurn.setOnClickListener(view -> endTurn());
 
         setBoard();
 
@@ -216,9 +218,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         updateTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                runOnUiThread(() -> {
-                    updateBoard();
-                });
+                runOnUiThread(() -> updateBoard());
             }
         }, 100,100);
 
@@ -270,7 +270,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
             }
         }
 
-        graph = Pathfinder.generatePathfindingGraph(graph, mapSizeX, mapSizeY);
+        graph = Pathfinder.generatePathfindingGraph(mapSizeX, mapSizeY);
 
         for(int i=1;i<=3;i++){
             Unit playerUnit = new Unit("example", i, 6,"ic_strat_img_caracal", 1, Owners.PLAYER, board);
@@ -331,8 +331,8 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     }
 
     private void checkWin(){
-        String winner = "";
-        String text = "";
+        String winner;
+        String text;
         if(computerUnits.isEmpty()){
             winner = "player";
         }else if(playerUnits.isEmpty()){
@@ -379,15 +379,18 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         String text = "";
         switch(state){
             case 0:
-                text = "click on one of your units";
+                text = "Click on one of your units";
                 break;
             case 1:
-                text = "click on a tile to move there";
+                text = "Click on a tile to move there";
                 break;
             case 2:
-                text = "click on an enemy to move there";
+                text = "Click on an enemy to move there";
         }
-        Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        if (toast != null) {
+            toast.cancel();
+        }
+        toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
         toast.show();
         this.state = state;
     }
@@ -436,9 +439,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         updateTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                runOnUiThread(() -> {
-                    updateBoard();
-                });
+                runOnUiThread(() -> updateBoard());
             }
         }, 100,100);
         runOnUiThread(()-> {
@@ -480,7 +481,29 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        userViewModel.update(user);
+    }
+
+    @Override
     public int getMusicId() {
         return R.raw.strategysong;
+    }
+
+    @Override
+    public void onBackPressed() {
+        backCount++;
+        if (backCount >= 2) {
+            super.onBackPressed();
+            toast.cancel();
+            return;
+        }
+        if (toast != null) {
+            toast.cancel();
+        }
+        toast = Toast.makeText(this, "Press back again to go to the dashboard", Toast.LENGTH_SHORT);
+        toast.show();
+        new Handler().postDelayed(() -> backCount = 0, 2000);
     }
 }

@@ -1,7 +1,5 @@
 package com.example.bullseye_android.games.turn_based;
 
-import android.util.Log;
-
 import com.example.bullseye_android.games.turn_based.units.Unit;
 
 import java.util.ArrayList;
@@ -35,11 +33,11 @@ public class Pathfinder {
             return new ArrayList<>();
         }
 
-        HashMap<Node, Float> dist = new HashMap<Node, Float>();
-        HashMap<Node, Node> prev = new HashMap<Node, Node>();
+        HashMap<Node, Float> dist = new HashMap<>();
+        HashMap<Node, Node> prev = new HashMap<>();
 
         // Setup the list of nodes we haven't checked yet.
-        ArrayList<Node> unvisited = new ArrayList<Node>();
+        ArrayList<Node> unvisited = new ArrayList<>();
 
         Node source = graph[sourceX][sourceY];
 
@@ -127,9 +125,9 @@ public class Pathfinder {
     /**
      * Creates the node graph and sets node neighbors, so that the path-finding algorithm can make a path
      */
-    public static Node[][] generatePathfindingGraph(Node[][] graph, int mapSizeX, int mapSizeY) {
+    public static Node[][] generatePathfindingGraph(int mapSizeX, int mapSizeY) {
         // Initialize the array
-        graph = new Node[mapSizeX][mapSizeY];
+        Node[][] graph = new Node[mapSizeX][mapSizeY];
 
         // Initialize a Node for each spot in the array
         for(int x=0; x < mapSizeX; x++) {

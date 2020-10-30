@@ -1,11 +1,10 @@
 package com.example.bullseye_android.games.turn_based;
 
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.music.MusicActivity;
@@ -14,7 +13,6 @@ public class TurnBasedInstructions extends AppCompatActivity implements MusicAct
 
     ConstraintLayout instructions1;
     ConstraintLayout instructions2;
-    boolean onPart2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +30,7 @@ public class TurnBasedInstructions extends AppCompatActivity implements MusicAct
             instructions2.setVisibility(View.VISIBLE);
         });
 
-        instructions2.setOnClickListener(view -> {
-            finish();
-        });
+        instructions2.setOnClickListener(view -> finish());
     }
 
     @Override

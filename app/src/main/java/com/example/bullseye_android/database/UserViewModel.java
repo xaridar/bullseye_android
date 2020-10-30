@@ -8,8 +8,6 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
-
 public class UserViewModel extends AndroidViewModel {
 
     private UserRepository userRepository;

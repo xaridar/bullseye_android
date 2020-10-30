@@ -1,29 +1,24 @@
 // Aakash coded and created layout
 package com.example.bullseye_android.activities;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.Fetcher;
-import com.example.bullseye_android.database.IDGenerator;
 import com.example.bullseye_android.database.User;
-import com.example.bullseye_android.database.UserSerializable;
 import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.util.ContinueFromEditTextListener;
-
-import java.util.function.Function;
 
 public class UserSignUpActivity extends AppCompatActivity {
     public static final int AVATAR_REQ_CODE = 0;
@@ -43,7 +38,7 @@ public class UserSignUpActivity extends AppCompatActivity {
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
         run();
-    };
+    }
 
 
     public void run(){
@@ -93,8 +88,12 @@ public class UserSignUpActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AVATAR_REQ_CODE) {
             if (resultCode == RESULT_OK) {
-                avatar = data.getStringExtra("avatar");
-                avaPicker.setImageResource(getResources().getIdentifier("pfp_" + data.getStringExtra("avatar"), "drawable", "com.example.bullseye_android"));
+                if (data != null) {
+                    avatar = data.getStringExtra("avatar");
+                    avaPicker.setImageResource(getResources().getIdentifier("pfp_" + data.getStringExtra("avatar"), "drawable", "com.example.bullseye_android"));
+                } else {
+                    Log.i(getPackageName(), "Activity failed.");
+                }
             } else {
                 Log.i(getPackageName(), "Activity failed.");
             }

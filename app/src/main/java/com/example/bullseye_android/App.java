@@ -21,9 +21,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         notifications = new Notifications(this);
-
-
-
     }
 }
 

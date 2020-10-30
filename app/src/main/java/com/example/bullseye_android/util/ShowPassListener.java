@@ -1,7 +1,6 @@
 // Elliot wrote
 package com.example.bullseye_android.util;
 
-import android.content.res.Resources;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.CheckBox;
@@ -11,7 +10,6 @@ public class ShowPassListener implements View.OnClickListener {
 
     private final EditText text;
     private final CheckBox showButton;
-    private Resources res;
 
     public ShowPassListener(EditText editText, CheckBox toggle) {
         text = editText;

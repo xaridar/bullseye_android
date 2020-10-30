@@ -8,7 +8,7 @@ public class UserSerializable implements Serializable {
     @NonNull
     private transient User user;
 
-    public UserSerializable(User user) {
+    public UserSerializable(@NonNull User user) {
         this.user = user;
     }
 

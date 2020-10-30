@@ -20,7 +20,6 @@ import com.example.bullseye_android.R;
 
 public class Notifications extends ContextWrapper {
     Notification notification;
-    private NotificationManager nManager;
     private static final String CHANNEL_ID = "bullseye_channel_id";
     public static final String channel_name = "bullseye_channel";
     public static final String channel_description = "Notification channel for bullseye app";
@@ -71,7 +70,7 @@ public class Notifications extends ContextWrapper {
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
-            nManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager nManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             nManager.createNotificationChannel(channel);
         }
     }
@@ -80,7 +79,6 @@ public class Notifications extends ContextWrapper {
 //        startService(intent);
         Log.i("test", "background notifications working");
         Intent intent = new Intent(this, NotificationsService.class);
-        Service service = NotificationsService.getService();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(intent);
         } else {

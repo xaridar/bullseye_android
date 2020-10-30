@@ -16,7 +16,7 @@ import java.util.TimerTask;
 public class EasyPatroller extends Unit {
 
     ArrayList<Pair<Integer, Integer>> patrolPoints = new ArrayList<>();
-    ArrayList<Node> currentPath = new ArrayList<Node>();
+    ArrayList<Node> currentPath = new ArrayList<>();
     int movespeed;
 
     public EasyPatroller(String name, int x, int y, String icon, int movespeed, ArrayList<Pair<Integer, Integer>> patrolPoints, Node[][] graph, Tile[][] board){
@@ -123,7 +123,7 @@ public class EasyPatroller extends Unit {
                                 }
                             }
                         }
-                        currentPath.add(currentPath.remove(0));;
+                        currentPath.add(currentPath.remove(0));
                     }
                 }
 
