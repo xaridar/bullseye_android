@@ -3,6 +3,9 @@ package com.example.bullseye_android.games.turn_based.units;
 import android.util.Log;
 import android.util.Pair;
 
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.bullseye_android.games.turn_based.MoveableUnit;
 import com.example.bullseye_android.games.turn_based.Node;
 import com.example.bullseye_android.games.turn_based.Owners;
@@ -18,20 +21,32 @@ public class EasyPatroller extends EnemyUnit {
     ArrayList<Pair<Integer, Integer>> patrolPoints = new ArrayList<>();
     ArrayList<Node> currentPath = new ArrayList<>();
     int movespeed;
+    Timer movementTimer;
 
-    public EasyPatroller(String name, int x, int y, String icon, int movespeed, ArrayList<Pair<Integer, Integer>> patrolPoints, Node[][] graph, Tile[][] board){
-        super(name, x, y, icon, movespeed, Owners.EASY, board);
+    public EasyPatroller(String name, int x, int y, String icon, int movespeed, ArrayList<Pair<Integer, Integer>> patrolPoints, Node[][] graph, Tile[][] board, LifecycleOwner ctx){
+        super(name, x, y, icon, movespeed, Owners.EASY, board, ctx);
         this.patrolPoints.add(new Pair<>(x,y));
         this.patrolPoints.addAll(patrolPoints);
         this.movespeed = movespeed;
+
+        dead.setValue(false);
+        dead.observe(ctx, isDead -> {
+            if(isDead){
+                try{
+                    movementTimer.cancel();
+                }catch (NullPointerException ignored){
+
+                }
+            }
+        });
 
         for(int i=0;i<this.patrolPoints.size();i++){
             int patrolTarget = i+1;
             if(i==this.patrolPoints.size()-1) {
                 patrolTarget = 0;
             }
-            Log.i("EP",this.patrolPoints.get(i).toString() + ", " + this.patrolPoints.get(patrolTarget).toString());
-            Log.i("EP",Pathfinder.generatePathTo(this.patrolPoints.get(i).first, this.patrolPoints.get(i).second, this.patrolPoints.get(patrolTarget).first, this.patrolPoints.get(patrolTarget).second, graph, board, this).toString());
+//            Log.i("EP",this.patrolPoints.get(i).toString() + ", " + this.patrolPoints.get(patrolTarget).toString());
+//            Log.i("EP",Pathfinder.generatePathTo(this.patrolPoints.get(i).first, this.patrolPoints.get(i).second, this.patrolPoints.get(patrolTarget).first, this.patrolPoints.get(patrolTarget).second, graph, board, this).toString());
             currentPath.addAll(Pathfinder.generatePathTo(this.patrolPoints.get(i).first, this.patrolPoints.get(i).second, this.patrolPoints.get(patrolTarget).first, this.patrolPoints.get(patrolTarget).second, graph, board, this));
         }
         setCurrentPath(currentPath);
@@ -72,7 +87,8 @@ public class EasyPatroller extends EnemyUnit {
         }else{
             moveTime = 600;
         }
-        new Timer().scheduleAtFixedRate(new TimerTask() {
+        movementTimer = new Timer();
+        movementTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
 
@@ -105,10 +121,12 @@ public class EasyPatroller extends EnemyUnit {
                     currentPath.add(currentPath.remove(0));
                 }else{
                     if((newTile.getUnit().getOwner() != EasyPatroller.this.getOwner()) || newTile.getUnit() == EasyPatroller.this){
-                        Log.i("tbdubug",currentPath.toString() + ", unit isnt same owner");
+//                        Log.i("tbdubug",currentPath.toString() + ", unit isnt same owner");
                         if(newTile.getUnit() != EasyPatroller.this){
+//                            Log.i("EP","killed player" + ", " + isDead());
                             Unit killedUnit = newTile.getUnit();
                             killedUnit.setJustDied(true);
+//                            Log.i("EP","set player dead");
                         }
 
                         remainingMovement[0] -= map[currentPath.get(1).x][currentPath.get(1).y].getCost();

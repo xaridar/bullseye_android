@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -70,6 +71,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     private Timer updateTimer;
     private ArrayList<Unit> playerUnits = new ArrayList<Unit>();
     private ArrayList<Unit> computerUnits = new ArrayList<Unit>();
+    private ArrayList<Unit> capturedUnits = new ArrayList<Unit>();
     KonfettiView konfetti;
     private MediaPlayer enemyCaptured;
     private MediaPlayer playerCaptured;
@@ -230,7 +232,8 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
     private void endTurn(){
         for(Unit playerUnit : playerUnits){
-            if(playerUnit.getCurrentPath() != null && playerUnit.getCurrentPath().size() > 0){
+            if((playerUnit.getCurrentPath() != null) && (playerUnit.getCurrentPath().size() > 0) && (!playerUnit.isDead())){
+//                Log.i("EP","moving player, " + playerUnit.isDead());
                 playerUnit.movement(board, graph);
             }
 
@@ -240,6 +243,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
             public void run() {
                 for(Unit computerUnit : computerUnits){
                     if(!computerUnit.isDead()) {
+//                        Log.i("EP","moving unit, " + computerUnit.isDead());
                         computerUnit.movement(board, graph);
                     }
                 }
@@ -278,16 +282,16 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         graph = Pathfinder.generatePathfindingGraph(mapSizeX, mapSizeY);
 
         int playerUnitNum = 3;
-        for(int i = 0; i< playerUnitNum; i++){
-            Unit playerUnit = new Unit("example", i, 6,"ic_strat_img_caracal", 1, Owners.PLAYER, board);
+        for(int i = 1; i< playerUnitNum+1; i++){
+            Unit playerUnit = new Unit("example", i, 6,"ic_strat_img_caracal", 1, Owners.PLAYER, board, this);
             playerUnits.add(playerUnit);
         }
 
-        EasyPatroller easyPatroller1 = new EasyPatroller("patroller", 0,0,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(0,3))),graph, board);
-        EasyPatroller easyPatroller2 = new EasyPatroller("patroller", 1,3,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(1,0))),graph, board);
-        EasyPatroller easyPatroller3 = new EasyPatroller("patroller", 2,0,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(2,3))),graph, board);
-        EasyPatroller easyPatroller4 = new EasyPatroller("patroller", 3,3,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(3,0))),graph, board);
-        EasyPatroller easyPatroller5 = new EasyPatroller("patroller", 4,0,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(4,3))),graph, board);
+        EasyPatroller easyPatroller1 = new EasyPatroller("patroller", 0,0,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(0,3))),graph, board, this);
+        EasyPatroller easyPatroller2 = new EasyPatroller("patroller", 1,3,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(1,0))),graph, board, this);
+        EasyPatroller easyPatroller3 = new EasyPatroller("patroller", 2,0,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(2,3))),graph, board, this);
+        EasyPatroller easyPatroller4 = new EasyPatroller("patroller", 3,3,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(3,0))),graph, board, this);
+        EasyPatroller easyPatroller5 = new EasyPatroller("patroller", 4,0,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(4,3))),graph, board, this);
         computerUnits.add(easyPatroller1);
         computerUnits.add(easyPatroller2);
         computerUnits.add(easyPatroller3);
@@ -311,27 +315,38 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                 }
             }
         }
-        for(Unit playerUnit : playerUnits){
-            if(playerUnit.isJustDied()){
+        for(Unit playerUnit : playerUnits) {
+            if (playerUnit.isJustDied()) {
                 playerCaptured.start();
                 playerUnit.setJustDied(false);
                 playerUnit.setDead(true);
-                playerUnits.remove(playerUnit);
+//                Log.i("EP", "player set dead");
             }
+        }for(Unit playerUnit : playerUnits){
             if(playerUnit.isDead()){
-
+                playerUnits.remove(playerUnit);
+//                Log.i("EP","player removed");
                 break;
+            }else {
+                playerUnit.update();
             }
-            playerUnit.update();
         }
         for(Unit computerUnit : computerUnits){
             if(computerUnit.isJustDied()){
                 enemyCaptured.start();
-                computerUnit.setDead(true);
-                computerUnits.remove(computerUnit);
                 computerUnit.setJustDied(false);
+                computerUnit.setDead(true);
+//                Log.i("EP","comp set dead");
             }
-
+        }
+        for(Unit computerUnit : computerUnits){
+            if(computerUnit.isDead()){
+                computerUnits.remove(computerUnit);
+//                Log.i("EP","comp removed");
+                break;
+            }else{
+                computerUnit.update();
+            }
         }
         checkWin();
     }

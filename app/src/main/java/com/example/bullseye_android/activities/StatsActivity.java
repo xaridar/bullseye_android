@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class StatsActivity extends AppCompatActivity implements MusicActivity {
+public class  StatsActivity extends AppCompatActivity implements MusicActivity {
 
     public static final int MEMORY = 0;
     public static final int SORTING = 1;

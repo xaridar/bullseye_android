@@ -1,10 +1,17 @@
 package com.example.bullseye_android.games.turn_based.units;
 
+import android.content.Context;
+import android.util.Log;
+
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.bullseye_android.games.turn_based.BoardActor;
 import com.example.bullseye_android.games.turn_based.MoveableUnit;
 import com.example.bullseye_android.games.turn_based.Node;
 import com.example.bullseye_android.games.turn_based.Owners;
 import com.example.bullseye_android.games.turn_based.Tile;
+import com.example.bullseye_android.games.turn_based.TurnBasedActivity;
 import com.example.bullseye_android.music.MusicActivity;
 
 import java.util.ArrayList;
@@ -19,19 +26,31 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
 
     private Owners owner;
 
-    private Timer timer = new Timer();
+    private Timer timer;
 
     private boolean moved = false;
-    private boolean dead = false;
+    MutableLiveData<Boolean> dead = new MutableLiveData<>();
     private boolean justDied = false;
 
-    public Unit(String name, int x, int y, String icon, int movespeed, Owners owner, Tile[][] board){
+    public Unit(String name, int x, int y, String icon, int movespeed, Owners owner, Tile[][] board, LifecycleOwner ctx){
         this.name = name;
         this.x = x;
         this.y = y;
         this.icon = icon;
         this.movespeed = movespeed;
         this.owner = owner;
+        dead.setValue(false);
+
+        dead.observe(ctx, isDead ->{
+            if(isDead){
+               try{
+                   timer.cancel();
+               }catch (NullPointerException ignored){
+
+               }
+            }
+        });
+
         board[x][y].setUnit(this);
     }
 
@@ -50,7 +69,7 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
         }else{
             moveTime = 600;
         }
-
+        timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -83,8 +102,10 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
                 }else{
                     if((newTile.getUnit().getOwner() != Unit.this.getOwner()) || newTile.getUnit() == Unit.this){
                         if(newTile.getUnit() != Unit.this){
+//                            Log.i("EP","killed unit" + ", " + isDead());
                             Unit killedUnit = newTile.getUnit();
                             killedUnit.setJustDied(true);
+//                            Log.i("EP","unit set dead");
                         }
                         remainingMovement[0] -= map[currentPath.get(1).x][currentPath.get(1).y].getCost();
                         oldTile.setUnit(null);
@@ -150,11 +171,11 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
     }
 
     public boolean isDead() {
-        return dead;
+        return dead.getValue();
     }
 
     public void setDead(boolean dead) {
-        this.dead = dead;
+        this.dead.setValue(dead);
     }
 
     public boolean isJustDied() {
@@ -164,4 +185,8 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
     public void setJustDied(boolean justDied) {
         this.justDied = justDied;
     }
+
+    public Timer getTimer(){ return timer; }
+
+    public void setTimer(Timer timer){ this.timer = timer; }
 }
