@@ -20,13 +20,13 @@ import java.util.TimerTask;
 
 public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
 
-    private ArrayList<Node> currentPath = null;
+    ArrayList<Node> currentPath = null;
 
-    private int movespeed;
+    int movespeed;
 
     private Owners owner;
 
-    private Timer timer;
+    Timer timer;
 
     private boolean moved = false;
     MutableLiveData<Boolean> dead = new MutableLiveData<>();
@@ -81,61 +81,53 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
                     return;
                 }
 
-
-
                 Tile oldTile = map[currentPath.get(0).x][currentPath.get(0).y];
                 Tile newTile = map[currentPath.get(1).x][currentPath.get(1).y];
+
                 if(newTile.getUnit() == null) {
                     remainingMovement[0] -= map[currentPath.get(1).x][currentPath.get(1).y].getCost();
                     oldTile.setUnit(null);
                     newTile.setUnit(Unit.this);
-
-                    for (int x = 0; x < map.length; x++) {
-                        for (int y = 0; y < map[x].length; y++) {
-                            if (map[x][y].getUnit() == Unit.this) {
-                                Unit.this.x = x;
-                                Unit.this.y = y;
-                            }
-                        }
-                    }
-                    currentPath.remove(0);
                 }else{
                     if((newTile.getUnit().getOwner() != Unit.this.getOwner()) || newTile.getUnit() == Unit.this){
                         if(newTile.getUnit() != Unit.this){
-//                            Log.i("EP","killed unit" + ", " + isDead());
-                            Unit killedUnit = newTile.getUnit();
-                            killedUnit.setJustDied(true);
-//                            Log.i("EP","unit set dead");
+                            onKillUnit(newTile.getUnit(), map, graph);
                         }
                         remainingMovement[0] -= map[currentPath.get(1).x][currentPath.get(1).y].getCost();
                         oldTile.setUnit(null);
                         newTile.setUnit(Unit.this);
-
-                        for (int x = 0; x < map.length; x++) {
-                            for (int y = 0; y < map[x].length; y++) {
-                                if (map[x][y].getUnit() == Unit.this) {
-                                    Unit.this.x = x;
-                                    Unit.this.y = y;
-                                }
-                            }
-                        }
-                        currentPath.remove(0);
                     }
                 }
-
+                for (int x = 0; x < map.length; x++) {
+                    for (int y = 0; y < map[x].length; y++) {
+                        if (map[x][y].getUnit() == Unit.this) {
+                            Unit.this.x = x;
+                            Unit.this.y = y;
+                        }
+                    }
+                }
+                onMovementFinished(map, graph);
                 if(currentPath.size() <= 1){
-                    currentPath = null;
+                    onPathfindingEnd(map, graph);
+
                 }
             }
         }, moveTime, moveTime);
+    }
 
+    @Override
+    public void onKillUnit(Unit killedUnit, Tile[][] map, Node[][] graph) {
+        killedUnit.setJustDied(true);
+    }
 
+    @Override
+    public void onMovementFinished(Tile[][] map, Node[][] graph) {
+        currentPath.remove(0);
+    }
 
-
-
-
-
-
+    @Override
+    public void onPathfindingEnd(Tile[][] map, Node[][] graph) {
+        currentPath = null;
     }
 
     public ArrayList<Node> getCurrentPath() {
