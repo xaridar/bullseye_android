@@ -69,9 +69,9 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     private Node[][] graph;
     private ImageButton[][] buttons = new ImageButton[mapSizeX][mapSizeY];
     private Timer updateTimer;
-    private ArrayList<Unit> playerUnits = new ArrayList<Unit>();
-    private ArrayList<Unit> computerUnits = new ArrayList<Unit>();
-    private ArrayList<Unit> capturedUnits = new ArrayList<Unit>();
+    private ArrayList<Unit> playerUnits;
+    private ArrayList<Unit> computerUnits;
+    private ArrayList<Unit> capturedUnits;
     KonfettiView konfetti;
     private MediaPlayer enemyCaptured;
     private MediaPlayer playerCaptured;
@@ -207,6 +207,10 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         moves = 0;
         float vol = (float) user.getGameVolume() / User.MAX_VOLUME;
 
+        playerUnits = new ArrayList<Unit>();
+        computerUnits = new ArrayList<Unit>();
+        capturedUnits = new ArrayList<Unit>();
+
         enemyCaptured = SfxManager.createSfx(this, R.raw.enemy_captured, vol);
         playerCaptured = SfxManager.createSfx(this, R.raw.unit_captured, vol);
 
@@ -287,7 +291,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
             playerUnits.add(playerUnit);
         }
 
-        EasyPatroller easyPatroller1 = new EasyPatroller("patroller", 0,0,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(0,3))),graph, board, this);
+        EasyPatroller easyPatroller1 = new EasyPatroller("patroller", 0,0,"ic_strat_img_duck",1, new ArrayList<>(Arrays.asList(new Pair<>(0,3))),graph, board, this);
         EasyPatroller easyPatroller2 = new EasyPatroller("patroller", 1,3,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(1,0))),graph, board, this);
         EasyPatroller easyPatroller3 = new EasyPatroller("patroller", 2,0,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(2,3))),graph, board, this);
         EasyPatroller easyPatroller4 = new EasyPatroller("patroller", 3,3,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(3,0))),graph, board, this);
@@ -320,14 +324,16 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                 playerCaptured.start();
                 playerUnit.setJustDied(false);
                 playerUnit.setDead(true);
+//                Log.i("EP",playerUnits.toString());
 //                Log.i("EP", "player set dead");
             }
-        }for(Unit playerUnit : playerUnits){
-            if(playerUnit.isDead()){
+            if (playerUnit.isDead()) {
                 playerUnits.remove(playerUnit);
+//                Log.i("EP",playerUnits.toString());
+
 //                Log.i("EP","player removed");
                 break;
-            }else {
+            } else {
                 playerUnit.update();
             }
         }
@@ -338,8 +344,6 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                 computerUnit.setDead(true);
 //                Log.i("EP","comp set dead");
             }
-        }
-        for(Unit computerUnit : computerUnits){
             if(computerUnit.isDead()){
                 computerUnits.remove(computerUnit);
 //                Log.i("EP","comp removed");

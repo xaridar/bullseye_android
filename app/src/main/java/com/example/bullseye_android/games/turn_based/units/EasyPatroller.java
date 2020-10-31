@@ -123,10 +123,10 @@ public class EasyPatroller extends EnemyUnit {
                     if((newTile.getUnit().getOwner() != EasyPatroller.this.getOwner()) || newTile.getUnit() == EasyPatroller.this){
 //                        Log.i("tbdubug",currentPath.toString() + ", unit isnt same owner");
                         if(newTile.getUnit() != EasyPatroller.this){
-//                            Log.i("EP","killed player" + ", " + isDead());
+                            Log.i("EP","killed player");
                             Unit killedUnit = newTile.getUnit();
                             killedUnit.setJustDied(true);
-//                            Log.i("EP","set player dead");
+                            Log.i("EP","set player dead");
                         }
 
                         remainingMovement[0] -= map[currentPath.get(1).x][currentPath.get(1).y].getCost();
