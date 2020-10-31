@@ -291,18 +291,20 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
             playerUnits.add(playerUnit);
         }
 
-//        EasyPatroller easyPatroller1 = new EasyPatroller("patroller", 0,0,"ic_strat_img_duck",1,graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(0, 3))));
-//        EasyPatroller easyPatroller2 = new EasyPatroller("patroller", 1,3,"ic_strat_img_duck",1,graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(1, 0))));
-//        EasyPatroller easyPatroller3 = new EasyPatroller("patroller", 2,0,"ic_strat_img_duck",1,graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(2, 3))));
-//        EasyPatroller easyPatroller4 = new EasyPatroller("patroller", 3,3,"ic_strat_img_duck",1,graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(3, 0))));
-//        EasyPatroller easyPatroller5 = new EasyPatroller("patroller", 4,0,"ic_strat_img_duck",1,graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(4, 3))));
-//        computerUnits.add(easyPatroller1);
-//        computerUnits.add(easyPatroller2);
-//        computerUnits.add(easyPatroller3);
-//        computerUnits.add(easyPatroller4);
-//        computerUnits.add(easyPatroller5);
-        EasyWanderer easyWanderer = new EasyWanderer("wanderer", 0,0,"ic_strat_img_duck", 1, graph, board, this, 0,0,4,2);
+        EasyWanderer easyWanderer = new EasyWanderer("wanderer", 0,0,"ic_strat_img_duck", 1, graph, board, this, 0,0,4,1);
         computerUnits.add(easyWanderer);
+
+        EasyPatroller easyPatroller1 = new EasyPatroller("patroller1", 0,2,"ic_mem_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(0, 4))));
+        EasyPatroller easyPatroller2 = new EasyPatroller("patroller2", 1,2,"ic_mem_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(1, 4))));
+        EasyPatroller easyPatroller3 = new EasyPatroller("patroller3", 2,2,"ic_mem_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(2, 4))));
+        EasyPatroller easyPatroller4 = new EasyPatroller("patroller4", 3,2,"ic_mem_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(3, 4))));
+        EasyPatroller easyPatroller5 = new EasyPatroller("patroller5", 4,2,"ic_mem_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(4, 4))));
+        computerUnits.add(easyPatroller1);
+        computerUnits.add(easyPatroller2);
+        computerUnits.add(easyPatroller3);
+        computerUnits.add(easyPatroller4);
+        computerUnits.add(easyPatroller5);
+
         startingAmount = computerUnits.size();
 
     }

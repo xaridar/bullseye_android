@@ -42,10 +42,13 @@ public class EasyWanderer extends EnemyUnit {
     }
 
     public ArrayList<Node> generateRandomPoint(Node[][] graph, Tile[][] map){
-        int randX = random.nextInt(maxX - minX + 1) + minX;
-        int randY = random.nextInt(maxY - minY + 1) + minY;
-//        Log.i("TB",randX + ", " + randY);
-//        Log.i("TB", Pathfinder.generatePathTo(x, y, randX, randY, graph, map, this).toString());
+        int randX = -1;
+        int randY = -1;
+        do {
+            randX = random.nextInt(maxX - minX + 1) + minX;
+            randY = random.nextInt(maxY - minY + 1) + minY;
+        }while((randX == -1 && randY == -1) || map[randX][randY].getUnit() != null);
+
         return(Pathfinder.generatePathTo(x, y, randX, randY, graph, map, this));
     }
 }

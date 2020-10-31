@@ -1,5 +1,7 @@
 package com.example.bullseye_android.games.turn_based;
 
+import android.util.Log;
+
 import com.example.bullseye_android.games.turn_based.units.Unit;
 
 import java.util.ArrayList;
@@ -19,8 +21,6 @@ public class Pathfinder {
      */
     public static ArrayList<Node> generatePathTo(int sourceX, int sourceY, int x, int y, Node[][] graph, Tile[][] board, Unit unit) {
 
-//        Log.i("EP","generating path");
-
         // Clear unit's old path.
         if(unit.getOwner() == Owners.PLAYER) {
             unit.setCurrentPath(null);
@@ -29,7 +29,7 @@ public class Pathfinder {
         if(!unitCanEnterTile(x, y, board, unit)) {
             // Clicked on tile that unit cannot walk on
 //            Log.i("tbdubug", "clicked on unwalkable");
-//            Log.i("EP","returned nothing");
+            Log.i("TB","returned nothing");
             return new ArrayList<>();
         }
 
@@ -96,16 +96,13 @@ public class Pathfinder {
 
         if(prev.get(target) == null) {
             // No route between our target and the source
+            Log.i("TB","no route");
             return new ArrayList<>();
         }
 
         ArrayList<Node> currentPath = new ArrayList<Node>();
 
         Node curr = target;
-
-//        if(target==null){
-//            Log.i("EP","target is null");
-//        }
 
         // Step through the "prev" chain and add it to our path
         while(curr != null) {
@@ -117,8 +114,6 @@ public class Pathfinder {
         // Right now, currentPath describes a route from out target to our source
         // So we need to invert it!
         Collections.reverse(currentPath);
-
-//        Log.i("EP", currentPath.size() + "");
         return currentPath;
     }
 
@@ -170,28 +165,23 @@ public class Pathfinder {
     private static boolean unitCanEnterTile(int targetX, int targetY, Tile[][] board, Unit unit) {
         boolean output;
         if(board[targetX][targetY].isWalkable() && board[targetX][targetY].getUnit() == null){
-
 //            Log.i("PF","there is nothing blocking target");
             output = true;
         }else if(board[targetX][targetY].getUnit() != null){
             if(board[targetX][targetY].getUnit().getOwner() != unit.getOwner()){
-
 //                Log.i("PF","there is opposing unit");
                 output = true;
             }else{
                 if(board[targetX][targetY].getUnit() == unit){
-
 //                    Log.i("PF","target is self");
                     output = true;
                 }else {
-
-//                    Log.i("PF","target is of same owner");
+                    Log.i("PF","target is of same owner");
                     output = false;
                 }
             }
         }else{
-
-//            Log.i("PF","there is both no unit and a unit at the same time");
+            Log.i("PF","there is both no unit and a unit at the same time");
             output = false;
         }
 

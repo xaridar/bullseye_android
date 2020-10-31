@@ -80,37 +80,41 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
                 if(currentPath == null){
                     return;
                 }
-
-                Tile oldTile = map[currentPath.get(0).x][currentPath.get(0).y];
-                Tile newTile = map[currentPath.get(1).x][currentPath.get(1).y];
-
-                if(newTile.getUnit() == null) {
-                    remainingMovement[0] -= map[currentPath.get(1).x][currentPath.get(1).y].getCost();
-                    oldTile.setUnit(null);
-                    newTile.setUnit(Unit.this);
-                }else{
-                    if((newTile.getUnit().getOwner() != Unit.this.getOwner()) || newTile.getUnit() == Unit.this){
-                        if(newTile.getUnit() != Unit.this){
-                            onKillUnit(newTile.getUnit(), map, graph);
-                        }
+                Tile oldTile;
+                Tile newTile;
+                if(currentPath.size() > 0) {
+                    oldTile = map[currentPath.get(0).x][currentPath.get(0).y];
+                    newTile = map[currentPath.get(1).x][currentPath.get(1).y];
+                    if(newTile.getUnit() == null) {
                         remainingMovement[0] -= map[currentPath.get(1).x][currentPath.get(1).y].getCost();
                         oldTile.setUnit(null);
                         newTile.setUnit(Unit.this);
-                    }
-                }
-                for (int x = 0; x < map.length; x++) {
-                    for (int y = 0; y < map[x].length; y++) {
-                        if (map[x][y].getUnit() == Unit.this) {
-                            Unit.this.x = x;
-                            Unit.this.y = y;
+                    }else{
+                        if((newTile.getUnit().getOwner() != Unit.this.getOwner()) || newTile.getUnit() == Unit.this){
+                            if(newTile.getUnit() != Unit.this){
+                                onKillUnit(newTile.getUnit(), map, graph);
+                            }
+                            remainingMovement[0] -= map[currentPath.get(1).x][currentPath.get(1).y].getCost();
+                            oldTile.setUnit(null);
+                            newTile.setUnit(Unit.this);
                         }
                     }
-                }
-                onMovementFinished(map, graph);
-                if(currentPath.size() <= 1){
-                    onPathfindingEnd(map, graph);
+                    for (int x = 0; x < map.length; x++) {
+                        for (int y = 0; y < map[x].length; y++) {
+                            if (map[x][y].getUnit() == Unit.this) {
+                                Unit.this.x = x;
+                                Unit.this.y = y;
+                            }
+                        }
+                    }
+                    onMovementFinished(map, graph);
+                    if(currentPath.size() <= 1){
+                        onPathfindingEnd(map, graph);
 
+                    }
                 }
+
+
             }
         }, moveTime, moveTime);
     }
