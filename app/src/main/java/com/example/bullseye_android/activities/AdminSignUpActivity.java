@@ -74,38 +74,43 @@ public class AdminSignUpActivity extends AppCompatActivity {
         btn.setOnClickListener(view -> {
             if (!clicked) {
                 if (name.getText().toString().equals("")) {
-                    AdminSignUpActivity.this.createDialogue("The name field cannot be empty.");
+                    createDialogue("The name field cannot be empty.");
                     return;
                 }
                 if (email.getText().toString().equals("")) {
-                    AdminSignUpActivity.this.createDialogue("The email field cannot be empty.");
+                    createDialogue("The email field cannot be empty.");
                     return;
                 }
                 if (pass.getText().toString().equals("")) {
-                    AdminSignUpActivity.this.createDialogue("The password field cannot be empty.");
+                    createDialogue("The password field cannot be empty.");
                     return;
                 }
                 if (confPass.getText().toString().equals("")) {
-                    AdminSignUpActivity.this.createDialogue("The confirm password field cannot be empty.");
+                    createDialogue("The confirm password field cannot be empty.");
                     return;
                 }
                 if (!EmailChecker.checkEmail(email.getText().toString())) {
-                    AdminSignUpActivity.this.createDialogue("The provided email is invalid.");
+                    createDialogue("The provided email is invalid.");
                     return;
                 }
                 if (!pass.getText().toString().equals(confPass.getText().toString())) {
-                    AdminSignUpActivity.this.createDialogue("Please make sure that both passwords match.");
+                    createDialogue("Please make sure that both passwords match.");
+                    return;
+                }
+                if (pass.getText().toString().length() < 8) {
+                    createDialogue("Your password should be at least 8 characters long.");
                     return;
                 }
                 btn.setEnabled(false);
                 clicked = true;
                 userViewModel.insert(new Admin(name.getText().toString(), email.getText().toString(), pass.getText().toString()));
-                Toast.makeText(AdminSignUpActivity.this, "Admin account created", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(AdminSignUpActivity.this, TransitionActivity.class);
+                Toast.makeText(this, "Admin account created", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, TransitionActivity.class);
                 intent.putExtra("sender", "adminSignUp");
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(AdminSignUpActivity.this, btn, "bigButton");
-                AdminSignUpActivity.this.startActivity(intent, options.toBundle());
-                AdminSignUpActivity.this.finish();
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, btn, "bigButton");
+                startActivity(intent, options.toBundle());
+                finish();
+
             }
         });
 
