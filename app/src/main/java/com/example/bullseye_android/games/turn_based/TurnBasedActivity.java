@@ -77,9 +77,11 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     KonfettiView konfetti;
     private MediaPlayer enemyCaptured;
     private MediaPlayer playerCaptured;
-    private long startMillis;
+    private long time;
+    private Timer secondTimer;
     private int moves;
     private int gameNum;
+    private boolean won;
 
     /**
      *  0 - Can click on their own units, selects them and lets them move
@@ -207,6 +209,13 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
     private void start(){
         moves = 0;
+        secondTimer = new Timer();
+        secondTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                time++;
+            }
+        }, 1000, 1000);
         float vol = (float) user.getGameVolume() / User.MAX_VOLUME;
 
         playerUnits = new ArrayList<Unit>();
@@ -225,7 +234,6 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         setState(0);
 
-        startMillis = System.currentTimeMillis();
         updateTimer = new Timer();
         updateTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -307,6 +315,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         startingAmount = computerUnits.size();
 
+        won = false;
     }
 
     private void updateBoard(){
@@ -353,56 +362,61 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     }
 
     private void checkWin(){
-        String winner;
-        String text;
-        if(computerUnits.isEmpty()){
-            winner = "player";
-        }else if(playerUnits.isEmpty()){
-            winner = "computer";
-        }else{
-            return;
-        }
-        switch(winner){
-            case "player":
-                //player wins
-                text = "You Win!";
-                confetti(konfetti, this.getApplicationContext());
-                endText.setText(text);
-                break;
-            case "computer":
-                //player loses
-                text = "You Lost . . .";
-                endText.setText(text);
-                break;
-            default:
-                break;
-        }
-        long elapsedSeconds = (System.currentTimeMillis() - startMillis) / 1000;
-        int remaining = playerUnits.size();
-        user.addStratGame(gameNum, calcPoints(moves, remaining), moves, remaining, elapsedSeconds);
-        updateTimer.cancel();
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(() -> {
-                    endingAmount = computerUnits.size();
-                    points = startingAmount - endingAmount;
-                    pointsText.setText(getString(R.string.tb_points, points));
-                    finishedLayout.setVisibility(View.VISIBLE);
-                    endTurn.setVisibility(View.INVISIBLE);
-                    pauseButton.setVisibility(View.INVISIBLE);
-
-                    playAgain.setOnClickListener(view -> pregame());
-                    backBtn.setOnClickListener(view -> finish());
-                });
+        if (!won) {
+            String winner;
+            String text;
+            if (computerUnits.isEmpty()) {
+                winner = "player";
+            } else if (playerUnits.isEmpty()) {
+                winner = "computer";
+            } else {
+                return;
             }
-        }, 600);
+            switch (winner) {
+                case "player":
+                    //player wins
+                    text = "You Win!";
+                    confetti(konfetti, this.getApplicationContext());
+                    endText.setText(text);
+                    break;
+                case "computer":
+                    //player loses
+                    text = "You Lost . . .";
+                    endText.setText(text);
+                    break;
+                default:
+                    break;
+            }
+            int remaining = playerUnits.size();
+            int pointsToAdd = calcPoints(moves, remaining);
+            user.addStratGame(gameNum, pointsToAdd, moves, remaining, time);
+            updateTimer.cancel();
+            secondTimer.cancel();
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(() -> {
+                        endingAmount = computerUnits.size();
+                        points = startingAmount - endingAmount;
+                        pointsText.setText(getString(R.string.tb_points, points));
+                        finishedLayout.setVisibility(View.VISIBLE);
+                        endTurn.setVisibility(View.INVISIBLE);
+                        pauseButton.setVisibility(View.INVISIBLE);
 
+                        playAgain.setOnClickListener(view -> pregame());
+                        backBtn.setOnClickListener(view -> finish());
+                    });
+                }
+            }, 600);
+            won = true;
+
+        }
     }
 
     private int calcPoints(int moves, int remaining) {
         // determine a good points algorithm
-        return 100 * (remaining / moves) * (startingAmount * 3);
+        float points = 100 * ((float) remaining / moves) * (startingAmount * 3);
+        return (int) points;
     }
 
     private void setState(int state){
@@ -446,6 +460,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 //        pauseButton.setVisibility(View.INVISIBLE);
         endTurn.setVisibility(View.INVISIBLE);
         updateTimer.cancel();
+        secondTimer.cancel();
         for(ImageButton[] buttonList : buttons){
             for(ImageButton button : buttonList){
                 button.setEnabled(false);
@@ -479,6 +494,13 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                 }
             }
         });
+        secondTimer = new Timer();
+        secondTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                time++;
+            }
+        }, 100, 100);
 
     }
 

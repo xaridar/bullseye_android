@@ -459,7 +459,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
 
     private int calcPoints(float acc, int time) {
         // determine a good points algorithm
-        return (int) (1000 * (acc / time) * (cards.length * cards[0].length));
+        return (int) ((float) (1000 * ((float) acc / time) * (cards.length * cards[0].length)));
     }
 
     @Override
