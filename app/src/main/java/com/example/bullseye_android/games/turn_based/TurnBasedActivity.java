@@ -287,11 +287,11 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         int playerUnitNum = 3;
         for(int i = 1; i< playerUnitNum+1; i++){
-            Unit playerUnit = new Unit("example", i, 6,"ic_strat_img_caracal", 1, Owners.PLAYER, board, this);
+            Unit playerUnit = new Unit("example" + (i+1), i, 6,"ic_strat_img_caracal", 1, Owners.PLAYER, board, this);
             playerUnits.add(playerUnit);
         }
 
-        EasyWanderer easyWanderer = new EasyWanderer("wanderer", 0,0,"ic_strat_img_duck", 1, graph, board, this, 0,0,4,1);
+        EasyWanderer easyWanderer = new EasyWanderer("wanderer", 0,0,"ic_strat_img_duck", 2, graph, board, this, 0,0,4,1);
         computerUnits.add(easyWanderer);
 
         EasyPatroller easyPatroller1 = new EasyPatroller("patroller1", 0,2,"ic_mem_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(0, 4))));

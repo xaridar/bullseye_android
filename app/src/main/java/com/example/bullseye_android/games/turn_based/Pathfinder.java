@@ -28,8 +28,7 @@ public class Pathfinder {
 
         if(!unitCanEnterTile(x, y, board, unit)) {
             // Clicked on tile that unit cannot walk on
-//            Log.i("tbdubug", "clicked on unwalkable");
-            Log.i("TB","returned nothing");
+            Log.i("TB",unit.getName() + ": returned unwalkable");
             return new ArrayList<>();
         }
 
@@ -96,7 +95,7 @@ public class Pathfinder {
 
         if(prev.get(target) == null) {
             // No route between our target and the source
-            Log.i("TB","no route");
+            Log.i("PF",unit.getName() + ": no route");
             return new ArrayList<>();
         }
 
@@ -176,12 +175,12 @@ public class Pathfinder {
 //                    Log.i("PF","target is self");
                     output = true;
                 }else {
-                    Log.i("PF","target is of same owner");
+                    Log.i("PF",unit.getName() + ": target is of same owner");
                     output = false;
                 }
             }
         }else{
-            Log.i("PF","there is both no unit and a unit at the same time");
+            Log.i("PF",unit.getName() + ": there is both no unit and a unit at the same time");
             output = false;
         }
 
