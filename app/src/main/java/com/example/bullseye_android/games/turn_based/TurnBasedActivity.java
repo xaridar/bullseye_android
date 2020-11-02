@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -26,12 +27,14 @@ import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.GamePauseFragment;
 import com.example.bullseye_android.games.turn_based.units.EasyPatroller;
+import com.example.bullseye_android.games.turn_based.units.EasyWanderer;
 import com.example.bullseye_android.games.turn_based.units.Unit;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.util.SfxManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -68,8 +71,9 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     private Node[][] graph;
     private ImageButton[][] buttons = new ImageButton[mapSizeX][mapSizeY];
     private Timer updateTimer;
-    private ArrayList<Unit> playerUnits = new ArrayList<Unit>();
-    private ArrayList<Unit> computerUnits = new ArrayList<Unit>();
+    private ArrayList<Unit> playerUnits;
+    private ArrayList<Unit> computerUnits;
+    private ArrayList<Unit> capturedUnits;
     KonfettiView konfetti;
     private MediaPlayer enemyCaptured;
     private MediaPlayer playerCaptured;
@@ -205,6 +209,10 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         moves = 0;
         float vol = (float) user.getGameVolume() / User.MAX_VOLUME;
 
+        playerUnits = new ArrayList<Unit>();
+        computerUnits = new ArrayList<Unit>();
+        capturedUnits = new ArrayList<Unit>();
+
         enemyCaptured = SfxManager.createSfx(this, R.raw.enemy_captured, vol);
         playerCaptured = SfxManager.createSfx(this, R.raw.unit_captured, vol);
 
@@ -230,7 +238,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
     private void endTurn(){
         for(Unit playerUnit : playerUnits){
-            if(playerUnit.getCurrentPath() != null && playerUnit.getCurrentPath().size() > 0){
+            if((playerUnit.getCurrentPath() != null) && (playerUnit.getCurrentPath().size() > 0) && (!playerUnit.isDead())){
                 playerUnit.movement(board, graph);
             }
 
@@ -278,21 +286,25 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         graph = Pathfinder.generatePathfindingGraph(mapSizeX, mapSizeY);
 
         int playerUnitNum = 3;
-        for(int i = 0; i< playerUnitNum; i++){
-            Unit playerUnit = new Unit("example", i, 6,"ic_strat_img_caracal", 1, Owners.PLAYER, board);
+        for(int i = 1; i< playerUnitNum+1; i++){
+            Unit playerUnit = new Unit("example" + (i+1), i, 6,"ic_strat_img_caracal", 1, Owners.PLAYER, board, this);
             playerUnits.add(playerUnit);
         }
 
-        EasyPatroller easyPatroller1 = new EasyPatroller("patroller", 0,0,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(0,3))),graph, board);
-        EasyPatroller easyPatroller2 = new EasyPatroller("patroller", 1,3,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(1,0))),graph, board);
-        EasyPatroller easyPatroller3 = new EasyPatroller("patroller", 2,0,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(2,3))),graph, board);
-        EasyPatroller easyPatroller4 = new EasyPatroller("patroller", 3,3,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(3,0))),graph, board);
-        EasyPatroller easyPatroller5 = new EasyPatroller("patroller", 4,0,"ic_strat_img_duck",1,new ArrayList<>(Arrays.asList(new Pair<>(4,3))),graph, board);
+        EasyWanderer easyWanderer = new EasyWanderer("wanderer", 0,0,"ic_strat_img_duck", 2, graph, board, this, 0,0,4,1);
+        computerUnits.add(easyWanderer);
+
+        EasyPatroller easyPatroller1 = new EasyPatroller("patroller1", 0,2,"ic_mem_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(0, 4))));
+        EasyPatroller easyPatroller2 = new EasyPatroller("patroller2", 1,2,"ic_mem_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(1, 4))));
+        EasyPatroller easyPatroller3 = new EasyPatroller("patroller3", 2,2,"ic_mem_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(2, 4))));
+        EasyPatroller easyPatroller4 = new EasyPatroller("patroller4", 3,2,"ic_mem_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(3, 4))));
+        EasyPatroller easyPatroller5 = new EasyPatroller("patroller5", 4,2,"ic_mem_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(4, 4))));
         computerUnits.add(easyPatroller1);
         computerUnits.add(easyPatroller2);
         computerUnits.add(easyPatroller3);
         computerUnits.add(easyPatroller4);
         computerUnits.add(easyPatroller5);
+
         startingAmount = computerUnits.size();
 
     }
@@ -311,27 +323,31 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                 }
             }
         }
-        for(Unit playerUnit : playerUnits){
-            if(playerUnit.isJustDied()){
+        for(Unit playerUnit : playerUnits) {
+            if (playerUnit.isJustDied()) {
                 playerCaptured.start();
                 playerUnit.setJustDied(false);
                 playerUnit.setDead(true);
+            }
+            if (playerUnit.isDead()) {
                 playerUnits.remove(playerUnit);
-            }
-            if(playerUnit.isDead()){
-
                 break;
+            } else {
+                playerUnit.update();
             }
-            playerUnit.update();
         }
         for(Unit computerUnit : computerUnits){
             if(computerUnit.isJustDied()){
                 enemyCaptured.start();
-                computerUnit.setDead(true);
-                computerUnits.remove(computerUnit);
                 computerUnit.setJustDied(false);
+                computerUnit.setDead(true);
             }
-
+            if(computerUnit.isDead()){
+                computerUnits.remove(computerUnit);
+                break;
+            }else{
+                computerUnit.update();
+            }
         }
         checkWin();
     }
