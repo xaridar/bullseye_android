@@ -140,7 +140,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         start = findViewById(R.id.start);
         countdown = findViewById(R.id.countdown);
         livesLayout = findViewById(R.id.livesLayout);
-        layout = findViewById(R.id.layout);
+        layout = findViewById(R.id.sortingLayout);
         timer = findViewById(R.id.time);
         finishedLayout = findViewById(R.id.settingsLayout);
         highScore = findViewById(R.id.highScore);
@@ -268,35 +268,32 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         String side;
         List<ImageButton> delete = new ArrayList<>();
         for (ImageButton imageButton : views) {
-                if (imageButton.getVisibility() == View.VISIBLE && ((ConstraintLayout.LayoutParams) imageButton.getLayoutParams()).topMargin >= height - (((ConstraintLayout.LayoutParams) despawn.getLayoutParams()).bottomMargin + 225)) {
-                    side = "bottom";
-                    delete.add(imageButton);
-                    layout.removeView(imageButton);
-                    if (!side.contentEquals(imageButton.getContentDescription())) {
-                        incorrectTone.start();
-                        lives--;
-                    }else{
-                        blackBallTone.start();
-                        correct ++;
-                    }
-                    sent++;
+            if (imageButton.getVisibility() == View.VISIBLE && ((ConstraintLayout.LayoutParams) imageButton.getLayoutParams()).topMargin >= height - (( (ConstraintLayout.LayoutParams) despawn.getLayoutParams()).bottomMargin + 225)) {
+                side = "bottom";
+                delete.add(imageButton);
+                layout.removeView(imageButton);
+                if (!side.contentEquals(imageButton.getContentDescription())) {
+                    incorrectTone.start();
+                    lives--;
+                }else{
+                    blackBallTone.start();
+                    correct ++;
                 }
-                else if(imageButton.getVisibility() == View.INVISIBLE && !colorHit.equals("")) {
-                    side = colorHit;
-                    delete.add(imageButton);
-                    layout.removeView(imageButton);
-                    if (!side.contentEquals(imageButton.getContentDescription())) {
-                        incorrectTone.start();
-                        lives--;
-                    }else{
-                        correctTone.start();
-                        correct ++;
-                    }
-                    sent++;
-
-
-              }
-            //}
+                sent++;
+            }
+            else if(imageButton.getVisibility() == View.INVISIBLE && !colorHit.equals("")) {
+                side = colorHit;
+                delete.add(imageButton);
+                layout.removeView(imageButton);
+                if (!side.contentEquals(imageButton.getContentDescription())) {
+                    incorrectTone.start();
+                    lives--;
+                }else{
+                    correctTone.start();
+                    correct ++;
+                }
+                sent++;
+            }
         }
         views.removeAll(delete);
         final HashMap<String, Object> objs = new HashMap<>();

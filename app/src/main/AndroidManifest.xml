@@ -14,8 +14,7 @@
         android:roundIcon="@mipmap/bullseye_logo_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialThemeWithActionBar">
-        <activity android:name=".games.turn_based.TurnBasedInstructions" android:theme="@style/TurnBasedGameInstructions" android:screenOrientation="portrait">
-        </activity>
+        <activity android:name=".games.turn_based.TurnBasedInstructions" android:theme="@style/TurnBasedGameInstructions" android:screenOrientation="portrait"/>
         <activity
             android:name=".games.turn_based.TurnBasedActivity"
             android:screenOrientation="portrait"
