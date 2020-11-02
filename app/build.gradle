@@ -27,6 +27,7 @@ android {
 }
 
 dependencies {
+    //base android studio
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -42,7 +43,6 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
     androidTestImplementation "android.arch.persistence.room:testing:1.1.1"
-
     implementation "android.arch.persistence.room:rxjava2:1.1.1"
 
     // Lifecycle components
@@ -52,12 +52,14 @@ dependencies {
 
     //noinspection GradleCompatible
     implementation "com.android.support:support-compat:28.0.0"
-    implementation 'nl.dionsegijn:konfetti:1.2.5'
 
+    // konfetti
+    implementation 'nl.dionsegijn:konfetti:1.2.5'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10'
 
+    // gif support
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
 
+    // sugartask (non-deprecated async task replacement)
     implementation 'com.github.mthli:SugarTask:v0.4'
-
 }
