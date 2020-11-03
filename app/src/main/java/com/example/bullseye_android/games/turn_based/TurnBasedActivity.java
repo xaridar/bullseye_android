@@ -77,6 +77,8 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     KonfettiView konfetti;
     private MediaPlayer enemyCaptured;
     private MediaPlayer playerCaptured;
+    private MediaPlayer winSound;
+    private MediaPlayer loseSound;
     private long time;
     private Timer secondTimer;
     private int moves;
@@ -224,6 +226,8 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         enemyCaptured = SfxManager.createSfx(this, R.raw.enemy_captured, vol);
         playerCaptured = SfxManager.createSfx(this, R.raw.unit_captured, vol);
+        winSound = SfxManager.createSfx(this, R.raw.win_default, vol);
+        loseSound = SfxManager.createSfx(this, R.raw.lose_sound, vol);
 
 
         pauseButton.setVisibility(View.VISIBLE);
@@ -378,11 +382,13 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                     text = "You Win!";
                     confetti(konfetti, this.getApplicationContext());
                     endText.setText(text);
+                    winSound.start();
                     break;
                 case "computer":
                     //player loses
                     text = "You Lost . . .";
                     endText.setText(text);
+                    loseSound.start();
                     break;
                 default:
                     break;

@@ -91,6 +91,9 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     private MediaPlayer correctTone;
     private MediaPlayer incorrectTone;
     private MediaPlayer blackBallTone;
+    private MediaPlayer winTone;
+    private MediaPlayer highScoreTone;
+    private MediaPlayer loseTone;
 
     private User user;
     private UserViewModel userViewModel;
@@ -128,6 +131,9 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         correctTone = SfxManager.createSfx(this, R.raw.mem_correct, vol);
         incorrectTone = SfxManager.createSfx(this, R.raw.mem_wrong, vol);
         blackBallTone = SfxManager.createSfx(this, R.raw.black_ball, vol);
+        winTone = SfxManager.createSfx(this, R.raw.win_default, vol);
+        highScoreTone = SfxManager.createSfx(this, R.raw.win_sound, vol);
+        loseTone = SfxManager.createSfx(this, R.raw.lose_sound, vol);
 
         rightArrow.startAnimation(animFadeOut);
         leftArrow.startAnimation(animFadeOut);
@@ -241,12 +247,18 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         for (ImageButton view : views) {
             layout.removeView(view);
         }
-        confetti(konfettiView, this.getApplicationContext());
+
         views.clear();
         finishedLayout.setVisibility(View.VISIBLE);
         finalTime.setText(getString(R.string.survived_for, timer.getText().toString()));
 
-        user.addGame(gameInt, (float) correct / sent, time, calcPoints((float) correct / sent, time));
+        boolean highScore = user.addGame(gameInt, (float) correct / sent, time, calcPoints((float) correct / sent, time));
+        if(highScore){
+            confetti(konfettiView, this.getApplicationContext());
+            highScoreTone.start();
+        }else{
+            winTone.start();
+        }
         setScore();
     }
 

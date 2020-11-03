@@ -71,6 +71,9 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     public MediaPlayer cardTone;
     public MediaPlayer correctTone;
     public MediaPlayer wrongTone;
+    public MediaPlayer highScoreTone;
+    public MediaPlayer winTone;
+
     private ArrayList<MemoryCard> shownCards = new ArrayList<>();
     Toast toast;
     int tries;
@@ -133,7 +136,13 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         timer.cancel();
 
 
-        user.addGame(diffInt, (float) pairs / tries, time, calcPoints((float) pairs / tries, time));
+        boolean gotHighScore = user.addGame(diffInt, (float) pairs / tries, time, calcPoints((float) pairs / tries, time));
+        if(gotHighScore){
+            confetti(konfettiView, this.getApplicationContext());
+            highScoreTone.start();
+        }else{
+            winTone.start();
+        }
 
         setScore();
 
@@ -182,6 +191,8 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         cardTone = SfxManager.createSfx(MemoryActivity.this, R.raw.card_flip, vol);
         correctTone = SfxManager.createSfx(this, R.raw.mem_correct, vol);
         wrongTone = SfxManager.createSfx(this, R.raw.mem_wrong, vol);
+        highScoreTone = SfxManager.createSfx(this, R.raw.win_sound, vol);
+        winTone = SfxManager.createSfx(this, R.raw.win_default, vol);
 
         toast = Toast.makeText(this, "Press the back button twice at any time to go back to the dashboard.", Toast.LENGTH_SHORT);
         toast.show();
