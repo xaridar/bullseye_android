@@ -62,4 +62,7 @@ dependencies {
 
     // sugartask (non-deprecated async task replacement)
     implementation 'com.github.mthli:SugarTask:v0.4'
+
+    // web scraping
+    implementation 'org.jsoup:jsoup:1.13.1'
 }

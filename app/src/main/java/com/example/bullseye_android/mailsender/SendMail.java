@@ -5,6 +5,11 @@ import android.app.ProgressDialog;
 import android.os.Message;
 import android.util.Log;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
+import java.lang.annotation.ElementType;
 import java.util.function.Function;
 
 import io.github.mthli.sugartask.SugarTask;
@@ -16,15 +21,24 @@ import io.github.mthli.sugartask.SugarTask;
 
 public class SendMail {
 
-    private ProgressDialog statusDialog;
-    private Activity activity;
+    private static SendMail INSTANCE;
 
-    public SendMail(Activity activity) {
-        this.activity = activity;
+    public static SendMail getInstance() {
+        if(INSTANCE == null){
+            INSTANCE = new SendMail();
+        }
+        return INSTANCE;
+    }
+
+    private ProgressDialog statusDialog;
+    String[] profane;
+
+    public SendMail()  {
+
     }
 
     public void sendMail(Function<Boolean, Void> onFinish, String fromEmail, String fromPassword,
-                         String toEmailList, String emailSubject, String emailBody) {
+                         String toEmailList, String emailSubject, String emailBody, Activity activity) {
         statusDialog = new ProgressDialog(activity);
         statusDialog.setMessage("Getting ready...");
         statusDialog.setIndeterminate(false);
