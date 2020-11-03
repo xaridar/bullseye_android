@@ -91,6 +91,8 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     private MediaPlayer correctTone;
     private MediaPlayer incorrectTone;
     private MediaPlayer blackBallTone;
+    private MediaPlayer countdownSound;
+    private MediaPlayer countdownfinish;
 
     private User user;
     private UserViewModel userViewModel;
@@ -128,6 +130,8 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         correctTone = SfxManager.createSfx(this, R.raw.mem_correct, vol);
         incorrectTone = SfxManager.createSfx(this, R.raw.mem_wrong, vol);
         blackBallTone = SfxManager.createSfx(this, R.raw.black_ball, vol);
+        countdownSound = SfxManager.createSfx(this, R.raw.countdown, vol);
+        countdownfinish = SfxManager.createSfx(this, R.raw.countdownfinish, vol);
 
         rightArrow.startAnimation(animFadeOut);
         leftArrow.startAnimation(animFadeOut);
@@ -192,11 +196,13 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
             public void run() {
                 runOnUiThread(() -> {
                     if (time[0] > 1) {
+                        countdownSound.start();
                         time[0] -= 1;
                         countdown.setText(getString(R.string.num, time[0]));
                     } else {
                         cancel();
                         countdown.setTextSize(80);
+                        countdownfinish.start();
                         countdown.setText(getString(R.string.start).toUpperCase());
                         new Timer().schedule(new TimerTask() {
                             @Override

@@ -4,6 +4,7 @@ package com.example.bullseye_android.games;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.bullseye_android.R;
 import com.example.bullseye_android.activities.UsersSettingsActivity;
 import com.example.bullseye_android.database.User;
 import com.example.bullseye_android.database.UserSerializable;
+import com.example.bullseye_android.util.SfxManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -37,6 +39,8 @@ public class GamePauseFragment extends Fragment {
     Timer timer;
     Game ctx;
     FloatingActionButton settings;
+    private MediaPlayer countdown;
+    private MediaPlayer countdownfinish;
 
     public GamePauseFragment() { }
 
@@ -69,6 +73,8 @@ public class GamePauseFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (getContext() != null) {
+            countdown = SfxManager.createSfx(getContext(), R.raw.countdown, (float) user.getGameVolume() / User.MAX_VOLUME);
+            countdownfinish = SfxManager.createSfx(getContext(), R.raw.countdownfinish, (float) user.getGameVolume() / User.MAX_VOLUME);
             ctx = (Game) getContext();
             time = 3;
             button = view.findViewById(R.id.unpauseButton);
@@ -134,6 +140,7 @@ public class GamePauseFragment extends Fragment {
             text.setTextSize(250);
             button.setVisibility(View.INVISIBLE);
             text.setVisibility(View.VISIBLE);
+            countdown.start();
             text.setText(String.valueOf(time));
             timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
@@ -142,6 +149,7 @@ public class GamePauseFragment extends Fragment {
                     time--;
                     if (time == 0){
                         cancel();
+                        countdownfinish.start();
                         act.runOnUiThread(()-> {
                             text.setTextSize(80);
                             text.setText(getString(R.string.start).toUpperCase());
@@ -153,6 +161,7 @@ public class GamePauseFragment extends Fragment {
                             }
                         }, 1000);
                     }else{
+                        countdown.start();
                         act.runOnUiThread(() -> text.setText(String.valueOf(time)));
                     }
                 }
@@ -183,6 +192,9 @@ public class GamePauseFragment extends Fragment {
     }
 
     public void exitPauseMenu(){
+        if (timer != null) {
+            timer.cancel();
+        }
         ctx.unpause();
         ctx.getSupportFragmentManager().beginTransaction().remove(this).commit();
     }
