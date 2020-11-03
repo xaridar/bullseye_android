@@ -30,6 +30,7 @@ import com.example.bullseye_android.games.turn_based.units.EasyPatroller;
 import com.example.bullseye_android.games.turn_based.units.EasyWanderer;
 import com.example.bullseye_android.games.turn_based.units.Unit;
 import com.example.bullseye_android.music.MusicActivity;
+import com.example.bullseye_android.music.MusicManager;
 import com.example.bullseye_android.util.SfxManager;
 
 import java.util.ArrayList;
@@ -376,6 +377,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
             } else {
                 return;
             }
+            MusicManager.getInstance().stop();
             switch (winner) {
                 case "player":
                     //player wins
@@ -409,7 +411,10 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                         endTurn.setVisibility(View.INVISIBLE);
                         pauseButton.setVisibility(View.INVISIBLE);
 
-                        playAgain.setOnClickListener(view -> pregame());
+                        playAgain.setOnClickListener(view -> {
+                            MusicManager.getInstance().make(TurnBasedActivity.this, getMusicId()).start();
+                            pregame();
+                        });
                         backBtn.setOnClickListener(view -> finish());
                     });
                 }

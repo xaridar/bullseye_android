@@ -39,6 +39,7 @@ import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.GamePauseFragment;
 import com.example.bullseye_android.music.MusicActivity;
+import com.example.bullseye_android.music.MusicManager;
 import com.example.bullseye_android.util.SfxManager;
 import com.example.bullseye_android.util.TimeFormatter;
 
@@ -159,6 +160,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         backBtn.setOnClickListener((view) -> finish());
 
         playAgain.setOnClickListener((view) -> {
+            MusicManager.getInstance().make(this, getMusicId()).start();
             finishedLayout.setVisibility(View.INVISIBLE);
             start.setVisibility(View.VISIBLE);
         });
@@ -248,6 +250,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     }
 
     private void end() {
+        MusicManager.getInstance().stop();
         for (ImageButton view : views) {
             layout.removeView(view);
         }

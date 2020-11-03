@@ -31,6 +31,7 @@ import com.example.bullseye_android.database.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.GamePauseFragment;
 import com.example.bullseye_android.music.MusicActivity;
+import com.example.bullseye_android.music.MusicManager;
 import com.example.bullseye_android.util.SfxManager;
 import com.example.bullseye_android.util.TimeFormatter;
 
@@ -127,6 +128,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
                 }
             }
         }
+        MusicManager.getInstance().stop();
         confetti(konfettiView, this.getApplicationContext());
         board.setVisibility(View.INVISIBLE);
         finishedLayout.setVisibility(View.VISIBLE);
@@ -148,6 +150,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         setScore();
 
         findViewById(R.id.playAgain).setOnClickListener(view -> {
+            MusicManager.getInstance().make(this, getMusicId()).start();
             finishedLayout.setVisibility(View.INVISIBLE);
             diff.setVisibility(View.VISIBLE);
             highScore.setVisibility(View.INVISIBLE);
