@@ -6,7 +6,7 @@ public class MemoryCard {
     private String type;
     private int backColor;
     public static int FRONT_COLOR = R.color.memCardFront;
-    public static String[] CARD_TYPES = {"Caracal", "Cat", "Chicken", "Cow", "Dog", "Duck", "Fish", "Frog", "Horse", "Monkey", "Owl", "Panda", "Pig", "Rabbit", "Snake"};
+    public static String[] CARD_TYPES = {"Bulldog", "Caracal", "Cat", "Chicken", "Cow", "Mouse", "Duck", "Fish", "Frog", "Horse", "Monkey", "Owl", "Panda", "Pig", "Rabbit", "Snake"};
     private boolean faceDown = true;
     public MemoryCard(String type) {
         this.type = type;

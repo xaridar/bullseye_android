@@ -21,21 +21,8 @@ import io.github.mthli.sugartask.SugarTask;
 
 public class SendMail {
 
-    private static SendMail INSTANCE;
-
-    public static SendMail getInstance() {
-        if(INSTANCE == null){
-            INSTANCE = new SendMail();
-        }
-        return INSTANCE;
-    }
-
     private ProgressDialog statusDialog;
     String[] profane;
-
-    public SendMail()  {
-
-    }
 
     public void sendMail(Function<Boolean, Void> onFinish, String fromEmail, String fromPassword,
                          String toEmailList, String emailSubject, String emailBody, Activity activity) {

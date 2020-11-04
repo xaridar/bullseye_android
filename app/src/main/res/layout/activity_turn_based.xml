@@ -424,7 +424,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_strat_img_caracal" />
+            app:srcCompat="@drawable/ic_strat_img_bulldog" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -20,7 +20,7 @@ public class EasyWanderer extends EnemyUnit {
     int maxX;
     int maxY;
 
-    Random random = new Random();
+    Random random;
 
     Tile[][] board;
     boolean updatedBoundingBox = false;
@@ -32,6 +32,7 @@ public class EasyWanderer extends EnemyUnit {
         this.maxX = maxX;
         this.maxY = maxY;
         this.board = board;
+        random = new Random();
         setCurrentPath(generateRandomPoint(graph, board));
     }
 
