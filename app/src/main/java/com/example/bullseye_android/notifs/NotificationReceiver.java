@@ -8,19 +8,21 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bullseye_android.activities.UsersActivity;
+
 public class NotificationReceiver extends BroadcastReceiver {
     Notifications notif;
     Context ctx;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i("recive", "service recieved");
+        Log.i("recieve", "service recieved");
         ctx = context;
         if (intent.getAction() == null) return;
         switch (intent.getAction()) {
             case "intent1":
                 Log.i("alarm", "alarm");
-                this.sendNotifications("Where have you been?", "Please come back we miss you. There is lots of stuff for you to do.", null);
+                this.sendNotifications("Where have you been?", "Please come back we miss you. There is lots of stuff for you to do.", UsersActivity.class);
                 break;
             case "intent2":
                 Log.i("daily", "daily notifs working");
@@ -33,6 +35,6 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     public void sendNotifications(String title, String text, Class <? extends AppCompatActivity> activity){
         notif = new Notifications(ctx);
-        notif.createNotification(ctx, title, text, activity);
+    //    notif.createNotification(ctx, title, text, activity);
     }
 }
