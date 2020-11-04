@@ -14,9 +14,18 @@
         android:roundIcon="@mipmap/bullseye_logo_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialThemeWithActionBar">
-        <activity android:name=".activities.CharacterIntroActivity" android:screenOrientation="portrait" android:theme="@style/MaterialThemeWithActionBar" android:label="Characters">
+        <activity android:name=".activities.GamesActivity" android:screenOrientation="portrait" android:label="Games" android:theme="@style/MaterialThemeWithActionBar">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.UserDashboardActivity"/>
+        </activity>
+        <activity
+            android:name=".activities.CharacterIntroActivity"
+            android:label="Characters"
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialThemeWithActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.UserDashboardActivity" />
         </activity>
         <activity
             android:name=".games.turn_based.TurnBasedInstructions"
