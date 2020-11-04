@@ -4,6 +4,7 @@ package com.example.bullseye_android.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -79,5 +80,9 @@ public class UserDashboardActivity extends AppCompatActivity implements MusicAct
             startActivity(intent);
         });
         logOutButton.setOnClickListener(v -> finish());
+    }
+
+    public void chars(View view) {
+        startActivity(new Intent(this, CharacterIntroActivity.class));
     }
 }

@@ -127,10 +127,6 @@ public class  StatsActivity extends AppCompatActivity implements MusicActivity {
             tab.setValue(MEMORY);
         });
 
-        currentUser.observe(this, user -> {
-
-        });
-
         tab.observe(this, integer -> {
             TextView tv = null;
             if (integer == MEMORY) {

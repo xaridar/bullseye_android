@@ -3,7 +3,7 @@
     package="com.example.bullseye_android">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".App"
@@ -14,7 +14,14 @@
         android:roundIcon="@mipmap/bullseye_logo_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialThemeWithActionBar">
-        <activity android:name=".games.turn_based.TurnBasedInstructions" android:theme="@style/TurnBasedGameInstructions" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.CharacterIntroActivity" android:screenOrientation="portrait" android:theme="@style/MaterialThemeWithActionBar" android:label="Characters">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.UserDashboardActivity"/>
+        </activity>
+        <activity
+            android:name=".games.turn_based.TurnBasedInstructions"
+            android:screenOrientation="portrait"
+            android:theme="@style/TurnBasedGameInstructions" />
         <activity
             android:name=".games.turn_based.TurnBasedActivity"
             android:screenOrientation="portrait"
@@ -26,9 +33,9 @@
             android:exported="true" />
 
         <receiver
-            android:process=":remote"
             android:name=".notifs.NotificationReceiver"
-            android:permission="TODO">
+            android:permission="TODO"
+            android:process=":remote">
             <intent-filter>
                 <action android:name="intent1" />
                 <action android:name="intent2" />

@@ -84,4 +84,6 @@
     <string name="sounds">Sounds</string>
     <string name="strategy">Strategy</string>
     <string name="change_email">Change Email</string>
+    <string name="strategy_game">Strategy Game</string>
+    <string name="meet_the_characters">Meet the Characters</string>
 </resources>
