@@ -22,6 +22,7 @@ import com.example.bullseye_android.games.sorting.SortingActivity;
 import com.example.bullseye_android.games.turn_based.TurnBasedActivity;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.music.MusicManager;
+import com.google.android.material.button.MaterialButton;
 
 public class UserDashboardActivity extends AppCompatActivity implements MusicActivity {
 
@@ -64,22 +65,25 @@ public class UserDashboardActivity extends AppCompatActivity implements MusicAct
             avatarImg.setImageResource(getResources().getIdentifier("pfp_" + user.getAvatar(), "drawable", "com.example.bullseye_android"));
         });
 
-        Button matchingGameButton = findViewById(R.id.matchingGameButton);
-        Button sortingGameButton = findViewById(R.id.sortingGameButton);
-        Button turnBasedGameButton = findViewById(R.id.turnBasedGameButton);
         Button settingsButton = findViewById(R.id.settingsButton);
         Button logOutButton = findViewById(R.id.logOutButton);
         Button surveyButton = findViewById(R.id.surveyButton);
+        MaterialButton gamesButton = findViewById(R.id.gamesButton);
 
+<<<<<<< HEAD
         matchingGameButton.setOnClickListener(v -> startActivity(new Intent(UserDashboardActivity.this, MemoryActivity.class)));
         surveyButton.setOnClickListener(v -> startActivity(new Intent(UserDashboardActivity.this, SurveyActivity.class)));
         sortingGameButton.setOnClickListener(v -> startActivity(new Intent(UserDashboardActivity.this, SortingActivity.class)));
         turnBasedGameButton.setOnClickListener(v -> startActivity(new Intent(UserDashboardActivity.this, TurnBasedActivity.class)));
+=======
+        surveyButton.setOnClickListener(v -> startActivity(new Intent(this, Survey.class)));
+>>>>>>> 2fc4846d1c5660c81a86e472e227be747c00f2ae
         settingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(UserDashboardActivity.this, UsersSettingsActivity.class);
             startActivity(intent);
         });
         logOutButton.setOnClickListener(v -> finish());
+        gamesButton.setOnClickListener(v -> startActivity(new Intent(this, GamesActivity.class)));
     }
 
     public void chars(View view) {
