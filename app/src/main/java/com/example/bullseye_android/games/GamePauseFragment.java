@@ -18,8 +18,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.activities.UsersSettingsActivity;
-import com.example.bullseye_android.database.User;
-import com.example.bullseye_android.database.UserSerializable;
+import com.example.bullseye_android.database.user.User;
+import com.example.bullseye_android.database.user.UserSerializable;
 import com.example.bullseye_android.util.SfxManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

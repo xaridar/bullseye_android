@@ -3,18 +3,27 @@ package com.example.bullseye_android.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
-import com.example.bullseye_android.database.Fetcher;
-import com.example.bullseye_android.database.User;
-import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.database.survey.Survey;
+import com.example.bullseye_android.database.survey.SurveyViewModel;
+import com.example.bullseye_android.database.user.Fetcher;
+import com.example.bullseye_android.database.user.User;
+import com.example.bullseye_android.database.user.UserViewModel;
+import com.example.bullseye_android.mailsender.SendMail;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.music.MusicManager;
+
+import java.util.List;
 
 public class AdminDashboardActivity extends AppCompatActivity implements MusicActivity {
 
@@ -55,6 +64,31 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
             startActivity(intent);
         });
         logOutButton.setOnClickListener(v -> finish());
+        sendSurveyEmail();
+    }
+
+    public void sendSurveyEmail(){
+        String subject = "Survey Results";
+        final StringBuilder body = new StringBuilder();
+        body.append("<html>");
+        SurveyViewModel viewModel = ViewModelProviders.of(this).get(SurveyViewModel.class);
+        LiveData<List<Survey>> data = viewModel.getAll();
+        data.observe(this, new Observer<List<Survey>>() {
+            @Override
+            public void onChanged(List<Survey> surveys) {
+                Log.i("Database change", surveys.toString());
+                for (Survey survey : surveys) {
+                    body.append(" ").append(SurveyActivity.getRadioAnswers(survey.getRadioAnswer()));
+                    body.append(" ").append(survey.getInputText());
+                    body.append("<br>");
+                }
+                body.append("</html>");
+                new SendMail().sendMail(null, "bullseyeapp.no.reply@gmail.com", "B7nuXx\"3}A", "aakashsell@gmail.com", subject, body.toString(), AdminDashboardActivity.this);
+                data.removeObserver(this);
+            }
+
+            });
+
     }
 
     @Override

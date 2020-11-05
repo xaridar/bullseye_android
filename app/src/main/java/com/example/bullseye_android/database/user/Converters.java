@@ -1,4 +1,4 @@
-package com.example.bullseye_android.database;
+package com.example.bullseye_android.database.user;
 
 import androidx.room.TypeConverter;
 

@@ -28,4 +28,8 @@ public class Notifications extends ContextWrapper{
         super(base);
         notify = new Notify(this);
     }
+
+    public void createNotification(Context context, String title, String text, Class<? extends AppCompatActivity> activity){
+        notify.createNotification(context, title, text, activity);
+    }
 }

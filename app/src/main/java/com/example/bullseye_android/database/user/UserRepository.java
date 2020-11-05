@@ -1,15 +1,9 @@
-package com.example.bullseye_android.database;
+package com.example.bullseye_android.database.user;
 
 import android.app.Application;
-import android.os.AsyncTask;
-import android.provider.ContactsContract;
-import android.telecom.Call;
-import android.util.Log;
 
-import androidx.constraintlayout.helper.widget.Flow;
 import androidx.lifecycle.LiveData;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -17,8 +11,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-
-import io.reactivex.Flowable;
 
 public class UserRepository {
 

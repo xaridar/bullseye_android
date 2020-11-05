@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.bullseye_android.R;
-import com.example.bullseye_android.database.User;
-import com.example.bullseye_android.database.UserSerializable;
+import com.example.bullseye_android.database.user.User;
+import com.example.bullseye_android.database.user.UserSerializable;
 import com.example.bullseye_android.util.TimeFormatter;
 
 public class SortingStatsFragment extends Fragment {

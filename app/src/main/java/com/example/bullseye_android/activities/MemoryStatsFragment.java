@@ -12,8 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.bullseye_android.R;
-import com.example.bullseye_android.database.User;
-import com.example.bullseye_android.database.UserSerializable;
+import com.example.bullseye_android.database.user.User;
+import com.example.bullseye_android.database.user.UserSerializable;
 import com.example.bullseye_android.util.TimeFormatter;
 
 public class MemoryStatsFragment extends Fragment {

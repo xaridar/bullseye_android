@@ -29,7 +29,7 @@ public class Notify extends ContextWrapper {
 
     public Notify(Context base) {
         super(base);
-        this.createNotification(this, null, null, null);
+        //this.createNotification(this, null, null, null);
         this.createNotificationChannel();
         //this.cancelAlarm();
     }
