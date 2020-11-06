@@ -30,22 +30,22 @@ public class CharacterIntroActivity extends AppCompatActivity {
 
     private List<CharDescriber> createCharDescribers() {
         List<CharDescriber> chars = new ArrayList<>();
-        chars.add(new CharDescriber("Bullseye the Bulldog", "Bullseye's mascot!", "bulldog", this));
+        chars.add(new CharDescriber("Bullseye the Bulldog", "Bullseye is the leader of the group, always in charge of group games!", "bulldog", this));
         chars.add(new CharDescriber("Carl the Caracal", "Carl is a playful caracal, ready to have some fun in Bullseye!", "caracal", this));
-        chars.add(new CharDescriber("Katie the Cat", "Bullseye's mascot!", "cat", this));
-        chars.add(new CharDescriber("Cheri the Chicken", "Bullseye's mascot!", "chicken", this));
-        chars.add(new CharDescriber("Kristoff the Cow", "Bullseye's mascot!", "cow", this));
-        chars.add(new CharDescriber("Filip the Fish", "Bullseye's mascot!", "fish", this));
-        chars.add(new CharDescriber("Farsch the Frog", "Bullseye's mascot!", "frog", this));
-        chars.add(new CharDescriber("Guggerz the Goose", "Bullseye's mascot!", "goose", this));
-        chars.add(new CharDescriber("Horace the Horse", "Bullseye's mascot!", "horse", this));
-        chars.add(new CharDescriber("Maurice the Monkey", "Bullseye's mascot!", "monkey", this));
-        chars.add(new CharDescriber("Morty the Mouse", "Bullseye's mascot!", "mouse", this));
-        chars.add(new CharDescriber("Oswald the Owl", "Bullseye's mascot!", "owl", this));
-        chars.add(new CharDescriber("Pendleton the Panda", "Bullseye's mascot!", "panda", this));
-        chars.add(new CharDescriber("Pearl the Pig", "Bullseye's mascot!", "pig", this));
-        chars.add(new CharDescriber("Ravenna the Rabbit", "Bullseye's mascot!", "rabbit", this));
-        chars.add(new CharDescriber("Shaquini the Snake", "Bullseye's mascot!", "snake", this));
+        chars.add(new CharDescriber("Katie the Cat", "Katie's a fancy cat, but she's got a couple tricks u her sleeve...", "cat", this));
+        chars.add(new CharDescriber("Cheri the Chicken", "Cheri loves to cook - she makes the best omelette in town!", "chicken", this));
+        chars.add(new CharDescriber("Kristoff the Cow", "Kristoff is always hungry for something. CHOMP!", "cow", this));
+        chars.add(new CharDescriber("Filip the Fish", "Filip likes playing fish games and eating fish food.", "fish", this));
+        chars.add(new CharDescriber("Farsch the Frog", "Farsch is a fast and fun frog friend.", "frog", this));
+        chars.add(new CharDescriber("Guggerz the Goose", "It's amazing how much noise Guggerz can make for such a small bird.", "goose", this));
+        chars.add(new CharDescriber("Harrison the Horse", "Harrison is the fastest one of the group - he can even beat Farsch in a race!", "horse", this));
+        chars.add(new CharDescriber("Maurice the Monkey", "Maurice loves to swing around the jungle with all his friends!", "monkey", this));
+        chars.add(new CharDescriber("Morty the Mouse", "He may be small, but Morty's a fierce competitor.", "mouse", this));
+        chars.add(new CharDescriber("Oswald the Owl", "HOO! HOO!", "owl", this));
+        chars.add(new CharDescriber("Pendleton the Panda", "This panda may look tough from the outside, but in his free time he collects quarters.", "panda", this));
+        chars.add(new CharDescriber("Pearl the Pig", "Pearl's ready to play some games with everybody!", "pig", this));
+        chars.add(new CharDescriber("Ravenna the Rabbit", "Ravenna hops around and paints pictures of carrots all day.", "rabbit", this));
+        chars.add(new CharDescriber("Shaquini the Snake", "Shaquini loves slithering around in the field.", "snake", this));
         return chars;
     }
 

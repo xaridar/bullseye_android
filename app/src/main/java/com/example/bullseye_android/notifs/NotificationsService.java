@@ -40,7 +40,7 @@ public class NotificationsService extends Service {
         Log.i("service", "service started");
         service = NotificationsService.this;
         notif = new Notifications(this);
-        service.startForeground(101, notif.getNotification());
+       // service.startForeground(101, notif.getNotification());
         sendNotification();
         setAlarm();
         dailyNotif();
@@ -76,7 +76,7 @@ public class NotificationsService extends Service {
 
     public void sendNotification(){
 
-        notif.createNotification(this, "background","this is a background notification", null);
+       // notif.createNotification(this, "background","this is a background notification", null);
     }
     public void dailyNotif(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

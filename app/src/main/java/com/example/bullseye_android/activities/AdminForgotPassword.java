@@ -2,8 +2,6 @@
 package com.example.bullseye_android.activities;
 
 import android.os.Bundle;
-import android.text.Html;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,11 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
-import com.example.bullseye_android.database.Fetcher;
-import com.example.bullseye_android.database.User;
-import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.database.user.Fetcher;
+import com.example.bullseye_android.database.user.User;
+import com.example.bullseye_android.database.user.UserViewModel;
 import com.example.bullseye_android.mailsender.SendMail;
-import com.example.bullseye_android.util.ContinueFromEditTextListener;
 import com.example.bullseye_android.util.TempPasswordGenerator;
 
 import java.io.IOException;

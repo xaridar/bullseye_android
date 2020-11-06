@@ -51,7 +51,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activities.Survey" />
+        <activity android:name=".activities.SurveyActivity" />
         <activity
             android:name=".games.memory.MemoryInstructionsActivity"
             android:screenOrientation="portrait"

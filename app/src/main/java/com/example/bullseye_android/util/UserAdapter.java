@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.activities.MoreUsersActivity;
-import com.example.bullseye_android.database.User;
-import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.database.user.User;
+import com.example.bullseye_android.database.user.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

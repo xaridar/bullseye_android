@@ -21,8 +21,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
-import com.example.bullseye_android.database.User;
-import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.database.user.User;
+import com.example.bullseye_android.database.user.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.GamePauseFragment;
 import com.example.bullseye_android.games.turn_based.units.Follower;

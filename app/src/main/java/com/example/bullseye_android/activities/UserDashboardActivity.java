@@ -14,9 +14,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bullseye_android.R;
-import com.example.bullseye_android.database.Fetcher;
-import com.example.bullseye_android.database.User;
-import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.database.user.Fetcher;
+import com.example.bullseye_android.database.user.User;
+import com.example.bullseye_android.database.user.UserViewModel;
 import com.example.bullseye_android.games.memory.MemoryActivity;
 import com.example.bullseye_android.games.sorting.SortingActivity;
 import com.example.bullseye_android.games.turn_based.TurnBasedActivity;
@@ -69,8 +69,7 @@ public class UserDashboardActivity extends AppCompatActivity implements MusicAct
         Button logOutButton = findViewById(R.id.logOutButton);
         Button surveyButton = findViewById(R.id.surveyButton);
         MaterialButton gamesButton = findViewById(R.id.gamesButton);
-
-        surveyButton.setOnClickListener(v -> startActivity(new Intent(this, Survey.class)));
+        surveyButton.setOnClickListener(v -> startActivity(new Intent(this, SurveyActivity.class)));
         settingsButton.setOnClickListener(v -> {
             Intent intent = new Intent(UserDashboardActivity.this, UsersSettingsActivity.class);
             startActivity(intent);

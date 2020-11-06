@@ -1,9 +1,6 @@
 package com.example.bullseye_android.util;
 
-import android.content.Context;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +9,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bullseye_android.R;
-import com.example.bullseye_android.activities.StatsActivity;
-import com.example.bullseye_android.database.User;
-import com.example.bullseye_android.database.UserViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CharAdapter extends RecyclerView.Adapter<CharAdapter.CharViewHolder> {

@@ -26,9 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bullseye_android.R;
-import com.example.bullseye_android.database.Fetcher;
-import com.example.bullseye_android.database.User;
-import com.example.bullseye_android.database.UserViewModel;
+import com.example.bullseye_android.database.user.Fetcher;
+import com.example.bullseye_android.database.user.User;
+import com.example.bullseye_android.database.user.UserViewModel;
 import com.example.bullseye_android.notifs.Notifications;
 import com.google.android.material.button.MaterialButton;
 
@@ -54,7 +54,7 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Notifications notifications = new Notifications(this);
-        notifications.createNotification(this,"User", "Good Job you got into the users screen", null);
+        notifications.createNotification(this,"User", "Good Job you got into the users screen", this.getClass());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users);
 

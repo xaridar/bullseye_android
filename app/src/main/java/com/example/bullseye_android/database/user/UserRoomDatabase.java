@@ -1,5 +1,5 @@
 // all database elements were created by Elliot
-package com.example.bullseye_android.database;
+package com.example.bullseye_android.database.user;
 
 import android.content.Context;
 
