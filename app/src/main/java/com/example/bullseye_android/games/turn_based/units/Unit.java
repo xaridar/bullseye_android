@@ -11,7 +11,6 @@ import com.example.bullseye_android.games.turn_based.MoveableUnit;
 import com.example.bullseye_android.games.turn_based.Node;
 import com.example.bullseye_android.games.turn_based.Owners;
 import com.example.bullseye_android.games.turn_based.Tile;
-import com.example.bullseye_android.games.turn_based.TurnBasedActivity;
 import com.example.bullseye_android.music.MusicActivity;
 
 import java.util.ArrayList;
@@ -109,11 +108,9 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
                     }
                     onMovementFinished(map, graph);
                     if(currentPath.size() <= 1){
-                        onPathfindingEnd(map, graph);
-
+                        onGoalReached(map, graph);
                     }
                 }
-
 
             }
         }, moveTime, moveTime);
@@ -130,7 +127,7 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
     }
 
     @Override
-    public void onPathfindingEnd(Tile[][] map, Node[][] graph) {
+    public void onGoalReached(Tile[][] map, Node[][] graph) {
         currentPath = null;
     }
 

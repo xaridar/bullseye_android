@@ -9,7 +9,6 @@ public class BoardActor {
     public String name;
     public int x;
     public int y;
-    public ArrayList<Integer> tags;
     public String icon;
 
     public String getName() {
@@ -18,18 +17,6 @@ public class BoardActor {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public ArrayList<Integer> getTags() {
-        return tags;
-    }
-
-    public void setTags(ArrayList<Integer> tags) {
-        this.tags = tags;
-    }
-
-    public void addTag(int tag){
-        tags.add(tag);
     }
 
     public String getIcon() {
