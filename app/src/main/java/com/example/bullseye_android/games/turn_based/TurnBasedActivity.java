@@ -37,6 +37,7 @@ import com.example.bullseye_android.music.MusicManager;
 import com.example.bullseye_android.util.SfxManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -132,7 +133,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                     }
                 }
             }
-
+            Log.i("TB", Arrays.toString(new Node[]{graph[location.first][location.second]}));
             switch(state){
                 case 0:
 
@@ -302,38 +303,30 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         graph = Pathfinder.generatePathfindingGraph(mapSizeX, mapSizeY);
 
-//        int playerUnitNum = 3;
-//        for(int i = 1; i< playerUnitNum+1; i++){
-//            Unit playerUnit = new Unit("example" + (i+1), i, 6,"ic_strat_img_bulldog", 1, Owners.PLAYER, board, this);
-//            playerUnits.add(playerUnit);
-//        }
+        int playerUnitNum = 3;
+        for(int i = 1; i< playerUnitNum+1; i++){
+            Unit playerUnit = new Unit("example" + (i+1), i, 6,"ic_strat_img_bulldog", 1, Owners.PLAYER, board, this);
+            playerUnits.add(playerUnit);
+        }
 
-        Wanderer easyWanderer1 = new WandererHard("wanderer1", 0,0,"ic_mem_img_frog", 2, graph, board, this, 0,0,4,6);
-        Wanderer easyWanderer2 = new WandererHard("wanderer2", 1,0,"ic_mem_img_chicken", 2, graph, board, this, 0,0,4,6);
-        Wanderer easyWanderer3 = new WandererHard("wanderer3", 2,0,"ic_mem_img_caracal", 2, graph, board, this, 0,0,4,6);
-        Wanderer easyWanderer4 = new WandererHard("wanderer4", 3,0,"ic_mem_img_fish", 2, graph, board, this, 0,0,4,6);
-        Wanderer easyWanderer5 = new WandererHard("wanderer5", 4,0,"ic_mem_img_cat", 2, graph, board, this, 0,0,4,6);
-
+        Wanderer easyWanderer1 = new WandererHard("wanderer1", 4,1,"ic_strat_img_frog", 2, graph, board, this, 0,0,4,6);
         computerUnits.add(easyWanderer1);
-        computerUnits.add(easyWanderer2);
-        computerUnits.add(easyWanderer3);
-        computerUnits.add(easyWanderer4);
-        computerUnits.add(easyWanderer5);
 
 
-//        Patroller easyPatroller1 = new PatrollerEasy("patroller1", 0,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(0, 4))));
-//        Patroller easyPatroller2 = new PatrollerEasy("patroller2", 1,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(1, 4))));
-//        Patroller easyPatroller3 = new PatrollerEasy("patroller3", 2,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(2, 4))));
-//        Patroller easyPatroller4 = new PatrollerEasy("patroller4", 3,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(3, 4))));
-//        Patroller easyPatroller5 = new PatrollerEasy("patroller5", 4,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(4, 4))));
-//        computerUnits.add(easyPatroller1);
-//        computerUnits.add(easyPatroller2);
-//        computerUnits.add(easyPatroller3);
-//        computerUnits.add(easyPatroller4);
-//        computerUnits.add(easyPatroller5);
+        Patroller easyPatroller1 = new PatrollerEasy("patroller1", 0,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(0, 4))));
+        Patroller easyPatroller2 = new PatrollerEasy("patroller2", 1,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(1, 4))));
+        Patroller easyPatroller3 = new PatrollerEasy("patroller3", 2,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(2, 4))));
+        Patroller easyPatroller4 = new PatrollerEasy("patroller4", 3,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(3, 4))));
+        Patroller easyPatroller5 = new PatrollerEasy("patroller5", 4,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(4, 4))));
+        computerUnits.add(easyPatroller1);
+        computerUnits.add(easyPatroller2);
+        computerUnits.add(easyPatroller3);
+        computerUnits.add(easyPatroller4);
+        computerUnits.add(easyPatroller5);
 
 //        Follower follower = new Follower("follower", 0, 0, "ic_mem_img_snake", 1, Owners.EASY, graph, board, this);
 //        computerUnits.add(follower);
+
         startingAmount = computerUnits.size();
 
         won = false;
@@ -382,7 +375,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                 computerUnit.update();
             }
         }
-//        checkWin();
+        checkWin();
     }
 
     private void checkWin(){

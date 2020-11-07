@@ -19,19 +19,8 @@ public class PatrollerHard extends Patroller {
     protected ArrayList<Node> onPatrolPathFinish(ArrayList<Node> currentPath) {
         for(int i=0; i < currentPath.size(); i++){
             Node lastPoint = null;
-            if(i > 0){
-                lastPoint = currentPath.get(i-1);
-            }else{
-                lastPoint = currentPath.get(currentPath.size()-1);
-            }
-            if(currentPath.get(i) == lastPoint){
-                if(i > 0){
-                    currentPath.remove(i-1);
-                }else{
-                    currentPath.remove(currentPath.size()-1);
-                }
-
-            }
+            lastPoint = i > 0 ? currentPath.get(i-1) : currentPath.get(currentPath.size()-1);
+            if(currentPath.get(i) == lastPoint) currentPath.remove(i > 0 ? i-1 : currentPath.size()-1);
         }
         return currentPath;
     }

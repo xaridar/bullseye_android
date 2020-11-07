@@ -12,9 +12,4 @@ public class EnemyUnit extends Unit {
     public EnemyUnit(String name, int x, int y, String icon, int movespeed, Owners owner, Tile[][] board, LifecycleOwner ctx) {
         super(name, x, y, icon, movespeed, owner, board, ctx);
     }
-
-    @Override
-    public void onMovementFinished(Tile[][] map, Node[][] graph) {
-        currentPath.add(currentPath.remove(0));
-    }
 }

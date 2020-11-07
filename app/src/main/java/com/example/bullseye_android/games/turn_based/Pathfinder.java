@@ -28,7 +28,7 @@ public class Pathfinder {
 
         if(!unitCanEnterTile(x, y, board, unit)) {
             // Clicked on tile that unit cannot walk on
-            Log.i("TB",unit.getName() + ": returned unwalkable: "+x+", "+y);
+//            Log.i("TB",unit.getName() + ": returned unwalkable: "+x+", "+y);
             return new ArrayList<>();
         }
 
@@ -95,7 +95,7 @@ public class Pathfinder {
 
         if(prev.get(target) == null) {
             // No route between our target and the source
-            Log.i("PF",unit.getName() + ": no route: "+x+", "+y);
+//            Log.i("PF",unit.getName() + ": no route: "+x+", "+y);
             return new ArrayList<>();
         }
 
