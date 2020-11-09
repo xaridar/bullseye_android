@@ -10,7 +10,9 @@ import com.example.bullseye_android.games.turn_based.BoardActor;
 import com.example.bullseye_android.games.turn_based.MoveableUnit;
 import com.example.bullseye_android.games.turn_based.Node;
 import com.example.bullseye_android.games.turn_based.Owners;
+import com.example.bullseye_android.games.turn_based.Pathfinder;
 import com.example.bullseye_android.games.turn_based.Tile;
+import com.example.bullseye_android.games.turn_based.TurnBasedActivity;
 import com.example.bullseye_android.music.MusicActivity;
 
 import java.util.ArrayList;
@@ -25,19 +27,27 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
 
     private Owners owner;
 
+    Tile[][] board;
+    Node[][] graph;
+
     Timer timer;
+
+    TurnBasedActivity game;
 
     private boolean moved = false;
     MutableLiveData<Boolean> dead = new MutableLiveData<>();
     private boolean justDied = false;
 
-    public Unit(String name, int x, int y, String icon, int movespeed, Owners owner, Tile[][] board, LifecycleOwner ctx){
+    public Unit(String name, int x, int y, String icon, int movespeed, Owners owner, Tile[][] board, Node[][] graph, LifecycleOwner ctx, TurnBasedActivity game){
         this.name = name;
         this.x = x;
         this.y = y;
         this.icon = icon;
         this.movespeed = movespeed;
         this.owner = owner;
+        this.game = game;
+        this.board = board;
+        this.graph = graph;
         dead.setValue(false);
 
         dead.observe(ctx, isDead ->{
@@ -55,7 +65,8 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
 
     @Override
     public void update() {
-
+        board[x][y].setUnit(currentPath != null && (currentPath.size() > 0 && ((currentPath.get(0).x != x) && (currentPath.get(0).y != y))) ? null : this);
+        board = game.getBoard();
     }
 
     @Override
@@ -63,7 +74,7 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
 
         final float[] remainingMovement = {(float) movespeed};
         int moveTime;
-        if(currentPath != null && currentPath.size() > 0) {
+        if(currentPath != null && currentPath.size() > 1) {
             moveTime = 600 / Math.min(movespeed, currentPath.size() - 1);
         }else{
             moveTime = 600;
@@ -81,34 +92,26 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
                 }
                 Tile oldTile;
                 Tile newTile;
-                if(currentPath.size() > 0) {
+                if(currentPath.size() > 1) {
                     oldTile = map[currentPath.get(0).x][currentPath.get(0).y];
                     newTile = map[currentPath.get(1).x][currentPath.get(1).y];
-                    if(newTile.getUnit() == null) {
+                    if(Pathfinder.unitCanEnterTile(newTile.x, newTile.y, board, Unit.this)) {
+                        if (newTile.getUnit() != null && (newTile.getUnit() != Unit.this)) {
+                            onKillUnit(newTile.getUnit(), map, graph);
+                        }
                         remainingMovement[0] -= map[currentPath.get(1).x][currentPath.get(1).y].getCost();
                         oldTile.setUnit(null);
                         newTile.setUnit(Unit.this);
+                        Unit.this.x = newTile.x;
+                        Unit.this.y = newTile.y;
+
+                        if (currentPath.size() <= 1) {
+                            onGoalReached(map, graph);
+                        }else{
+                            onMovementFinished(map, graph);
+                        }
                     }else{
-                        if((newTile.getUnit().getOwner() != Unit.this.getOwner()) || newTile.getUnit() == Unit.this){
-                            if(newTile.getUnit() != Unit.this){
-                                onKillUnit(newTile.getUnit(), map, graph);
-                            }
-                            remainingMovement[0] -= map[currentPath.get(1).x][currentPath.get(1).y].getCost();
-                            oldTile.setUnit(null);
-                            newTile.setUnit(Unit.this);
-                        }
-                    }
-                    for (int x = 0; x < map.length; x++) {
-                        for (int y = 0; y < map[x].length; y++) {
-                            if (map[x][y].getUnit() == Unit.this) {
-                                Unit.this.x = x;
-                                Unit.this.y = y;
-                            }
-                        }
-                    }
-                    onMovementFinished(map, graph);
-                    if(currentPath.size() <= 1){
-                        onGoalReached(map, graph);
+                        onMovementInterrupted(map, graph);
                     }
                 }
 
@@ -129,6 +132,11 @@ public class Unit extends BoardActor implements MoveableUnit, MusicActivity {
     @Override
     public void onGoalReached(Tile[][] map, Node[][] graph) {
         currentPath = null;
+    }
+
+    @Override
+    public void onMovementInterrupted(Tile[][] map, Node[][] graph) {
+
     }
 
     public ArrayList<Node> getCurrentPath() {

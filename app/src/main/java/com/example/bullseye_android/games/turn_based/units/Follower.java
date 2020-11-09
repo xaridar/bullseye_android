@@ -6,6 +6,7 @@ import com.example.bullseye_android.games.turn_based.Node;
 import com.example.bullseye_android.games.turn_based.Owners;
 import com.example.bullseye_android.games.turn_based.Pathfinder;
 import com.example.bullseye_android.games.turn_based.Tile;
+import com.example.bullseye_android.games.turn_based.TurnBasedActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,10 +17,9 @@ public class Follower extends EnemyUnit {
     Unit closestUnit = null;
 
     Node[][] graph;
-    Tile[][] board;
 
-    public Follower(String name, int x, int y, String icon, int movespeed, Owners owner, Node[][] graph, Tile[][] board, LifecycleOwner ctx) {
-        super(name, x, y, icon, movespeed, owner, board, ctx);
+    public Follower(String name, int x, int y, String icon, int movespeed, Owners owner, Node[][] graph, Tile[][] board, LifecycleOwner ctx, TurnBasedActivity game) {
+        super(name, x, y, icon, movespeed, owner, board, graph, ctx, game);
         this.graph = graph;
         this.board = board;
         closestUnit = getClosestUnit();
