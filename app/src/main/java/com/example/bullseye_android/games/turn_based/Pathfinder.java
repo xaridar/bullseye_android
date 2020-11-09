@@ -206,4 +206,8 @@ public class Pathfinder {
         return (float) tile.getCost();
 
     }
+
+    public static boolean unitCanReachPoint(int targetX, int targetY, Tile[][] board, Node[][] graph, Unit unit){
+        return generatePathTo(unit.x, unit.y, targetX, targetY, graph, board, unit).size() != 0;
+    }
 }

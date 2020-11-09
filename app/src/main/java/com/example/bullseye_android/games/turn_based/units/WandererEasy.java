@@ -5,10 +5,12 @@ import androidx.lifecycle.LifecycleOwner;
 import com.example.bullseye_android.games.turn_based.Node;
 import com.example.bullseye_android.games.turn_based.Owners;
 import com.example.bullseye_android.games.turn_based.Tile;
+import com.example.bullseye_android.games.turn_based.TurnBasedActivity;
 
 public class WandererEasy extends Wanderer {
-    public WandererEasy(String name, int x, int y, String icon, int movespeed, Node[][] graph, Tile[][] board, LifecycleOwner ctx, int minX, int minY, int maxX, int maxY) {
-        super(name, x, y, icon, movespeed, Owners.EASY, graph, board, ctx, minX, minY, maxX, maxY);
+
+    public WandererEasy(String name, int x, int y, String icon, int movespeed, Node[][] graph, Tile[][] board, LifecycleOwner ctx, TurnBasedActivity game, int minX, int minY, int maxX, int maxY) {
+        super(name, x, y, icon, movespeed, Owners.EASY, graph, board, ctx, game, minX, minY, maxX, maxY);
         showNextLocation(board);
     }
 
@@ -63,5 +65,25 @@ public class WandererEasy extends Wanderer {
             }
             map[currentPath.get(1).x][currentPath.get(1).y].setIcon("ic_strat_img_" + direction);
         }
+    }
+
+    @Override
+    public void setJustDied(boolean justDied) {
+        if(currentPath.size() > 1){
+            for(Tile[] tiles : board){
+                for(Tile tile : tiles){
+                    tile.setPadding(0,0,0,0);
+                    tile.setIcon("");
+                }
+            }
+        }
+        super.setJustDied(justDied);
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        showNextLocation(board);
+
     }
 }
