@@ -11,5 +11,6 @@ public interface MoveableUnit {
     void onKillUnit(Unit killedUnit, Tile[][] map, Node[][] graph);
     void onMovementFinished(Tile[][] map, Node[][] graph);
     void onGoalReached(Tile[][] map, Node[][] graph);
+    void onMovementInterrupted(Tile[][] map, Node[][] graph);
 
 }

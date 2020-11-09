@@ -133,7 +133,13 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                     }
                 }
             }
+            Log.i("TB", Arrays.toString(new Tile[]{board[location.first][location.second]}));
             Log.i("TB", Arrays.toString(new Node[]{graph[location.first][location.second]}));
+            Log.i("TB", board[location.first][location.second].getUnit() == null ? "  > Unit is null" : "  > " + board[location.first][location.second].getUnit().getName());
+            Log.i("TB", board[location.first][location.second].getUnit() != null ? board[location.first][location.second].getUnit().getCurrentPath() != null ? "    > " + board[location.first][location.second].getUnit().getCurrentPath().toString() : "" : "" );
+            Log.i("TB", board[location.first][location.second].getUnit() != null ?  "    > " + board[location.first][location.second].getUnit().x + ", " + board[location.first][location.second].getUnit().y : "" );
+
+            Log.i("TB", "  > " + board[location.first][location.second].x + ", " + board[location.first][location.second].y);
             switch(state){
                 case 0:
 
@@ -305,19 +311,19 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         int playerUnitNum = 3;
         for(int i = 1; i< playerUnitNum+1; i++){
-            Unit playerUnit = new Unit("example" + (i+1), i, 6,"ic_strat_img_bulldog", 1, Owners.PLAYER, board, this);
+            Unit playerUnit = new Unit("example" + (i+1), i, 6,"ic_strat_img_bulldog", 1, Owners.PLAYER, board, graph, this, this);
             playerUnits.add(playerUnit);
         }
 
-        Wanderer easyWanderer1 = new WandererHard("wanderer1", 4,1,"ic_strat_img_frog", 2, graph, board, this, 0,0,4,6);
+        Wanderer easyWanderer1 = new WandererEasy("wanderer1", 4,1,"ic_strat_img_frog", 2, graph, board, this, this, 0,0,4,6);
         computerUnits.add(easyWanderer1);
 
 
-        Patroller easyPatroller1 = new PatrollerEasy("patroller1", 0,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(0, 4))));
-        Patroller easyPatroller2 = new PatrollerEasy("patroller2", 1,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(1, 4))));
-        Patroller easyPatroller3 = new PatrollerEasy("patroller3", 2,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(2, 4))));
-        Patroller easyPatroller4 = new PatrollerEasy("patroller4", 3,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(3, 4))));
-        Patroller easyPatroller5 = new PatrollerEasy("patroller5", 4,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(4, 4))));
+        Patroller easyPatroller1 = new PatrollerEasy("patroller1", 0,2,"ic_strat_img_duck",1, graph, board, this, this, new ArrayList<>(Collections.singletonList(new Pair<>(0, 4))));
+        Patroller easyPatroller2 = new PatrollerEasy("patroller2", 1,2,"ic_strat_img_duck",1, graph, board, this, this, new ArrayList<>(Collections.singletonList(new Pair<>(1, 4))));
+        Patroller easyPatroller3 = new PatrollerEasy("patroller3", 2,2,"ic_strat_img_duck",1, graph, board, this, this, new ArrayList<>(Collections.singletonList(new Pair<>(2, 4))));
+        Patroller easyPatroller4 = new PatrollerEasy("patroller4", 3,2,"ic_strat_img_duck",1, graph, board, this, this, new ArrayList<>(Collections.singletonList(new Pair<>(3, 4))));
+        Patroller easyPatroller5 = new PatrollerEasy("patroller5", 4,2,"ic_strat_img_duck",1, graph, board, this, this, new ArrayList<>(Collections.singletonList(new Pair<>(4, 4))));
         computerUnits.add(easyPatroller1);
         computerUnits.add(easyPatroller2);
         computerUnits.add(easyPatroller3);
@@ -338,7 +344,6 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
             for(int y=0;y<buttons[x].length;y++) {
                 ImageButton button = buttons[x][y];
                 Tile tile = board[x][y];
-                button.setPadding(tile.getPadding()[0],tile.getPadding()[1],tile.getPadding()[2],tile.getPadding()[3]);
                 if (tile.getUnit() != null && !tile.getUnit().isDead()) {
                     totalUnits++;
                     button.setImageResource(getResources().getIdentifier(tile.getUnit().getIcon(), "drawable", "com.example.bullseye_android"));
@@ -347,6 +352,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                 }else {
                     button.setImageResource(0);
                 }
+                button.setPadding(tile.getPadding()[0],tile.getPadding()[1],tile.getPadding()[2],tile.getPadding()[3]);
             }
         }
         for(Unit playerUnit : playerUnits) {
@@ -435,6 +441,10 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         }
     }
+
+    public Tile[][] getBoard(){ return board; }
+
+    public Node[][] getGraph(){ return graph; }
 
     private int calcPoints(int moves, int remaining) {
         // determine a good points algorithm
