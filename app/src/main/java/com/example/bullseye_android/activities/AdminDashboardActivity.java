@@ -4,6 +4,7 @@ package com.example.bullseye_android.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.music.MusicManager;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class AdminDashboardActivity extends AppCompatActivity implements MusicActivity {
 
@@ -53,6 +55,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
 
         Button statsButton = findViewById(R.id.adminStatsButton);
         Button settingsButton = findViewById(R.id.adminSettingsButton);
+        Button surveyButton = findViewById(R.id.adminSurveyButton);
         Button logOutButton = findViewById(R.id.adminLogOutButton);
         TextView adminWelcome = findViewById(R.id.adminWelcomeText);
 
@@ -63,8 +66,14 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
             Intent intent = new Intent(AdminDashboardActivity.this, AdminSettingsActivity.class);
             startActivity(intent);
         });
+        surveyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendSurveyEmail();
+            }
+        });
         logOutButton.setOnClickListener(v -> finish());
-        sendSurveyEmail();
+
     }
 
     public void sendSurveyEmail(){
@@ -90,6 +99,8 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
             });
 
     }
+
+
 
     @Override
     public int getMusicId() {

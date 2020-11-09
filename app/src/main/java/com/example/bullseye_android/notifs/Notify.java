@@ -25,13 +25,12 @@ public class Notify extends ContextWrapper {
     String description;
     public NotificationCompat.Builder builder;
     public int notificationId = 101;
-    public NotificationsService service;
 
     public Notify(Context base) {
         super(base);
         //this.createNotification(this, null, null, null);
         this.createNotificationChannel();
-        //this.cancelAlarm();
+        //this.cancelAlarm();-
     }
 
     public void createNotification(Context context, String title, String text, Class<? extends AppCompatActivity> activity){

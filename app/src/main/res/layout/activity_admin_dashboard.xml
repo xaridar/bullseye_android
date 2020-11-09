@@ -11,7 +11,6 @@
         android:id="@+id/adminLogOutButton"
         android:layout_width="194dp"
         android:layout_height="80dp"
-        android:layout_marginBottom="64dp"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
         android:paddingTop="10dp"
@@ -30,12 +29,33 @@
         android:id="@+id/adminSettingsButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="90dp"
+        android:layout_marginBottom="50dp"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
         android:paddingTop="30dp"
         android:paddingBottom="30dp"
         android:text="@string/settings"
+        android:textAllCaps="false"
+        android:textColor="@color/color1"
+        android:textSize="27sp"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/adminSurveyButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/color5"
+        tools:ignore="UnknownId" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/adminSurveyButton"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/roboto"
+        android:letterSpacing="0.02"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:text="Email Survey Results"
         android:textAllCaps="false"
         android:textColor="@color/color1"
         android:textSize="27sp"
@@ -51,7 +71,6 @@
         android:id="@+id/adminStatsButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="90dp"
         android:fontFamily="@font/roboto"
         android:letterSpacing="0.02"
         android:paddingTop="30dp"
@@ -63,8 +82,8 @@
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toTopOf="@+id/adminSettingsButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adminWelcomeText"
         app:rippleColor="@color/color5" />
 
     <TextView
@@ -77,8 +96,7 @@
         android:paddingEnd="32dp"
         android:textColor="@color/color4"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="174dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

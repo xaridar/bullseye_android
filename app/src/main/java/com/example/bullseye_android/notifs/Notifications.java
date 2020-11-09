@@ -15,21 +15,42 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 
 import com.example.bullseye_android.R;
 
 import org.jsoup.select.NodeFilter;
 
+import java.util.concurrent.TimeUnit;
+
 public class Notifications extends ContextWrapper{
     Notify notify;
+    NotifWorker notifWorker;
 
 
     public Notifications(Context base) {
         super(base);
         notify = new Notify(this);
+        createWorker();
+
     }
 
     public void createNotification(Context context, String title, String text, Class<? extends AppCompatActivity> activity){
         notify.createNotification(context, title, text, activity);
+    }
+
+    public void createNotifications(Context context, String title, String content, Class<? extends AppCompatActivity> activity){
+        notify.createNotification(context, title, content, activity);
+    }
+
+    public void createWorker(){
+        PeriodicWorkRequest notifRequest =
+                new PeriodicWorkRequest.Builder(NotifWorker.class, 1, TimeUnit.HOURS)
+                        // Constraints
+                        .build();
+        WorkManager
+                .getInstance(getApplicationContext())
+                .enqueue(notifRequest);
     }
 }
