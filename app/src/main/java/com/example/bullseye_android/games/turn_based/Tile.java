@@ -10,6 +10,7 @@ public class Tile extends BoardActor{
     private int cost;
     private boolean isWalkable;
     private Unit unit;
+    private int[] padding;
 
     public Tile(String name, int x, int y, String icon, int cost, boolean isWalkable, Unit unit){
         this.name = name;
@@ -19,6 +20,7 @@ public class Tile extends BoardActor{
         this.cost = cost;
         this.isWalkable = isWalkable;
         this.unit = unit;
+        this.padding = new int[4];
     }
 
     public int getCost() {
@@ -43,5 +45,16 @@ public class Tile extends BoardActor{
 
     public void setUnit(Unit unit) {
         this.unit = unit;
+    }
+
+    public int[] getPadding() {
+        return padding;
+    }
+
+    public void setPadding(int left, int top, int right, int bottom) {
+        this.padding[0] = left;
+        this.padding[1] = top;
+        this.padding[2] = right;
+        this.padding[3] = bottom;
     }
 }

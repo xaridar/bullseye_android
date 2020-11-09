@@ -25,14 +25,19 @@ import com.example.bullseye_android.database.user.User;
 import com.example.bullseye_android.database.user.UserViewModel;
 import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.GamePauseFragment;
-import com.example.bullseye_android.games.turn_based.units.EasyPatroller;
-import com.example.bullseye_android.games.turn_based.units.EasyWanderer;
+import com.example.bullseye_android.games.turn_based.units.Follower;
+import com.example.bullseye_android.games.turn_based.units.Patroller;
+import com.example.bullseye_android.games.turn_based.units.PatrollerEasy;
+import com.example.bullseye_android.games.turn_based.units.Wanderer;
 import com.example.bullseye_android.games.turn_based.units.Unit;
+import com.example.bullseye_android.games.turn_based.units.WandererEasy;
+import com.example.bullseye_android.games.turn_based.units.WandererHard;
 import com.example.bullseye_android.music.MusicActivity;
 import com.example.bullseye_android.music.MusicManager;
 import com.example.bullseye_android.util.SfxManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -128,7 +133,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                     }
                 }
             }
-
+            Log.i("TB", Arrays.toString(new Node[]{graph[location.first][location.second]}));
             switch(state){
                 case 0:
 
@@ -149,7 +154,6 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                     }
                     if(selectedUnit!=null) {
                         ArrayList<Node> path = Pathfinder.generatePathTo(selectedUnit.x, selectedUnit.y, location.first, location.second, graph, board, selectedUnit);
-                        Log.i("tbdubug",path.toString());
                         if(path.size() > 0) {
                             selectedUnit.setMoved(true);
                             selectedUnit.setCurrentPath(path);
@@ -280,7 +284,8 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         for(int x=0;x<board.length;x++){
             for(int y=0;y<board[x].length;y++){
-                board[x][y] = new Tile("grass", x, y,"ic_grean",1,true,null);
+                board[x][y] = new Tile("grass", x, y,"",1,true,null);
+
             }
         }
 
@@ -291,6 +296,8 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                 String img = board[x][y].getIcon();
                 int res = getResources().getIdentifier(img, "drawable", "com.example.bullseye_android");
                 buttons[x][y].setOnClickListener(tileListener);
+
+                board[x][y].setPadding(buttons[x][y].getPaddingLeft(), buttons[x][y].getPaddingTop(), buttons[x][y].getPaddingRight(), buttons[x][y].getPaddingBottom());
             }
         }
 
@@ -302,19 +309,23 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
             playerUnits.add(playerUnit);
         }
 
-        EasyWanderer easyWanderer = new EasyWanderer("wanderer", 0,0,"ic_strat_img_frog", 2, graph, board, this, 0,0,4,1);
-        computerUnits.add(easyWanderer);
+        Wanderer easyWanderer1 = new WandererHard("wanderer1", 4,1,"ic_strat_img_frog", 2, graph, board, this, 0,0,4,6);
+        computerUnits.add(easyWanderer1);
 
-        EasyPatroller easyPatroller1 = new EasyPatroller("patroller1", 0,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(0, 4))));
-        EasyPatroller easyPatroller2 = new EasyPatroller("patroller2", 1,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(1, 4))));
-        EasyPatroller easyPatroller3 = new EasyPatroller("patroller3", 2,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(2, 4))));
-        EasyPatroller easyPatroller4 = new EasyPatroller("patroller4", 3,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(3, 4))));
-        EasyPatroller easyPatroller5 = new EasyPatroller("patroller5", 4,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(4, 4))));
+
+        Patroller easyPatroller1 = new PatrollerEasy("patroller1", 0,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(0, 4))));
+        Patroller easyPatroller2 = new PatrollerEasy("patroller2", 1,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(1, 4))));
+        Patroller easyPatroller3 = new PatrollerEasy("patroller3", 2,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(2, 4))));
+        Patroller easyPatroller4 = new PatrollerEasy("patroller4", 3,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(3, 4))));
+        Patroller easyPatroller5 = new PatrollerEasy("patroller5", 4,2,"ic_strat_img_duck",1, graph, board, this, new ArrayList<>(Collections.singletonList(new Pair<>(4, 4))));
         computerUnits.add(easyPatroller1);
         computerUnits.add(easyPatroller2);
         computerUnits.add(easyPatroller3);
         computerUnits.add(easyPatroller4);
         computerUnits.add(easyPatroller5);
+
+//        Follower follower = new Follower("follower", 0, 0, "ic_mem_img_snake", 1, Owners.EASY, graph, board, this);
+//        computerUnits.add(follower);
 
         startingAmount = computerUnits.size();
 
@@ -324,12 +335,15 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     private void updateBoard(){
         int totalUnits = 0;
         for(int x=0;x<buttons.length;x++){
-            for(int y=0;y<buttons[x].length;y++){
+            for(int y=0;y<buttons[x].length;y++) {
                 ImageButton button = buttons[x][y];
                 Tile tile = board[x][y];
-                if(tile.getUnit()!=null && !tile.getUnit().isDead()) {
+                button.setPadding(tile.getPadding()[0],tile.getPadding()[1],tile.getPadding()[2],tile.getPadding()[3]);
+                if (tile.getUnit() != null && !tile.getUnit().isDead()) {
                     totalUnits++;
                     button.setImageResource(getResources().getIdentifier(tile.getUnit().getIcon(), "drawable", "com.example.bullseye_android"));
+                }else if(!tile.getIcon().equals("")){
+                    button.setImageResource(getResources().getIdentifier(tile.getIcon(), "drawable", "com.example.bullseye_android"));
                 }else {
                     button.setImageResource(0);
                 }

@@ -28,7 +28,7 @@ public class Pathfinder {
 
         if(!unitCanEnterTile(x, y, board, unit)) {
             // Clicked on tile that unit cannot walk on
-            Log.i("TB",unit.getName() + ": returned unwalkable");
+//            Log.i("TB",unit.getName() + ": returned unwalkable: "+x+", "+y);
             return new ArrayList<>();
         }
 
@@ -95,7 +95,7 @@ public class Pathfinder {
 
         if(prev.get(target) == null) {
             // No route between our target and the source
-            Log.i("PF",unit.getName() + ": no route");
+//            Log.i("PF",unit.getName() + ": no route: "+x+", "+y);
             return new ArrayList<>();
         }
 
@@ -161,7 +161,7 @@ public class Pathfinder {
      * @param targetY   Y position of tile to check
      * @return          returns whether or not the unit can enter the tile
      */
-    private static boolean unitCanEnterTile(int targetX, int targetY, Tile[][] board, Unit unit) {
+    public static boolean unitCanEnterTile(int targetX, int targetY, Tile[][] board, Unit unit) {
         boolean output;
         if(board[targetX][targetY].isWalkable() && board[targetX][targetY].getUnit() == null){
 //            Log.i("PF","there is nothing blocking target");
@@ -175,7 +175,7 @@ public class Pathfinder {
 //                    Log.i("PF","target is self");
                     output = true;
                 }else {
-                    Log.i("PF",unit.getName() + ": target is of same owner");
+//                    Log.i("PF",unit.getName() + ": target is of same owner");
                     output = false;
                 }
             }

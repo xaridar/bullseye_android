@@ -10,6 +10,6 @@ public interface MoveableUnit {
     void movement(Tile[][] map, Node[][] graph);
     void onKillUnit(Unit killedUnit, Tile[][] map, Node[][] graph);
     void onMovementFinished(Tile[][] map, Node[][] graph);
-    void onPathfindingEnd(Tile[][] map, Node[][] graph);
+    void onGoalReached(Tile[][] map, Node[][] graph);
 
 }
