@@ -1,20 +1,18 @@
 package com.example.bullseye_android.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.TextView;
-
 import com.example.bullseye_android.R;
 import com.example.bullseye_android.database.user.User;
 import com.example.bullseye_android.database.user.UserViewModel;
-import com.example.bullseye_android.games.Game;
 import com.example.bullseye_android.games.memory.MemoryActivity;
 import com.example.bullseye_android.games.sorting.SortingActivity;
 import com.example.bullseye_android.games.turn_based.TurnBasedActivity;
