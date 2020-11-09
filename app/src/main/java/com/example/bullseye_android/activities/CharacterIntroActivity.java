@@ -32,7 +32,7 @@ public class CharacterIntroActivity extends AppCompatActivity {
         List<CharDescriber> chars = new ArrayList<>();
         chars.add(new CharDescriber("Bullseye the Bulldog", "Bullseye is the leader of the group, always in charge of group games!", "bulldog", this));
         chars.add(new CharDescriber("Carl the Caracal", "Carl is a playful caracal, ready to have some fun in Bullseye!", "caracal", this));
-        chars.add(new CharDescriber("Katie the Cat", "Katie's a fancy cat, but she's got a couple tricks u her sleeve...", "cat", this));
+        chars.add(new CharDescriber("Katie the Cat", "Katie's a fancy cat, but she's got a couple tricks up her sleeve...", "cat", this));
         chars.add(new CharDescriber("Cheri the Chicken", "Cheri loves to cook - she makes the best omelette in town!", "chicken", this));
         chars.add(new CharDescriber("Kristoff the Cow", "Kristoff is always hungry for something. CHOMP!", "cow", this));
         chars.add(new CharDescriber("Filip the Fish", "Filip likes playing fish games and eating fish food.", "fish", this));
