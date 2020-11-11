@@ -46,7 +46,7 @@ public class Notifications extends ContextWrapper{
 
     public void createWorker(){
         PeriodicWorkRequest notifRequest =
-                new PeriodicWorkRequest.Builder(NotifWorker.class, 1, TimeUnit.HOURS)
+                new PeriodicWorkRequest.Builder(NotifWorker.class, 24, TimeUnit.HOURS)
                         // Constraints
                         .build();
         WorkManager

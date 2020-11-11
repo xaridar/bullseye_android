@@ -80,6 +80,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
         String subject = "Survey Results";
         final StringBuilder body = new StringBuilder();
         body.append("<html>");
+        body.append("Survey Results. General Feeling About App First. User Responses Second");
         SurveyViewModel viewModel = ViewModelProviders.of(this).get(SurveyViewModel.class);
         LiveData<List<Survey>> data = viewModel.getAll();
         data.observe(this, new Observer<List<Survey>>() {
@@ -87,12 +88,19 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
             public void onChanged(List<Survey> surveys) {
                 Log.i("Database change", surveys.toString());
                 for (Survey survey : surveys) {
+
+                    body.append("<br>");
                     body.append(" ").append(SurveyActivity.getRadioAnswers(survey.getRadioAnswer()));
                     body.append(" ").append(survey.getInputText());
                     body.append("<br>");
                 }
                 body.append("</html>");
-                new SendMail().sendMail(null, "bullseyeapp.no.reply@gmail.com", "B7nuXx\"3}A", "aakashsell@gmail.com", subject, body.toString(), AdminDashboardActivity.this);
+                new SendMail().sendMail(new Function<Boolean, Void>() {
+                    @Override
+                    public Void apply(Boolean aBoolean) {
+                        return null;
+                    }
+                }, "bullseyeapp.no.reply@gmail.com", "B7nuXx\"3}A", "aakashsell@gmail.com", subject, body.toString(), AdminDashboardActivity.this);
                 data.removeObserver(this);
             }
 
