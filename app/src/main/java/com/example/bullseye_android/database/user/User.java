@@ -28,7 +28,7 @@ public class User {
     public static final int POINTS = 0;
     public static final int ACC = 1;
     public static final int TIME = 2;
-    public int statsTypes = 3;
+    public static final int statsTypes = 3;
 
     public static final int STRAT_POINTS = 0;
     public static final int STRAT_MOVES = 1;

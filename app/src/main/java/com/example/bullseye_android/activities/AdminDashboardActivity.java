@@ -92,7 +92,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
                     body.append("<br>");
                 }
                 body.append("</html>");
-                new SendMail().sendMail(null, "bullseyeapp.no.reply@gmail.com", "B7nuXx\"3}A", "aakashsell@gmail.com", subject, body.toString(), AdminDashboardActivity.this);
+                new SendMail().sendMail(aBoolean -> null, "bullseyeapp.no.reply@gmail.com", "B7nuXx\"3}A", admin.getEmail(), subject, body.toString(), AdminDashboardActivity.this);
                 data.removeObserver(this);
             }
 
@@ -110,5 +110,21 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
     @Override
     public boolean startImmediately() {
         return false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UserViewModel mUserViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        Fetcher.runNewAdminFetcher(mUserViewModel, user -> {
+            if (user != null) {
+                admin = user;
+                run();
+            } else {
+                startActivity(new Intent(AdminDashboardActivity.this, AdminSignUpActivity.class));
+                finish();
+            }
+            return null;
+        });
     }
 }

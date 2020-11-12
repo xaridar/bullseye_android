@@ -11,7 +11,7 @@ import androidx.room.TypeConverters;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {User.class}, version = 5, exportSchema = false)
+@Database(entities = {User.class}, version = 6, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class UserRoomDatabase extends RoomDatabase {
 
