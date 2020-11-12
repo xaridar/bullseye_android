@@ -15,6 +15,7 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 
@@ -51,6 +52,8 @@ public class Notifications extends ContextWrapper{
                         .build();
         WorkManager
                 .getInstance(getApplicationContext())
-                .enqueue(notifRequest);
+                .enqueueUniquePeriodicWork("Send Notification", ExistingPeriodicWorkPolicy.KEEP, notifRequest);
+        Log.i("This works", "Work manager is started!! YAY");
+
     }
 }

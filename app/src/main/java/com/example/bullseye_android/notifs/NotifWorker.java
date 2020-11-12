@@ -41,10 +41,11 @@ public class NotifWorker extends Worker {
         notification = new Notify(getApplicationContext());
         notification.createNotification(getApplicationContext(), "Where have you been??", "We have missed you. Come play some games with bullseye!!", UsersActivity.class);
         //just testing sending email with a workManager
-        sendSurveyEmail();
+        //currently doesn't work
+        //sendSurveyEmail();
         return Result.success();
     }
-    public void sendSurveyEmail(){
+   /* public void sendSurveyEmail(){
         String subject = "Survey Results";
         final StringBuilder body = new StringBuilder();
         body.append("<html>");
@@ -74,5 +75,5 @@ public class NotifWorker extends Worker {
 
         });
 
-    }
+    }*/
 }

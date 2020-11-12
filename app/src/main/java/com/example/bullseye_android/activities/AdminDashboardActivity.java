@@ -91,6 +91,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
 
                     body.append("<br>");
                     body.append(" ").append(SurveyActivity.getRadioAnswers(survey.getRadioAnswer()));
+                    body.append(". ");
                     body.append(" ").append(survey.getInputText());
                     body.append("<br>");
                 }
