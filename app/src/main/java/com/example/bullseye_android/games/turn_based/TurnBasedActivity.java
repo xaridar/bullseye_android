@@ -208,6 +208,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         diff.setVisibility(View.VISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
         endTurn.setVisibility(View.INVISIBLE);
+        konfetti.setVisibility(View.INVISIBLE);
 
         Button dashBtn = findViewById(R.id.dashBtn);
         dashBtn.setOnClickListener(view -> finish());
