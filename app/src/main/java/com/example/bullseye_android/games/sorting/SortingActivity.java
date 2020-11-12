@@ -178,7 +178,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         finishedLayout.setVisibility(View.INVISIBLE);
         highScore.setVisibility(View.INVISIBLE);
         pauseButton.setVisibility(View.INVISIBLE);
-
+        konfettiView.setVisibility(View.INVISIBLE);
 
         startBtn.setOnClickListener(view -> {
             RadioButton choice = findViewById(speedChoice.getCheckedRadioButtonId());

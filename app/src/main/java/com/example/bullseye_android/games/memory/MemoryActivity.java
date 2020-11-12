@@ -283,6 +283,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         cards = new MemoryCard[y][x];
         buttons = new ImageButton[cards.length * cards[0].length];
         LinearLayout[] columns = new LinearLayout[cards[0].length];
+        konfettiView.setVisibility(View.INVISIBLE);
         board.setVisibility(View.VISIBLE);
         board.removeAllViews();
         pauseButton.setVisibility(View.VISIBLE);
