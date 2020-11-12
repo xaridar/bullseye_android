@@ -66,7 +66,7 @@ public class EasyLevelGen implements LevelGen{
                 wanderers.add(new WandererEasy("wanderer", 4, 0, "ic_strat_img_frog", 2, graph, board, game, game, 0, 0, 4,6));
                 break;
             case 2:
-                wanderers.add(new WandererEasy("wanderer", 2, 4, "ic_strat_img_frog", 2, graph, board, game, game, 0, 0, 4,6));
+                wanderers.add(new WandererEasy("wanderer", 0, 5, "ic_strat_img_frog", 2, graph, board, game, game, 0, 0, 4,6));
                 break;
             case 3:
                 wanderers.add(new WandererEasy("wanderer", 4, 0, "ic_strat_img_frog", 2, graph, board, game, game, 0, 0, 4,6));
