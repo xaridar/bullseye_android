@@ -197,7 +197,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="invisible">
+        tools:visibility="visible">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/howToPlay"

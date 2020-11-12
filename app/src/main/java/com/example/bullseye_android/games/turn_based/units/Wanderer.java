@@ -57,11 +57,6 @@ public class Wanderer extends EnemyUnit {
             generateRandomPoint(graph, map);
             setCurrentPath(Pathfinder.generatePathTo(x, y, goalX, goalY, graph, map, this));
         }
-//        if(!Pathfinder.unitCanEnterTile(goalX, goalY, map, this)) {
-//            Log.i("TB",name + ": goal has a unit: " + board[goalX][goalY].getUnit().getName());
-//            setCurrentPath(generateRandomPoint(graph, board));
-//            Log.i("TB", name + ": " + goalX + ", " + goalY);
-//        }
     }
 
     @Override

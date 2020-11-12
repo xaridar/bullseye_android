@@ -353,7 +353,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="invisible">
+        tools:visibility="visible">
 
         <View
             android:id="@+id/diffOverlay"
@@ -368,11 +368,50 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/roboto"
+            android:text="Difficulty"
+            android:textColor="@color/tbText"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/playBtn" />
+
+        <RadioGroup
+            android:id="@+id/diffGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkedButton="@id/buttonEasy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView26">
+
+            <RadioButton
+                android:id="@+id/buttonEasy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/tbText"
+                android:text="Easy"
+                android:textColor="@color/tbText" />
+
+            <RadioButton
+                android:id="@+id/buttonHard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/tbText"
+                android:text="Hard"
+                android:textColor="@color/tbText" />
+        </RadioGroup>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/howToPlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="24dp"
             android:backgroundTint="@color/tbSecondary"
             android:fontFamily="@font/roboto_bold"
             android:onClick="howToPlay"
@@ -381,7 +420,7 @@
             android:textColorHighlight="@color/color5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/playBtn"
+            app:layout_constraintTop_toBottomOf="@+id/diffGroup"
             app:rippleColor="@color/tbBackground" />
 
         <com.google.android.material.button.MaterialButton
@@ -404,7 +443,7 @@
             android:id="@+id/playBtn"
             android:layout_width="166dp"
             android:layout_height="99dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:backgroundTint="@color/tbSecondary"
             android:fontFamily="@font/roboto_bold"
             android:text="PLAY"
@@ -420,7 +459,7 @@
             android:id="@+id/imageView2"
             android:layout_width="249dp"
             android:layout_height="233dp"
-            android:layout_marginBottom="64dp"
+            android:layout_marginBottom="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -438,7 +477,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        tools:visibility="invisible">
 
         <TextView
             android:id="@+id/pointCount"

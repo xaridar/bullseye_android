@@ -29,8 +29,13 @@ public class WandererEasy extends Wanderer {
     private void showNextLocation(Tile[][] map){
         for(Tile[] tiles : map){
             for(Tile tile : tiles){
-                tile.setPadding(0,0,0,0);
-                tile.setIcon("");
+                if((tile.x == x) && (tile.y == y)){
+                    tile.setPadding(0,0,0,0);
+                    tile.setIcon("");
+                }else if(tile.getUnit() != null){
+                    tile.setPadding(0,0,0,0);
+                    tile.setIcon("");
+                }
             }
         }
         if(currentPath.size() > 1) {

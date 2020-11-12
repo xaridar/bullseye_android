@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,6 +72,9 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
     private int endingAmount;
     private int diffInt;
     private String difficulty;
+    private RadioGroup diffGroup;
+    private RadioButton buttonEasy;
+    private RadioButton buttonHard;
     private int mapSizeX = 5;
     private int mapSizeY = 7;
     private Tile[][] board;
@@ -202,6 +207,7 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
         pointsText = findViewById(R.id.pointCount);
         playAgain = findViewById(R.id.playAgain);
         backBtn = findViewById(R.id.backToDashboard);
+        diffGroup = findViewById(R.id.diffGroup);
 
         grid.setVisibility(View.VISIBLE);
         finishedLayout.setVisibility(View.INVISIBLE);
@@ -214,6 +220,13 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
 
         playButton.setOnClickListener(view -> {
             diff.setVisibility(View.INVISIBLE);
+            if(diffGroup.getCheckedRadioButtonId() == R.id.buttonEasy){
+                diffInt = User.GAME_STRATEGY_EASY;
+                difficulty = "Easy";
+            }else{
+                diffInt = User.GAME_STRATEGY_HARD;
+                difficulty = "Hard";
+            }
             start();
             gameNum = User.GAME_STRATEGY_EASY;
         });
@@ -305,25 +318,20 @@ public class TurnBasedActivity extends AppCompatActivity implements Game, MusicA
                 buttons[x][y].setOnClickListener(tileListener);
 
                 board[x][y].setPadding(buttons[x][y].getPaddingLeft(), buttons[x][y].getPaddingTop(), buttons[x][y].getPaddingRight(), buttons[x][y].getPaddingBottom());
+                board[x][y].setOriginalPadding(board[x][y].getPadding());
             }
         }
 
         graph = Pathfinder.generatePathfindingGraph(mapSizeX, mapSizeY);
 
-//        int playerUnitNum = 3;
-//        for(int i = 1; i< playerUnitNum+1; i++){
-//            Unit playerUnit = new Unit("example" + (i), i, 6,"ic_strat_img_bulldog", 1, Owners.PLAYER, board, graph, this, this);
-//            playerUnits.add(playerUnit);
-//        }
+        int playerUnitNum = 3;
+        for(int i = 1; i< playerUnitNum+1; i++){
+            Unit playerUnit = new Unit("example" + (i), i, 6,"ic_strat_img_bulldog", 1, Owners.PLAYER, board, graph, this, this);
+            playerUnits.add(playerUnit);
+        }
 
-//        LevelGen levelGen = new HardLevelGen();
-//        computerUnits = levelGen.genLevel(board, graph, this);
-
-        playerUnits.add(new PlayerUnit("player", 4, 5, "ic_strat_img_bulldog", 1, board, graph, this, this));
-//        computerUnits.add(new PatrollerEasy("patroller", 0, 5, "ic_strat_img_duck", 1, graph, board, this, this, new ArrayList<>(Collections.singletonList(new Pair<>(4, 5)))));
-//        computerUnits.add(new WandererEasy("wanderer", 0, 1, "ic_strat_img_frog", 2, graph, board, this, this, 0,1,4,2));
-//        computerUnits.add(new Follower("follower", 0, 5, "ic_strat_img_snake", 2, Owners.HARD, graph, board, this, this));
-        computerUnits.add(new Unit("example", 2, 5, "ic_strat_img_duck", 1, Owners.HARD, board, graph, this, this));
+        LevelGen levelGen = difficulty.equals("Easy") ? new EasyLevelGen() : new HardLevelGen();
+        computerUnits = levelGen.genLevel(board, graph, this);
 
         startingAmount = computerUnits.size();
 
