@@ -76,6 +76,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
 
     }
 
+    //Coded by Aakash Sell
     public void sendSurveyEmail(){
         String subject = "Survey Results";
         final StringBuilder body = new StringBuilder();
