@@ -80,6 +80,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
         String subject = "Survey Results";
         final StringBuilder body = new StringBuilder();
         body.append("<html>");
+        body.append("Survey Results. General Feeling About App First. User Responses Second");
         SurveyViewModel viewModel = ViewModelProviders.of(this).get(SurveyViewModel.class);
         LiveData<List<Survey>> data = viewModel.getAll();
         data.observe(this, new Observer<List<Survey>>() {
@@ -87,6 +88,8 @@ public class AdminDashboardActivity extends AppCompatActivity implements MusicAc
             public void onChanged(List<Survey> surveys) {
                 Log.i("Database change", surveys.toString());
                 for (Survey survey : surveys) {
+
+                    body.append("<br>");
                     body.append(" ").append(SurveyActivity.getRadioAnswers(survey.getRadioAnswer()));
                     body.append(" ").append(survey.getInputText());
                     body.append("<br>");

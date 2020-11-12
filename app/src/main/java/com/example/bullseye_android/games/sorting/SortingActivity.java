@@ -70,6 +70,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     private TextView highScore;
     private TextView finalTime;
     private ImageButton pauseButton;
+    private ImageView trophy;
     ImageView rightArrow;
     ImageView leftArrow;
     String colorHit;
@@ -96,6 +97,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
     private MediaPlayer countdownfinish;
     private MediaPlayer winTone;
     private MediaPlayer highScoreTone;
+    private MediaPlayer trophyTone;
 
     private User user;
     private UserViewModel userViewModel;
@@ -124,6 +126,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
             }
         });
         konfettiView = findViewById(R.id.viewKonfetti);
+
     }
     public void run() {
 
@@ -137,6 +140,7 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         countdownfinish = SfxManager.createSfx(this, R.raw.countdownfinish, vol);
         winTone = SfxManager.createSfx(this, R.raw.win_default, vol);
         highScoreTone = SfxManager.createSfx(this, R.raw.win_sound, vol);
+        trophyTone = SfxManager.createSfx(this, R.raw.beep, vol);
 
         rightArrow.startAnimation(animFadeOut);
         leftArrow.startAnimation(animFadeOut);
@@ -157,6 +161,10 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         Button playAgain = findViewById(R.id.playAgain);
         finalTime = findViewById(R.id.finalTime);
         pauseButton = findViewById(R.id.pauseButton2);
+        trophy = findViewById(R.id.trophy);
+        trophy.setOnClickListener(view -> trophyTone.start());
+        trophy.setVisibility(View.INVISIBLE);
+        trophy.setEnabled(false);
         backBtn.setOnClickListener((view) -> finish());
 
         playAgain.setOnClickListener((view) -> {
@@ -263,6 +271,8 @@ public class SortingActivity extends AppCompatActivity implements Game, MusicAct
         if(highScore){
             confetti(konfettiView, this.getApplicationContext());
             highScoreTone.start();
+            trophy.setVisibility(View.VISIBLE);
+            trophy.setEnabled(true);
         }else{
             winTone.start();
         }

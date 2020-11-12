@@ -51,6 +51,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     private LinearLayout board;
     private ConstraintLayout diff;
     private RadioGroup diffChoice;
+    private ImageView trophy;
 
     private ConstraintLayout finishedLayout;
     private TextView timeTxt;
@@ -74,6 +75,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
     public MediaPlayer wrongTone;
     public MediaPlayer highScoreTone;
     public MediaPlayer winTone;
+    public MediaPlayer trophyTone;
 
     private ArrayList<MemoryCard> shownCards = new ArrayList<>();
     Toast toast;
@@ -142,6 +144,8 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         if(gotHighScore){
             confetti(konfettiView, this.getApplicationContext());
             highScoreTone.start();
+            trophy.setVisibility(View.VISIBLE);
+            trophy.setEnabled(true);
         }else{
             winTone.start();
         }
@@ -167,6 +171,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         setContentView(R.layout.activity_memory);
         paused = false;
         konfettiView = findViewById(R.id.viewKonfetti);
+
 
         SharedPreferences prefs = getSharedPreferences("userID", MODE_PRIVATE);
         long id = (prefs.getLong("id", 0));
@@ -196,6 +201,7 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         wrongTone = SfxManager.createSfx(this, R.raw.mem_wrong, vol);
         highScoreTone = SfxManager.createSfx(this, R.raw.win_sound, vol);
         winTone = SfxManager.createSfx(this, R.raw.win_default, vol);
+        trophyTone = SfxManager.createSfx(this, R.raw.beep, vol);
 
         toast = Toast.makeText(this, "Press the back button twice at any time to go back to the dashboard.", Toast.LENGTH_SHORT);
         toast.show();
@@ -209,6 +215,12 @@ public class MemoryActivity extends AppCompatActivity implements Game, MusicActi
         pairTxt= findViewById(R.id.pairs);
         highScore = findViewById(R.id.highScore);
         highScore.setVisibility(View.INVISIBLE);
+        trophy = findViewById(R.id.trophy);
+        trophy.setOnClickListener(view -> {
+            trophyTone.start();
+        });
+        trophy.setVisibility(View.INVISIBLE);
+        trophy.setEnabled(false);
         diff = findViewById(R.id.settingLayout);
         diff.setVisibility(View.VISIBLE);
         Button playBtn = findViewById(R.id.playBtn);
