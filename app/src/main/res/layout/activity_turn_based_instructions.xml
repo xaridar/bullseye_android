@@ -50,58 +50,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.0"
-        tools:visibility="visible">
+        tools:visibility="invisible">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/playerMovement"
+            android:layout_width="178dp"
+            android:layout_height="79dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/unit_movement"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView24"
             android:layout_width="223dp"
             android:layout_height="132dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginTop="24dp"
             android:fontFamily="@font/roboto"
             android:gravity="center"
             android:text="This is Bullseye. Click on him, then click on a tile to move him. He can only move one tile per turn!"
             android:textColor="@color/tbText"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/playerMovement"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/playerMovement" />
-
-        <pl.droidsonroids.gif.GifImageView
-            android:id="@+id/enemyPatrol"
-            android:layout_width="297dp"
-            android:layout_height="69dp"
-            android:layout_marginTop="24dp"
-            android:src="@drawable/enemy_patrol"
-            app:layout_constraintBottom_toTopOf="@+id/textView25"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/playerMovement" />
 
         <pl.droidsonroids.gif.GifImageView
-            android:id="@+id/playerMovement"
-            android:layout_width="62dp"
-            android:layout_height="220dp"
+            android:id="@+id/enemyPatrol"
+            android:layout_width="297dp"
+            android:layout_height="69dp"
             android:layout_marginTop="32dp"
-            android:src="@drawable/player_moving"
-            app:layout_constraintEnd_toStartOf="@+id/textView24"
+            android:src="@drawable/patroller_movement"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
         <TextView
             android:id="@+id/textView25"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
             android:fontFamily="@font/roboto"
             android:gravity="center"
-            android:text="This is Guggerz! As you can see, he patrols between points, pausing at each one. Watch out for more enemies too, like Farsch and Shaquini! Press anywhere to continue to know how to capture enemies!"
+            android:text="This is Guggerz! As you can see, he patrols between points, pausing at each one. Watch out for more enemies too, like Farsch, who hops in a random direction, and Shaquini, who will follow you! Press anywhere to continue to know how to capture enemies!"
             android:textColor="@color/tbText"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enemyPatrol" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -115,14 +114,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.0"
-        tools:visibility="invisible">
+        tools:visibility="visible">
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/enemyCapture"
-            android:layout_width="81dp"
-            android:layout_height="232dp"
+            android:layout_width="342dp"
+            android:layout_height="104dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="54dp"
+            android:layout_marginTop="32dp"
             android:src="@drawable/enemy_captured"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -131,40 +130,39 @@
             android:id="@+id/textView28"
             android:layout_width="225dp"
             android:layout_height="124dp"
+            android:layout_marginTop="32dp"
             android:fontFamily="@font/roboto"
             android:gravity="center"
             android:text="Enemies are captured by moving a unit onto the same space as an enemy. Capture all enemies to win!"
             android:textColor="@color/tbText"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/enemyCapture"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/enemyCapture"
-            app:layout_constraintTop_toTopOf="@+id/enemyCapture" />
-
-        <pl.droidsonroids.gif.GifImageView
-            android:id="@+id/playerCapture"
-            android:layout_width="142dp"
-            android:layout_height="110dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="32dp"
-            android:src="@drawable/player_captured"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/enemyCapture" />
 
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/playerCapture"
+            android:layout_width="352dp"
+            android:layout_height="94dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/unit_captured"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
         <TextView
             android:id="@+id/textView29"
-            android:layout_width="130dp"
-            android:layout_height="122dp"
-            android:layout_marginEnd="32dp"
+            android:layout_width="314dp"
+            android:layout_height="67dp"
+            android:layout_marginTop="32dp"
             android:fontFamily="@font/roboto"
             android:gravity="center"
             android:text="Watch out! Enemies can capture your units if you aren't careful!"
             android:textColor="@color/tbText"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/playerCapture"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/playerCapture" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/playerCapture" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
